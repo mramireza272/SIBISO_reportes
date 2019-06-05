@@ -8,7 +8,7 @@ use Auth;
 class Navigation
 {
     private $menus;
-    
+
     function __construct(){
         //$this->menus = [];
 
@@ -16,13 +16,13 @@ class Navigation
         $this->menus = [
             'Menu principal'    => [
                 'url'     => url('/home'),
-                'active'  => ($url == '')?' class="active-sub"':'',
+                'active'  => ($url == '') ?' class="active-sub"' : '',
                 'icon'    => 'pli-home',
             ],
         ];
 
         if(Auth::check()){
-            if(Auth::user()->hasRole(['DIF','Administrador'])){
+            if(Auth::user()->hasRole(['SIBISO', 'Administrador'])){
                 $this->menus['Bitácora'] = [
                     'url'     => route('bitacora.index'),
                     'active' => (strpos($url,str_replace(url('/'),'','/bitacora')) !== false)?' class="active-sub"':'',
@@ -36,7 +36,7 @@ class Navigation
                     'active' => (strpos($url,str_replace(url('/'),'','/usuarios')) !== false)?' class="active-sub"':'',
                     'icon'   => 'pli-male-female'
                 ];
-            } 
+            }
 
             if(Auth::user()->hasPermissionTo('index_roles')){
                 $this->menus['Roles'] = [
@@ -52,7 +52,7 @@ class Navigation
                 ];
             }
         }
-        
+
     }
 
     /**
@@ -65,7 +65,7 @@ class Navigation
     public function handle($request, Closure $next)
     {
         $menu = collect($this->menus);
-        \Session::put('Current.menu',$menu);        
+        \Session::put('Current.menu',$menu);
         return $next($request);
     }
 }
