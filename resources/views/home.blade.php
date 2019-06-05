@@ -1,6 +1,6 @@
 @extends('templates.master')
 
-@section('titulo', 'SIBISO | Sistema de Reportes')
+@section('titulo', 'Sistema de Reportes SIBISO')
 
 @section('customcss')
 @endsection
@@ -9,5 +9,4 @@
 @endsection
 
 @section('content')
-
 @endsection

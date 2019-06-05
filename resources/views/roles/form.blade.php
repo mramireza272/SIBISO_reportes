@@ -3,12 +3,12 @@
     <div class="row">
         <div class="col-sm-12">
             <div class="form-group">
-            	<label class="control-label">Nombre*</label>
-            	<input class="form-control" type="text" name="name" value="{{ $role->name ?? old('name')}}">
+            	<label class="control-label" for="name"><strong>Nombre*</strong></label>
+            	<input class="form-control" type="text" name="name" value="{{ $role->name ?? old('name') }}">
                 {!! $errors->first('name', '<small class="help-block text-danger">:message</small>')!!}
             </div>
       	</div>
-      	<div class="col-sm-12">
+      	<div class="col-sm-12 col-md-12 col-lg-12 col-xl-12">
             <div class="form-group">
             	<label class="control-label">Lista de Roles</label>
               {!! $errors->first('permissions', '<small class="help-block text-danger">:message</small>')!!}
@@ -36,5 +36,6 @@
     </div>
 </div>
 <div class="panel-footer text-right">
+    <a role="button" class="btn btn-primary" href="{{ route('roles.index') }}">Regresar</a>
     <button type="submit" class="btn btn-primary">{{ isset($btnText) ? $btnText : 'Guardar'}}</button>
 </div>

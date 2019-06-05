@@ -10,7 +10,7 @@
 
 @section('content')
 	<div class="row">
-	    <div class="col-lg-12">
+	    <div class="col-sm-12 col-md-12 col-lg-12 col-xl-12">
 	        <div class="panel">
 	        	@if(session()->has('info'))
 		        	<div class="panel-heading">
@@ -27,14 +27,14 @@
     <!-- Contact Toolbar -->
     <!---------------------------------->
     <div class="row pad-btm">
-        <div class="col-sm-2 toolbar-left">
+        <div class="col-sm-2 col-md-2 col-lg-2 col-xl-2 toolbar-left">
         	@can('create_user')
             	<a href="{{ route('usuarios.create') }}" class="btn btn-primary">Crear usuario</a>
             @endcan
         </div>
 
-        <div class="col-sm-5 toolbar-center">
-            <form method="get" action="{{ route('usuarios.index') }}">
+        <div class="col-sm-5 col-md-5 col-lg-5 col-xl-5 toolbar-center">
+            <form method="get" action="{{ route('usuarios.search') }}">
                 <div class="input-group mar-btm">
                     <input type="text" id="search" name="search" placeholder="Buscar por nombre o correo electrónico" class="form-control" value="{{ $search }}" autofocus>
                     <span class="input-group-btn">
@@ -44,14 +44,14 @@
             </form>
         </div>
 
-        <div class="col-sm-5 toolbar-right text-right">
+        <div class="col-sm-5 col-md-5 col-lg-5 col-xl-5 toolbar-right text-right">
         	<br><br>
         </div>
 
         <div class="row">
         	@php ($row = 1)
 			@foreach ($users as $user)
-				<div class="col-sm-4 col-md-3">
+				<div class="col-sm-4 col-md-4 col-lg-4 col-xl-4">
 	            <!-- Contact Widget -->
 	            <!---------------------------------->
 	            <div class="panel pos-rel">

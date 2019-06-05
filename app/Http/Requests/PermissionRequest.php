@@ -4,7 +4,7 @@ namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class CreateRoleRequest extends FormRequest
+class PermissionRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -24,15 +24,13 @@ class CreateRoleRequest extends FormRequest
     public function rules() {
         return [
             'name' => 'required|max:255',
-            'permissions' => 'required'
         ];
     }
 
     public function messages() {
         return [
-            'name.required' => 'El Nombre del Rol es obligatorio',
-            'permissions.required' => 'Debe seleccionar al menos un permiso',
-            'max' => 'El Nombre del Rol no debe ser mayor a :max caracteres',
+            'name.required' => 'El Nombre del Permiso es obligatorio',
+            'max' => 'El Nombre del Permiso no debe ser mayor a :max caracteres',
         ];
     }
 }
