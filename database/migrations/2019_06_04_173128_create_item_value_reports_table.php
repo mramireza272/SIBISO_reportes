@@ -20,7 +20,7 @@ class CreateItemValueReportsTable extends Migration
             $table->foreign('report_id')->references('id')->on('reports');
             $table->integer('item_rol_id');
             $table->foreign('item_rol_id')->references('id')->on('item_rols');
-            $table->integer('value');
+            $table->jsonb('values');
             $table->timestamps();
             $table->softDeletes();
 
