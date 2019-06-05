@@ -16,9 +16,9 @@ class CreateRolStructureItemsTable extends Migration
     {
         Schema::create('rol_structure_items', function (Blueprint $table) {
             $table->increments('id');
-            $table->integer('rol_id');
-            $table->foreign('rol_id')->references('id')->on('roles');
-            $table->jsonb('structure');
+            $table->integer('item_rol_id');
+            $table->foreign('item_rol_id')->references('id')->on('item_rols');
+            $table->string('columns');
             $table->integer('order');
             $table->timestamps();
             $table->softDeletes();

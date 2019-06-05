@@ -38,9 +38,7 @@ class UserRequest extends FormRequest
                     'materno'  => 'max:255',
                     'email'    => 'required|email|same:email_confirmation|max:255|unique:users,email',
                     'password' => 'required|same:password_confirmation',
-                    'roles'    => 'required',
-                    'phone'    => 'required|integer',
-                    'imei'     => 'required|integer',
+                    'roles'    => 'required'
                 ];
             }
             case 'PUT':
@@ -52,9 +50,7 @@ class UserRequest extends FormRequest
                     'materno'  => 'max:255',
                     'email'    => 'required|email|same:email_confirmation|max:255|unique:users,email,'. $this->user_id,
                     'password' => 'required|same:password_confirmation',
-                    'roles'    => 'required',
-                    'phone'    => 'required|integer',
-                    'imei'     => 'required|integer',
+                    'roles'    => 'required'
             ];
             }
             default:break;
@@ -94,8 +90,7 @@ class UserRequest extends FormRequest
             'email_confirmation'    => 'Confirmar Correo Personal',
             'password'              => 'Contraseña',
             'password_confirmation' => 'Confirmación de Contraseña',
-            'roles'                 => 'Rol',
-            'imei'                  => 'IMEI'
+            'roles'                 => 'Rol'
         ];
     }
 }
