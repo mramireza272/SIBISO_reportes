@@ -17,7 +17,6 @@ class ItemRolSeeder extends Seeder
         
     	$role = Role::findByName('Instituto para la Atención a Poblaciones Prioritarias');
 
-    	dd($role);
 
     	$mains = [
     			'CAAIS',
@@ -112,7 +111,7 @@ class ItemRolSeeder extends Seeder
 
     	$order=0;
     	foreach ($mains as $key => $value) {
-	    	$itemrol = ItemRol::create(['rol_id' => 1,
+	    	$itemrol = ItemRol::create(['rol_id' => $role->id,
 	        				 'item'   => $value,
 	        				 'parent_id' =>null,
 	        				 'editable' => false,
@@ -130,7 +129,7 @@ class ItemRolSeeder extends Seeder
 	    	$suborder = 0;
 	    	foreach ($subs[$order] as $subkey => $subvalue) {
 
-		    	$subitemrol = ItemRol::create(['rol_id' => 1,
+		    	$subitemrol = ItemRol::create(['rol_id' => $role->id,
 		        				 'item'   => $subvalue['col'],
 		        				 'parent_id' =>$itemrol->id,
 		        				 'editable' => true,
@@ -139,7 +138,7 @@ class ItemRolSeeder extends Seeder
 
 		    	$subsuborder=0;
 		    	foreach ($subvalue['subcol'] as $subbval) {
-			    	$subsubitemrol = ItemRol::create(['rol_id' => 1,
+			    	$subsubitemrol = ItemRol::create(['rol_id' => $role->id,
 			        				 'item'   => $subbval,
 			        				 'parent_id' =>$subitemrol->id,
 			        				 'editable' => true,
