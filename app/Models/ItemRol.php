@@ -13,11 +13,11 @@ class ItemRol extends Model
 
 
     public function childs(){
-    	return $this->hasMany('App\Models\ItemRol','parent_id','id');
+    	return $this->hasMany('App\Models\ItemRol','parent_id','id')->orderBy('order');
     }
 
     public function cols(){
-    	return $this->hasMany('App\Models\RolStructureItem','item_rol_id','id');
+    	return $this->hasMany('App\Models\RolStructureItem','item_rol_id','id')->orderBy('order');
     }
 
 
