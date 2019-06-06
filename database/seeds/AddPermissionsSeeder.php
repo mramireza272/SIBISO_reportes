@@ -103,5 +103,57 @@ class AddPermissionsSeeder extends Seeder
         $role6->givePermissionTo('delete_iapp');
         $role6->givePermissionTo('edit_iapp');
         $role6->givePermissionTo('index_iapp');
+
+
+        $user = User::create([
+                'name' => $role2->name,
+                'email' => 'rol2@rol.rol',
+                'password' => 'roler',
+                'active' => 1,
+                'confirmed' => 1
+            ]);
+        
+
+        
+        $user->assignRole($role2->name);
+
+
+
+        $user = User::create([
+                'name' => $role3->name,
+                'email' => 'rol3@rol.rol',
+                'password' => 'roler',
+                'active' => 1,
+                'confirmed' => 1,
+            ]);
+        $user->assignRole($role3->name);
+        $user = User::create([
+                'name' => $role4->name,
+                'email' => 'rol4@rol.rol',
+                'password' => 'roler',
+                'active' => 1,
+                'confirmed' => 1,
+            ]);
+        $user->assignRole($role4->name);
+        $user = User::create([
+                'name' => $role5->name,
+                'email' => 'rol5@rol.rol',
+                'password' => 'roler',
+                'active' => 1,
+                'confirmed' => 1,
+            ]);
+        $user->assignRole($role5->name);
+        
+        $user = User::create([
+                'name' => $role6->name,
+                'email' => 'rol6@rol.rol',
+                'password' => 'roler',
+                'active' => 1,
+                'confirmed' => 1,
+            ]);
+        $user->assignRole($role6->name);
+
+
     }
+
 }

@@ -19,3 +19,6 @@ Route::resource('bitacora', 'LogController');
 Route::resource('usuarios', 'UserController')->except(['show']);
 Route::match(['get', 'post'], '/usuarios/busqueda', ['as' => 'usuarios.search', 'uses' => 'UserController@search']);
 Route::resource('forma', 'BuildForm');
+Route::resource('form', 'saveForm');
+Route::post('saveform', 'saveForm@store');
+Route::get('edtform/{id?}','saveForm@edit');

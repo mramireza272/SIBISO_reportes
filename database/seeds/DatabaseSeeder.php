@@ -17,5 +17,7 @@ class DatabaseSeeder extends Seeder
         $this->call(ItemRolSeeder::class);
         $this->call(ItemRolForm1::class);
         $this->call(ItemRolForm2::class);
+        $this->call(ItemRolForm3::class);
+        $this->call(ItemRolForm4::class);
     }
 }
