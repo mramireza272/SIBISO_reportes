@@ -26,7 +26,8 @@ class RolesController extends Controller
      */
     public function index()
     {
-        $roles = Role::all();
+        $roles = Role::orderBy('name', 'ASC')->get();
+
         return view('roles.index', compact('roles'));
     }
     /**
@@ -36,7 +37,8 @@ class RolesController extends Controller
      */
     public function create()
     {
-        $permissions = Permission::get();
+        $permissions = Permission::all();
+
         return view('roles.create', compact('permissions'));
     }
 
@@ -46,14 +48,20 @@ class RolesController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(CreateRoleRequest $request)
-    {
+    public function store(CreateRoleRequest $request) {
+        $messages = [
+            'name.unique' => 'El Nombre del Rol ya ha sido registrado',
+        ];
+
+        $request->validate([
+            'name' => 'unique:roles,name'
+        ], $messages);
         //create role
         $role = Role::create(['name' => $request->name]);
          //update permissions
         $role->permissions()->sync($request->get('permissions'));
 
-        return redirect()->route('roles.edit', $role->id)->with('info', 'Rol guardado con éxito');
+        return redirect()->route('roles.edit', $role->id)->with('info', 'Rol creado satisfactoriamente.');
     }
 
     /**
@@ -62,9 +70,7 @@ class RolesController extends Controller
      * @param  \App\role  $role
      * @return \Illuminate\Http\Response
      */
-    public function show(role $role)
-    {
-        
+    public function show(role $role) {
         return view('roles.show', compact('role'));
     }
 
@@ -74,10 +80,8 @@ class RolesController extends Controller
      * @param  \App\role  $role
      * @return \Illuminate\Http\Response
      */
-    public function edit(role $role)
-    {
-        
-        $permissions = Permission::get();
+    public function edit(role $role) {
+        $permissions = Permission::all();
         //dd($role->permissions->toArray());
         return view('roles.edit', compact('role', 'permissions'));
     }
@@ -89,14 +93,20 @@ class RolesController extends Controller
      * @param  \App\role  $role
      * @return \Illuminate\Http\Response
      */
-    public function update(CreateRoleRequest $request, role $role)
-    {
+    public function update(CreateRoleRequest $request, role $role) {
+        $messages = [
+            'name.unique' => 'El Nombre del Rol ya ha sido registrado',
+        ];
+
+        $request->validate([
+            'name' => 'unique:roles,name,'. $role->id
+        ], $messages);
         //update role
         $role->update(['name' => $request->name]);
          //update permissions
         $role->syncPermissions($request->get('permissions'));
-        
-        return redirect()->route('roles.edit', $role->id)->with('info', 'Role actualizado con éxito');
+
+        return redirect()->route('roles.edit', $role->id)->with('info', 'Role actualizado satisfactoriamente.');
     }
 
     /**
@@ -105,9 +115,9 @@ class RolesController extends Controller
      * @param  \App\role  $role
      * @return \Illuminate\Http\Response
      */
-    public function destroy(role $role)
-    {
+    public function destroy(role $role) {
         $role->delete();
-        return back()->with('info', 'Rol eliminado Correctamente');
+
+        return redirect()->route('roles.index')->with('info', 'Rol eliminado satisfactoriamente.');
     }
 }

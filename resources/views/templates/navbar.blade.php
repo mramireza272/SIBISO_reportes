@@ -6,7 +6,7 @@
         <!--Brand logo & name-->
         <!--================================-->
         <div class="navbar-header">
-            <a href="index.html" class="navbar-brand">
+            <a href="{{ url('/home') }}" class="navbar-brand">
                 {{--<img src="/img/logos/logo_min.png" alt="Nifty Logo" class="brand-icon">--}}
                 <div class="brand-title">
                     <img width="100%" src="/img/logos/logo_full.png" alt="" class="">
@@ -54,7 +54,7 @@
 
             </ul>
             <ul class="nav navbar-top-links">{{--
-                
+
 
                 <!--Mega dropdown-->
                 <!--~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~-->
@@ -316,7 +316,7 @@
                 <!--~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~-->
                 <!--End user dropdown-->
 
-                
+
                 <li>
                     <a href="#" class="aside-toggle">
                         <i class="pli-dot-vertical"></i>

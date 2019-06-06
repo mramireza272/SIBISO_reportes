@@ -11,8 +11,7 @@ class UserRequest extends FormRequest
      *
      * @return bool
      */
-    public function authorize()
-    {
+    public function authorize() {
         return true;
     }
 
@@ -21,40 +20,15 @@ class UserRequest extends FormRequest
      *
      * @return array
      */
-    public function rules()
-    {
-        switch($this->method())
-        {
-            case 'GET':
-            case 'DELETE':
-            {
-                return [];
-            }
-            case 'POST':
-            {
-                return [
-                    'name'     => 'required|max:255',
-                    'paterno'  => 'max:255',
-                    'materno'  => 'max:255',
-                    'email'    => 'required|email|same:email_confirmation|max:255|unique:users,email',
-                    'password' => 'required|same:password_confirmation',
-                    'roles'    => 'required'
-                ];
-            }
-            case 'PUT':
-            case 'PATCH':
-            {
-                return [
-                    'name'     => 'required|max:255',
-                    'paterno'  => 'max:255',
-                    'materno'  => 'max:255',
-                    'email'    => 'required|email|same:email_confirmation|max:255|unique:users,email,'. $this->user_id,
-                    'password' => 'required|same:password_confirmation',
-                    'roles'    => 'required'
-            ];
-            }
-            default:break;
-        }
+    public function rules() {
+        return [
+            'name'       => 'required|max:255',
+            'paterno'    => 'max:255',
+            'materno'    => 'max:255',
+            'email'      => 'required|email|same:email_confirmation|max:255',
+            'password'   => 'required|same:password_confirmation',
+            'roles'      => 'required',
+        ];
     }
 
     /**
@@ -62,16 +36,12 @@ class UserRequest extends FormRequest
      *
      * @return array
      */
-    public function messages()
-    {
+    public function messages() {
         return [
             'password.required' => 'La Contraseña es obligatoria',
             'required'          => 'El :attribute es obligatorio',
-            'max'               => 'El :attribute no debe ser mayor a :max',
             'same'              => ':attribute y :other deben coincidir',
-            'email'             => ':attribute no es un correo válido',
-            'unique'            => ':attribute ya ha sido registrado',
-            'integer'           => ':attribute debe ser numérico',
+            'max'               => 'El :attribute no debe ser mayor a :max caracteres',
         ];
     }
 
@@ -80,17 +50,16 @@ class UserRequest extends FormRequest
      *
      * @return array
      */
-    public function attributes()
-    {
+    public function attributes() {
         return [
             'name'                  => 'Nombre',
             'paterno'               => 'Apellido Paterno',
             'materno'               => 'Apellido Materno',
-            'email'                 => 'Correo personal',
+            'email'                 => 'Correo Personal',
             'email_confirmation'    => 'Confirmar Correo Personal',
             'password'              => 'Contraseña',
             'password_confirmation' => 'Confirmación de Contraseña',
-            'roles'                 => 'Rol'
+            'roles'                 => 'Rol',
         ];
     }
 }

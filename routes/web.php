@@ -17,4 +17,5 @@ Route::resource('roles', 'RolesController');
 Route::resource('permisos', 'PermissionsController');
 Route::resource('bitacora', 'LogController');
 Route::resource('usuarios', 'UserController')->except(['show']);
+Route::match(['get', 'post'], '/usuarios/busqueda', ['as' => 'usuarios.search', 'uses' => 'UserController@search']);
 Route::resource('forma', 'BuildForm');
