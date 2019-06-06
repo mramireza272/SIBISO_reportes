@@ -35,14 +35,14 @@ class BuildForm extends Controller
                 foreach ($itm->cols as $col) {
                     print('<td><input type="text" name="" /></td>');
                 }
-                print('</tr>');            
+                print('</tr>');
                 foreach($ch->childs as $subch){
                     print('<tr style="border:1px dotted black;margin:5px;">');
                     print('<td>'.$subch->item.'</td>');
                     foreach ($itm->cols as $col) {
                         print('<td><input type="text" name="" /></td>');
                     }
-                    print('</tr>');            
+                    print('</tr>');
                 }
 
 
