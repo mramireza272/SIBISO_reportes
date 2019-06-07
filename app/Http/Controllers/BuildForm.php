@@ -56,7 +56,7 @@ class BuildForm extends Controller {
     public function store(ReportRequest $request) {
         //dd($request->all());
         $post = $request->post();
-        $report = Report::create([
+        $report = Report::crete([
             'rol_id' => $post['rol_id'],
             'created_by' => $post['created_by'],
             'date_start' => $post['date_start'],
@@ -79,7 +79,7 @@ class BuildForm extends Controller {
             }
         }
 
-        return redirect()->route('forma.create')->with('info', 'Reporte creado satisfactoriamente');
+        return redirect()->route('forma.create')->with('info', 'Reporte creado satisfactoriamente.');
     }
 
     /**
@@ -88,9 +88,21 @@ class BuildForm extends Controller {
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
-    {
-        //
+    public function show($id) {
+        $report = Report::findOrFail($id);
+        $rol = Role::findOrFail($report->rol_id);
+        $items_rol = ItemRol::where('rol_id', $report->rol_id)->where('parent_id', null)->get();
+        $items_values = ItemValueReport::where('report_id', $report->id)->get();
+        $vals = [];
+
+        foreach ($items_values as $itve) {
+            $vals[$itve->item_col_id][$itve->item_rol_id] =[
+                'value' => $itve->valore,
+                'id' => $itve->id
+            ];
+        }
+
+        return view('forms.show', compact('rol', 'report', 'items_rol', 'vals'));
     }
 
     /**
@@ -143,7 +155,7 @@ class BuildForm extends Controller {
             }
         }
 
-        return redirect()->route('forma.edit', $id)->with('info', 'Reporte actualizado satisfactoriamente');
+        return redirect()->route('forma.edit', $id)->with('info', 'Reporte actualizado satisfactoriamente.');
     }
 
     /**

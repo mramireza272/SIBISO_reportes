@@ -74,5 +74,7 @@
 </div>
 <div class="panel-footer text-right">
     <a role="button" href="{{ route('forma.index') }}" class="btn btn-primary">Regresar</a>
-    <button type="submit" class="btn btn-primary">{{ isset($btnText) ? $btnText : 'Guardar'}}</button>
+    @if($action != 'show')
+        <button type="submit" class="btn btn-primary">{{ isset($btnText) ? $btnText : 'Guardar'}}</button>
+    @endif
 </div>

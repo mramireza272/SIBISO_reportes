@@ -47,7 +47,7 @@ class ReportRequest extends FormRequest
             foreach($itm->childs as $ch) {
                 foreach ($itm->cols as $col) {
                     if($this->action == 'create') {
-                        $input_name = 'f_'. $rol->id .'_'. $col->id .'_'. $ch->id;
+                        $input_name = 'f_'. $this->rol_id .'_'. $col->id .'_'. $ch->id;
                     } else {
                         $input_name = 'f_'. $vals[$col->id][$ch->id]['id'];
                     }
@@ -60,7 +60,7 @@ class ReportRequest extends FormRequest
                 foreach ($ch->childs as $subch) {
                     foreach ($itm->cols as $col) {
                         if($this->action == 'create') {
-                            $input_name = 'f_'. $rol->id .'_'. $col->id .'_'. $subch->id;
+                            $input_name = 'f_'. $this->rol_id .'_'. $col->id .'_'. $subch->id;
                         } else {
                             $input_name = 'f_'. (isset($vals[$col->id][$subch->id]['id']) ? $vals[$col->id][$subch->id]['id'] : '');
                         }
