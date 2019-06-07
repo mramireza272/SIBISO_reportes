@@ -4,6 +4,7 @@ namespace App\Http\Middleware;
 
 use Closure;
 use Auth;
+use \Spatie\Permission\Models\Role;
 
 class Navigation
 {
@@ -16,7 +17,7 @@ class Navigation
         $this->menus = [
             'Menu principal'    => [
                 'url'     => url('/home'),
-                'active'  => ($url == '') ?' class="active-sub"' : '',
+                'active'  => ($url == '') ? ' class="active-sub"' : '',
                 'icon'    => 'pli-home',
             ],
         ];
@@ -25,7 +26,7 @@ class Navigation
             if(Auth::user()->hasRole(['SIBISO', 'Administrador'])){
                 $this->menus['Bitácora'] = [
                     'url'     => route('bitacora.index'),
-                    'active' => (strpos($url,str_replace(url('/'),'','/bitacora')) !== false)?' class="active-sub"':'',
+                    'active' => (strpos($url, str_replace(url('/'), '', '/bitacora')) !== false) ? ' class="active-sub"' : '',
                     'icon'   => 'pli-bulleted-list'
                 ];
             }
@@ -33,7 +34,7 @@ class Navigation
             if(Auth::user()->hasPermissionTo('index_user')){
                 $this->menus['Usuarios'] = [
                     'url'    => url('/usuarios'),
-                    'active' => (strpos($url,str_replace(url('/'),'','/usuarios')) !== false)?' class="active-sub"':'',
+                    'active' => (strpos($url, str_replace(url('/'), '', '/usuarios')) !== false) ? ' class="active-sub"' : '',
                     'icon'   => 'pli-male-female'
                 ];
             }
@@ -41,14 +42,24 @@ class Navigation
             if(Auth::user()->hasPermissionTo('index_roles')){
                 $this->menus['Roles'] = [
                     'url'    => url('/roles'),
-                    'active' => (strpos($url,str_replace(url('/'),'','/roles')) !== false)?' class="active-sub"':'',
+                    'active' => (strpos($url, str_replace(url('/'), '', '/roles')) !== false) ? ' class="active-sub"' : '',
                     'icon'   => 'pli-id-card'
                 ];
 
                 $this->menus['Permisos'] = [
                     'url'    => url('/permisos'),
-                    'active' => (strpos($url,str_replace(url('/'),'','/permisos')) !== false)?' class="active-sub"':'',
+                    'active' => (strpos($url, str_replace(url('/'), '', '/permisos')) !== false) ? ' class="active-sub"' : '',
                     'icon'   => 'pli-key'
+                ];
+            }
+
+            $roles = Role::where('name', '!=', 'Administrador')->get();
+
+            if(Auth::user()->hasAnyRole($roles)){
+                $this->menus['Reportes'] = [
+                    'url'    => url('/forma'),
+                    'active' => (strpos($url, str_replace(url('/'), '', '/forma')) !== false) ? ' class="active-sub"' : '',
+                    'icon'   => 'pli-notepad-2'
                 ];
             }
         }

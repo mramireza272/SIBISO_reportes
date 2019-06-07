@@ -25,10 +25,10 @@ class ItemRolForm1 extends Seeder
     		'0'=>[
     			['col'=>'Visitas Médicas SALUD EN TU VIDA','subcol'=>[]],
     			['col'=>'Atención brindada (Análisis)','subcol'=>[]],
-    			['col'=>'Atención brindada (Emocnial / Mental)','subcol'=>[]],
+    			['col'=>'Atención brindada (Emocional / Mental)','subcol'=>[]],
     			['col'=>'Atención brindada (Translado hospitalario)','subcol'=>[]],
     			['col'=>'Atención incidentes de violencia','subcol'=>[]],
-    			['col'=>'Incidentes Abonado','subcol'=>[]],
+    			['col'=>'Incidentes abandono','subcol'=>[]],
     			['col'=>'Reportes ciudadanos atendidos','subcol'=>[]],
     			['col'=>'Participaciones en turismo social foráneo','subcol'=>[]],
     			['col'=>'Participaciones en turismo social Sonrisas','subcol'=>[]],
@@ -45,7 +45,7 @@ class ItemRolForm1 extends Seeder
     		]
     	];
 
-    	
+
     	$order=0;
     	foreach ($mains as $key => $value) {
 	    	$itemrol = ItemRol::create(['rol_id' => $role->id,
@@ -54,7 +54,7 @@ class ItemRolForm1 extends Seeder
 	        				 'editable' => false,
 	        				 'order' => $key
 	    	]);
-	    	
+
 	    	foreach ($columnsmain[$order] as $ckey => $cvalue) {
 		    	$itemstruct = RolStructureItem::create(['item_rol_id' => $itemrol->id,
 		        				 'columns'   => $cvalue,

@@ -14,6 +14,7 @@ class Report extends Model
 
     protected $fillable = [
         'rol_id',
+        'created_by',
         'date_start',
         'date_end',
         'active'

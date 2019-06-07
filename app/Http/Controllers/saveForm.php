@@ -18,8 +18,8 @@ class saveForm extends Controller
      */
     public function index(Request $request)
     {
-        
-        
+
+
 
         $id_rol = Auth::user()->roles->pluck('id')[0];
         $items_rol = ItemRol::where('rol_id',$id_rol)->where('parent_id',null)->get();
@@ -43,14 +43,14 @@ class saveForm extends Controller
                 foreach ($itm->cols as $col) {
                     print('<td><input type="text" name="f_'.$id_rol.'_'.$col->id.'_'.$ch->id.'" /></td>');
                 }
-                print('</tr>');            
+                print('</tr>');
                 foreach($ch->childs as $subch){
                     print('<tr style="border:1px dotted black;margin:5px;">');
                     print('<td>'.$subch->item.'</td>');
                     foreach ($itm->cols as $col) {
                         print('<td><input type="text" name="f_'.$id_rol.'_'.$col->id.'_'.$subch->id.'" /></td>');
                     }
-                    print('</tr>');            
+                    print('</tr>');
                 }
 
 
@@ -73,7 +73,7 @@ class saveForm extends Controller
      */
     public function create(Request $request)
     {
-        
+
         //
 
     }
@@ -165,14 +165,14 @@ class saveForm extends Controller
                 foreach ($itm->cols as $col) {
                     print('<td><input type="text" name="f_'.$id_rol.'_'.$col->id.'_'.$ch->id.'" value="'.$vals[$col->id][$ch->id].'" /></td>');
                 }
-                print('</tr>');            
+                print('</tr>');
                 foreach($ch->childs as $subch){
                     print('<tr style="border:1px dotted black;margin:5px;">');
                     print('<td>'.$subch->item.'</td>');
                     foreach ($itm->cols as $col) {
                         print('<td><input type="text" name="f_'.$id_rol.'_'.$col->id.'_'.$subch->id.'" value="'.$vals[$col->id][$subch->id].'" /></td>');
                     }
-                    print('</tr>');            
+                    print('</tr>');
                 }
 
 

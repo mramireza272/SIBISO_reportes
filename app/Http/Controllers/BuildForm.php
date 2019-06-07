@@ -3,58 +3,35 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Http\Requests\ReportRequest;
+use \Spatie\Permission\Models\Permission;
+use \Spatie\Permission\Models\Role;
 use App\Models\ItemRol;
 use App\Models\Report;
 use App\Models\RolStructureItem;
 use App\Models\ItemValueReport;
 use Auth;
 
-class BuildForm extends Controller
-{
+class BuildForm extends Controller {
+    function __construct() {
+        $this->middleware('auth');
+        $this->middleware(['role:Instituto para el Envejecimiento Digno|Coordinación General de Inclusión y Bienestar|Atención Social y Ciudadana|Subsecretaría de Derechos Humanos|Instituto para la Atención a Poblaciones Prioritarias']);
+    }
+
     /**
      * Display a listing of the resource.
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
-    {
-        //
-        $id_rol = Auth::user()->roles->pluck('id')[0];
-        $items_rol = ItemRol::where('rol_id',$id_rol)->where('parent_id',null)->get();
-        print('<table order="1">');
-        foreach ($items_rol as $itm) {
-            print('<tr style="border:1px dotted black;margin:5px;">');
-                print('<td>'.$itm->item.'</td>');
-                foreach ($itm->cols as $col) {
-                    print('<td>'.$col->columns.'</td>');
-                }
-            print('</tr>');
-            foreach($itm->childs as $ch){
-                print('<tr style="border:1px dotted black;margin:5px;">');
-                print('<td>'.$ch->item.'</td>');
-                foreach ($itm->cols as $col) {
-                    print('<td><input type="text" name="" /></td>');
-                }
-                print('</tr>');
-                foreach($ch->childs as $subch){
-                    print('<tr style="border:1px dotted black;margin:5px;">');
-                    print('<td>'.$subch->item.'</td>');
-                    foreach ($itm->cols as $col) {
-                        print('<td><input type="text" name="" /></td>');
-                    }
-                    print('</tr>');
-                }
+    public function index() {
+        $rol = auth()->user()->roles()->first();
+        $reports = Report::where([
+            ['active', true],
+            ['rol_id', $rol->id],
+        ])->orderBy('created_at', 'desc')->get();
+        //dd($reports);
 
-
-            }
-
-        }
-
-
-
-        print('</table>');
-
-        #dd($items_rol);
+        return view('forms.index', compact('reports', 'rol'));
     }
 
     /**
@@ -62,9 +39,12 @@ class BuildForm extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create()
-    {
-        //
+    public function create() {
+        $rol = auth()->user()->roles()->first();
+        $items_rol = ItemRol::where('rol_id', $rol->id)->where('parent_id', null)->get();
+        $vals = [];
+
+        return view('forms.create', compact('items_rol', 'rol', 'vals'));
     }
 
     /**
@@ -73,9 +53,33 @@ class BuildForm extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
-    {
-        //
+    public function store(ReportRequest $request) {
+        //dd($request->all());
+        $post = $request->post();
+        $report = Report::create([
+            'rol_id' => $post['rol_id'],
+            'created_by' => $post['created_by'],
+            'date_start' => $post['date_start'],
+            'date_end' => $post['date_end'],
+            'active' => $post['active'],
+        ]);
+
+        foreach ($post as $key => $value) {
+            $field = strpos($key, 'f_');
+
+            if($field>-1 and strlen($value)>-1){
+                $pices = explode('_', $key);
+                $ivr = ItemValueReport::firstOrCreate([
+                    'report_id' => $report->id,
+                    'item_rol_id' => $pices[3],
+                    'item_col_id' => $pices[2]
+                ]);
+                $ivr->valore = $value;
+                $ivr->save();
+            }
+        }
+
+        return redirect()->route('forma.create')->with('info', 'Reporte creado satisfactoriamente');
     }
 
     /**
@@ -95,9 +99,18 @@ class BuildForm extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
-    {
-        //
+    public function edit($id) {
+        $report = Report::findOrFail($id);
+        $rol = Role::findOrFail($report->rol_id);
+        $items_rol = ItemRol::where('rol_id', $report->rol_id)->where('parent_id', null)->get();
+        $items_values = ItemValueReport::where('report_id', $report->id)->get();
+        $vals = [];
+
+        foreach ($items_values as $itve) {
+            $vals[$itve->item_col_id][$itve->item_rol_id] = $itve->valore;
+        }
+
+        return view('forms.edit', compact('rol', 'report', 'items_rol', 'vals'));
     }
 
     /**
@@ -107,9 +120,8 @@ class BuildForm extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
-    {
-        //
+    public function update(ReportRequest $request, $id) {
+        //se utiliza el mismo store? Qué pasa con el reporte, lo crea de nuevo?
     }
 
     /**
@@ -118,8 +130,10 @@ class BuildForm extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
-    {
-        //
+    public function destroy($id) {
+        $report = Report::find($id)->delete();
+        $itemValueReport = ItemValueReport::where('report_id', $id)->delete();
+
+        return redirect()->route('forma.index')->with('info', 'Reporte eliminado satisfactoriamente.');
     }
 }

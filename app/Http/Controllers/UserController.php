@@ -150,7 +150,7 @@ class UserController extends Controller
     }
 
     private function getRoles() {
-        $roles = Role::pluck('name', 'name');
+        $roles = Role::orderBy('name')->pluck('name', 'name');
 
         return $roles;
     }
