@@ -22,3 +22,4 @@ Route::resource('forma', 'BuildForm');
 Route::resource('form', 'saveForm');
 Route::post('saveform', 'saveForm@store');
 Route::get('edtform/{id?}','saveForm@edit');
+Route::post('updateform/','saveForm@update');

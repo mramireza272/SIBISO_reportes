@@ -142,13 +142,17 @@ class saveForm extends Controller
         $items_values = ItemValueReport::where('report_id',$report->id)->get();
         $vals = [];
         foreach ($items_values as $itve) {
-            $vals[$itve->item_col_id][$itve->item_rol_id]=$itve->valore;
+            $vals[$itve->item_col_id][$itve->item_rol_id]=[
+                'value'=>$itve->valore,
+                'id'=>$itve->id
+            ];
         }
 
-        print('<table order="1"><form action="/saveform" method="post">');
+        print('<table order="1"><form action="/updateform/" method="post">');
         print('<tr>');
-        print('<td><input type="text" name="start" value="'.$report->date_start.'"  />');
-        print('<td><input type="text" name="end" value="'.$report->date_end.'"  />');
+        print('<td><input type="hidden" name="report_id" value="'.$report->id.'"  />');
+        print('<input type="text" name="start" value="'.$report->date_start.'"  />');
+        print('<input type="text" name="end" value="'.$report->date_end.'"  />');
         print('</td>');
         print('</tr>');
 
@@ -163,14 +167,15 @@ class saveForm extends Controller
                 print('<tr style="border:1px dotted black;margin:5px;">');
                 print('<td>'.$ch->item.'</td>');
                 foreach ($itm->cols as $col) {
-                    print('<td><input type="text" name="f_'.$id_rol.'_'.$col->id.'_'.$ch->id.'" value="'.$vals[$col->id][$ch->id].'" /></td>');
+                    print('<td><input type="text" name="f_'.$vals[$col->id][$ch->id]['id'].'" value="'.$vals[$col->id][$ch->id]['value'].'" /></td>');
                 }
                 print('</tr>');
                 foreach($ch->childs as $subch){
                     print('<tr style="border:1px dotted black;margin:5px;">');
                     print('<td>'.$subch->item.'</td>');
                     foreach ($itm->cols as $col) {
-                        print('<td><input type="text" name="f_'.$id_rol.'_'.$col->id.'_'.$subch->id.'" value="'.$vals[$col->id][$subch->id].'" /></td>');
+                        print('<td><input type="text" name="f_'.
+                            $vals[$col->id][$ch->id]['id'].'" value="'.$vals[$col->id][$subch->id].'" /></td>');
                     }
                     print('</tr>');
                 }
@@ -195,9 +200,28 @@ class saveForm extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request)
     {
         //
+
+        $post = $request->post();
+        $report = Report::find($post['report_id']);
+        $report->date_start=$post['start'];
+        $report->date_end=$post['end'];
+        $report->save();
+                foreach ($post as $key => $value) {
+
+            $field = strpos($key,'f_');
+            if($field>-1 and strlen($value)>-1){
+                $pices = explode('_', $key);
+                $ivr = ItemValueReport::find($pices[1]);
+                $ivr->valore = $value;
+                $ivr->save();
+            }
+        }
+
+        
+
     }
 
     /**
