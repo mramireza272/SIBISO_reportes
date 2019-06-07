@@ -107,7 +107,10 @@ class BuildForm extends Controller {
         $vals = [];
 
         foreach ($items_values as $itve) {
-            $vals[$itve->item_col_id][$itve->item_rol_id] = $itve->valore;
+            $vals[$itve->item_col_id][$itve->item_rol_id] =[
+                'value' => $itve->valore,
+                'id' => $itve->id
+            ];
         }
 
         return view('forms.edit', compact('rol', 'report', 'items_rol', 'vals'));
@@ -121,7 +124,26 @@ class BuildForm extends Controller {
      * @return \Illuminate\Http\Response
      */
     public function update(ReportRequest $request, $id) {
-        //se utiliza el mismo store? Qué pasa con el reporte, lo crea de nuevo?
+        //dd($request->all());
+        $report = Report::findOrFail($id);
+        $post = $request->post();
+        $report->date_start = $post['date_start'];
+        $report->date_end = $post['date_end'];
+        $report->created_by = $post['created_by'];
+        $report->save();
+
+        foreach ($post as $key => $value) {
+            $field = strpos($key, 'f_');
+
+            if($field>-1 and strlen($value)>-1){
+                $pices = explode('_', $key);
+                $ivr = ItemValueReport::findOrFail($pices[1]);
+                $ivr->valore = $value;
+                $ivr->save();
+            }
+        }
+
+        return redirect()->route('forma.edit', $id)->with('info', 'Reporte actualizado satisfactoriamente');
     }
 
     /**

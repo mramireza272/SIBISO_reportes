@@ -79,12 +79,17 @@
 			        	@foreach($reports as $report)
 				            <tr>
 				            	<td>{{ $loop->iteration }}</td>
-				                <td>{{ isset($report->date_start) ? $report->date_start : '' }}</td>
-				                <td>{{ isset($report->date_end) ? $report->date_end : '' }}</td>
+				                <td>{{ $report->date_start }}</td>
+				                <td>{{ $report->date_end }}</td>
 				                <td>
 				                	<a href="{{ route('forma.show', $report->id) }}" class="btn btn-sm btn-primary">
 		                                Ver
 		                            </a>
+		                            @php
+		                            	$two_hours = date('Y-m-d H:i:s', strtotime('+2 hour', strtotime($report->created_at)));
+		                            	$now = date("Y-m-d H:i:s");
+		                            @endphp
+		                            @if($now <= $two_hours)
 				                	<a href="{{ route('forma.edit', $report->id) }}" class="btn btn-sm btn-warning">
 	                                	Editar
 	                            	</a>
@@ -95,6 +100,7 @@
 			        						Eliminar
 			        					</button>
 					                </form>
+					                @endif
 					            </td>
 				            </tr>
 			        	@endforeach

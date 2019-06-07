@@ -56,10 +56,10 @@
 	    	</div>
 	  	@endif
 		<div class="panel-body">
-			<form method="POST" action="{{ route('forma.store') }}">
+			<form method="POST" action="{{ route('forma.store') }}" class="form-horizontal form-padding">
 				<input type="hidden" name="active" value="1">
 				<input type="hidden" name="created_by" value="{{ auth()->user()->id }}">
-				@include('forms.form', ['report' => new \App\Models\Report])
+				@include('forms.form', ['report' => new \App\Models\Report, 'action' => 'create'])
 			</form>
 		</div>
 	</div>

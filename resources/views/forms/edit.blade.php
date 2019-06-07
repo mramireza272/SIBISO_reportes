@@ -57,10 +57,11 @@
 			        	</div>
 				    </div>
 			    @endif
-	        	<form method="POST" action="{{ route('forma.update', $report->id) }}" enctype="multipart/form-data" class="panel-body form-horizontal form-padding">
+	        	<form method="POST" action="{{ route('forma.update', $report->id) }}" enctype="multipart/form-data" class="form-horizontal form-padding">
 	                  {!! method_field('PUT') !!}
 	                  <input type="hidden" name="created_by" value="{{ auth()->user()->id }}">
-	                  @include('forms.form', ['btnText' => 'Actualizar'])
+	                  <input type="hidden" name="report_id" value="{{ $report->id }}">
+	                  @include('forms.form', ['btnText' => 'Actualizar', 'action' => 'edit'])
 				</form>
 			</div>
 	    </div>
