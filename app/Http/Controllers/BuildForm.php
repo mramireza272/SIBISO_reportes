@@ -56,7 +56,7 @@ class BuildForm extends Controller {
     public function store(ReportRequest $request) {
         //dd($request->all());
         $post = $request->post();
-        $report = Report::crete([
+        $report = Report::create([
             'rol_id' => $post['rol_id'],
             'created_by' => $post['created_by'],
             'date_start' => $post['date_start'],
