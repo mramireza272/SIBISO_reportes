@@ -8,11 +8,11 @@
 <div class="form-group">
     <label class="control-label col-sm-4 col-md-4 col-lg-4 col-xl-4"><strong>Periodo al que corresponde la información: *</strong></label>
     <div class="col-sm-4 col-md-4 col-lg-4 col-xl-4">
-        <input autocomplete="off" type='text' class="form-control date fechapicker" name="date_start" value="{{ old('date_start') ?? $report->date_start }}" placeholder="Fecha de inicio del periodo" />
+        <input autocomplete="off" type='text' class="form-control date fechapicker" name="date_start" value="{{ old('date_start') ?? $report->date_start }}" placeholder="Fecha de inicio del periodo" @if($action == 'show') readonly @endif />
         {!! $errors->first('date_start', '<small class="help-block text-danger">:message</small>') !!}
     </div>
     <div class="col-sm-4 col-md-4 col-lg-4 col-xl-4">
-        <input autocomplete="off" type='text' class="form-control date fechapicker" name="date_end" value="{{ old('date_end') ?? $report->date_end }}" placeholder="Fecha del fin del periodo" />
+        <input autocomplete="off" type='text' class="form-control date fechapicker" name="date_end" value="{{ old('date_end') ?? $report->date_end }}" placeholder="Fecha del fin del periodo" @if($action == 'show') readonly @endif />
         {!! $errors->first('date_end', '<small class="help-block text-danger">:message</small>') !!}
     </div>
 </div>
@@ -42,7 +42,7 @@
                                     @endif
                                     @if($ch->editable)
                                         <td>
-                                            <input type="text" name="{{ $input_name }}" oninput="this.value = this.value.replace(/[^0-9.]/g, ''); this.value = this.value.replace(/(\..*)\./g, '$1');" value="{{ old('f_'. $rol->id .'_'. $col->id .'_'. $ch->id) ?? (isset($vals[$col->id][$ch->id]['value']) ? $vals[$col->id][$ch->id]['value'] : '') }}" />
+                                            <input type="text" name="{{ $input_name }}" oninput="this.value = this.value.replace(/[^0-9.]/g, ''); this.value = this.value.replace(/(\..*)\./g, '$1');" value="{{ old('f_'. $rol->id .'_'. $col->id .'_'. $ch->id) ?? (isset($vals[$col->id][$ch->id]['value']) ? $vals[$col->id][$ch->id]['value'] : '') }}" @if($action == 'show') readonly @endif />
                                             {!! $errors->first($input_name, '<small class="help-block text-danger">:message</small>')!!}
                                         </td>
                                     @endif
@@ -58,7 +58,7 @@
                                             @php($input_name = 'f_'. $vals[$col->id][$subch->id]['id'])
                                         @endif
                                         <td>
-                                            <input type="text" name="{{ $input_name }}" oninput="this.value = this.value.replace(/[^0-9.]/g, ''); this.value = this.value.replace(/(\..*)\./g, '$1');" value="{{ old('f_'. $rol->id .'_'. $col->id .'_'. $subch->id) ?? (isset($vals[$col->id][$subch->id]) ? $vals[$col->id][$subch->id] : '') }}"/>
+                                            <input type="text" name="{{ $input_name }}" oninput="this.value = this.value.replace(/[^0-9.]/g, ''); this.value = this.value.replace(/(\..*)\./g, '$1');" value="{{ old('f_'. $rol->id .'_'. $col->id .'_'. $subch->id) ?? (isset($vals[$col->id][$subch->id]) ? $vals[$col->id][$subch->id] : '') }}" @if($action == 'show') readonly @endif />
                                             {!! $errors->first($input_name, '<small class="help-block text-danger">:message</small>')!!}
                                         </td>
                                     @endforeach
