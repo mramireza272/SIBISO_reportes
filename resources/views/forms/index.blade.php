@@ -72,6 +72,7 @@
 			                <th>#</th>
 			                <th>Fecha Inicio</th>
 			                <th>Fecha Fin</th>
+			                <th>Fecha y Hora de creación</th>
 			                <th>Acciones</th>
 			            </tr>
 			        </thead>
@@ -81,6 +82,7 @@
 				            	<td>{{ $loop->iteration }}</td>
 				                <td>{{ $report->date_start }}</td>
 				                <td>{{ $report->date_end }}</td>
+				                <td>{{ $report->created_at }}</td>
 				                <td>
 				                	<a href="{{ route('forma.show', $report->id) }}" class="btn btn-sm btn-primary">
 		                                Ver

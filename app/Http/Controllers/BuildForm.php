@@ -113,19 +113,24 @@ class BuildForm extends Controller {
      */
     public function edit($id) {
         $report = Report::findOrFail($id);
-        $rol = Role::findOrFail($report->rol_id);
-        $items_rol = ItemRol::where('rol_id', $report->rol_id)->where('parent_id', null)->get();
-        $items_values = ItemValueReport::where('report_id', $report->id)->get();
-        $vals = [];
 
-        foreach ($items_values as $itve) {
-            $vals[$itve->item_col_id][$itve->item_rol_id] =[
-                'value' => $itve->valore,
-                'id' => $itve->id
-            ];
+        if($this->checkTime($report->created_at)) {
+            $rol = Role::findOrFail($report->rol_id);
+            $items_rol = ItemRol::where('rol_id', $report->rol_id)->where('parent_id', null)->get();
+            $items_values = ItemValueReport::where('report_id', $report->id)->get();
+            $vals = [];
+
+            foreach ($items_values as $itve) {
+                $vals[$itve->item_col_id][$itve->item_rol_id] =[
+                    'value' => $itve->valore,
+                    'id' => $itve->id
+                ];
+            }
+
+            return view('forms.edit', compact('rol', 'report', 'items_rol', 'vals'));
         }
 
-        return view('forms.edit', compact('rol', 'report', 'items_rol', 'vals'));
+        return redirect()->route('forma.index');
     }
 
     /**
@@ -138,24 +143,29 @@ class BuildForm extends Controller {
     public function update(ReportRequest $request, $id) {
         //dd($request->all());
         $report = Report::findOrFail($id);
-        $post = $request->post();
-        $report->date_start = $post['date_start'];
-        $report->date_end = $post['date_end'];
-        $report->created_by = $post['created_by'];
-        $report->save();
 
-        foreach ($post as $key => $value) {
-            $field = strpos($key, 'f_');
+        if($this->checkTime($report->created_at)) {
+            $post = $request->post();
+            $report->date_start = $post['date_start'];
+            $report->date_end = $post['date_end'];
+            $report->created_by = $post['created_by'];
+            $report->save();
 
-            if($field>-1 and strlen($value)>-1){
-                $pices = explode('_', $key);
-                $ivr = ItemValueReport::findOrFail($pices[1]);
-                $ivr->valore = $value;
-                $ivr->save();
+            foreach ($post as $key => $value) {
+                $field = strpos($key, 'f_');
+
+                if($field>-1 and strlen($value)>-1){
+                    $pices = explode('_', $key);
+                    $ivr = ItemValueReport::findOrFail($pices[1]);
+                    $ivr->valore = $value;
+                    $ivr->save();
+                }
             }
+
+            return redirect()->route('forma.edit', $id)->with('info', 'Reporte actualizado satisfactoriamente.');
         }
 
-        return redirect()->route('forma.edit', $id)->with('info', 'Reporte actualizado satisfactoriamente.');
+        return redirect()->route('forma.index');
     }
 
     /**
@@ -165,9 +175,26 @@ class BuildForm extends Controller {
      * @return \Illuminate\Http\Response
      */
     public function destroy($id) {
-        $report = Report::find($id)->delete();
-        $itemValueReport = ItemValueReport::where('report_id', $id)->delete();
+        $report = Report::findOrFail($id);
 
-        return redirect()->route('forma.index')->with('info', 'Reporte eliminado satisfactoriamente.');
+        if($this->checkTime($report->created_at)) {
+            $report->delete();
+            $itemValueReport = ItemValueReport::where('report_id', $id)->delete();
+
+            return redirect()->route('forma.index')->with('info', 'Reporte eliminado satisfactoriamente.');
+        }
+
+        return redirect()->route('forma.index');
+    }
+
+    private function checkTime($created_at) {
+        $two_hours = date('Y-m-d H:i:s', strtotime('+2 hour', strtotime($created_at)));
+        $now = date("Y-m-d H:i:s");
+
+        if($now <= $two_hours) {
+            return true;
+        }
+
+        return false;
     }
 }

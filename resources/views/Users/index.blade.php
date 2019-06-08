@@ -93,7 +93,7 @@
 	            <!---------------------------------->
 
 	            </div>
-	            @if($row > 3)
+	            @if($row > 2)
 	            	@php ( $row = 1 )
 	            	<div class="clearfix"></div>
 	            @else
