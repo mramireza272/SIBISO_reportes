@@ -92,16 +92,20 @@
 		                            	$now = date("Y-m-d H:i:s");
 		                            @endphp
 		                            @if($now <= $two_hours)
-				                	<a href="{{ route('forma.edit', $report->id) }}" class="btn btn-sm btn-warning">
-	                                	Editar
-	                            	</a>
-				                	<form class="delete" style="display: inline;" method="POST" action="{{ route('forma.destroy', $report->id) }}">
-	                                    {!! method_field('DELETE') !!}
-						                <input type="hidden" name="_token" value="{{ csrf_token() }}">
-						                <button title="Eliminar" class="btn btn-sm btn-danger">
-			        						Eliminar
-			        					</button>
-					                </form>
+			                            @canany(['edit_ined', 'edit_cgib', 'edit_asc', 'edit_sdh', 'edit_iapp'])
+					                	<a href="{{ route('forma.edit', $report->id) }}" class="btn btn-sm btn-warning">
+		                                	Editar
+		                            	</a>
+		                            	@endcanany
+		                            	@canany(['delete_ined', 'delete_cgib', 'delete_asc', 'delete_sdh', 'delete_iapp'])
+					                	<form class="delete" style="display: inline;" method="POST" action="{{ route('forma.destroy', $report->id) }}">
+		                                    {!! method_field('DELETE') !!}
+							                <input type="hidden" name="_token" value="{{ csrf_token() }}">
+							                <button title="Eliminar" class="btn btn-sm btn-danger">
+				        						Eliminar
+				        					</button>
+						                </form>
+						                @endcanany
 					                @endif
 					            </td>
 				            </tr>

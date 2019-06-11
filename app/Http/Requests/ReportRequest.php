@@ -82,6 +82,7 @@ class ReportRequest extends FormRequest
     public function messages() {
         return [
             'f_*.required'      => 'Este campo es obligatorio',
+            'f_*.integer'       => 'Este campo debe ser numérico',
             'required'          => 'El campo :attribute es obligatorio',
             'integer'           => ':attribute debe ser numérico',
             'after_or_equal'    => ':attribute debe ser una fecha posterior o igual a :date',
