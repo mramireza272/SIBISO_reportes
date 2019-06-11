@@ -19,92 +19,135 @@ class ItemRolSeeder extends Seeder
 
 
     	$mains = [
-    			'CAAIS',
+    			'CAIS',
     			'Hogar CDMX',
     			'Sistema de Servicios para el Bienestar Capital Social',
     			'Niños y Niñas fuera de peligro',
     			'Remodelaciones C.A.I.S (Ubicación)',
     			'Obra Centros de Valoración y Canalización (Ubicación)',
     			'Concepto',
+    			'Concepto',
     			'Actas de Nacimiento Extemporáneas'
     			];
 
-    	$columnsmain = ['0'=>['Raciones (Alimentación)','Atenciones Médicas','Pernocata','Actividades Recreativas'],
+    	$columnsmain = ['0'=>['Raciones (Alimentación)','Atenciones Médicas','Pernocta','Actividades Recreativas'],
     		'1'=>['Raciones','Atenciones Médicas','Personal de Enfermería','Actividades Recreativas'],
     		'2'=>['Tarjetas entregadas'],
     		'3'=>['Niños y Niñas atendidos'],
-    		'4'=>['Por iniciar obra','En proceso','Concluida','Ninguna'],
-    		'5'=>['Por iniciar obra','En proceso','Concluida','Ninguna'],
-    		'6'=>['Unicación','Cantidad'],
-    		'7'=>['Cantidad','Población en situación de calle']
+    		'4'=>['Por iniciar obra','En proceso','Concluida'],
+    		'5'=>['Por iniciar obra','En proceso','Concluida'],
+    		'6'=>['Espacio Techo'],
+    		'7'=>['Unidad Móvil'],
+    		'8'=>['Población en situación de calle']
     	];
 
     	$subs = [
     		'0'=>[
-    			['col'=>'Atlapma','subcol'=>['Hombres','Mujeres']],
-    			['col'=>'Atzapotzalco','subcol'=>['Hombres','Mujeres']],
-    			['col'=>'Cascada','subcol'=>['Hombres','Mujeres']],
-    			['col'=>'Coruña Hombres','subcol'=>['Hombres','Mujeres']],
-    			['col'=>'Coruña jovenes','subcol'=>['Hombres','Mujeres']],
-    			['col'=>'Cuautepec','subcol'=>['Hombres','Mujeres']],
-    			['col'=>'Cuemanco','subcol'=>['Hombres','Mujeres']],
-    			['col'=>'Villa Mujeres','subcol'=>['Hombres','Mujeres']],
-    			['col'=>'Plaza del Estudiante','subcol'=>['Hombres','Mujeres']],
-    			['col'=>'Torres de Potrero','subcol'=>['Hombres','Mujeres']],
-    			['col'=>'Hogar CDMX (emergente)','subcol'=>['Hombres','Mujeres']],
-    			['col'=>'Albergue Familiar DIF-CDMX','subcol'=>['Hombres','Mujeres']]
+    			['col'=>'Atlampa',
+    			'editable'=>false,
+    			'subcol'=>['Hombres','Mujeres']
+    			],
+    			['col'=>'Atzapotzalco',
+    			 'editable'=>false,
+    			 'subcol'=>['Hombres','Mujeres']],
+    			['col'=>'Cascada',
+    			 'editable'=>false,
+    			 'subcol'=>['Hombres','Mujeres']],
+    			['col'=>'Coruña Hombres',
+    			 'editable'=>false,
+    			 'subcol'=>['Hombres','Mujeres']],
+    			['col'=>'Coruña Jóvenes',
+    			 'editable'=>false,
+    			 'subcol'=>['Hombres','Mujeres']],
+    			['col'=>'Cuautepec',
+    			 'editable'=>false,
+    			 'subcol'=>['Hombres','Mujeres']],
+    			['col'=>'Cuemanco',
+    			 'editable'=>false,
+    			 'subcol'=>['Hombres','Mujeres']],
+    			['col'=>'Villa Mujeres',
+    			 'editable'=>false,
+    			 'subcol'=>['Hombres','Mujeres']],
+    			['col'=>'Plaza del Estudiante',
+    			 'editable'=>false,
+    			 'subcol'=>['Hombres','Mujeres']],
+    			['col'=>'Torres de Potrero',
+    			 'editable'=>false,
+    			 'subcol'=>['Hombres','Mujeres']],
+    			['col'=>'Hogar CDMX (emergente)',
+    			 'editable'=>false,
+    			 'subcol'=>['Hombres','Mujeres']],
+    			['col'=>'Albergue Familiar DIF-CDMX',
+    			 'editable'=>false,
+    			 'subcol'=>['Hombres','Mujeres']]
 
     		],
     		'1'=>[
-    			['col'=>'Ingresos','subcol'=>['Hombres','Mujeres']],
-    			['col'=>'Egresos','subcol'=>['Hombres','Mujeres']]
+    			['col'=>'Ingresos',
+    			 'editable'=>true,
+    			 'subcol'=>['Hombres','Mujeres']],
+    			['col'=>'Egresos',
+    			 'editable'=>true,
+    			 'subcol'=>['Hombres','Mujeres']]
     		],
     		'2'=>[
-    		['col'=>'Cantidad','subcol'=>[]]
+    		['col'=>'Cantidad',
+    		 'editable'=>true,
+    		 'subcol'=>[]]
     		],
     		'3'=>[
-    			['col'=>'Cantidad','subcol'=>[]]
+    			['col'=>'Cantidad',
+    			 'editable'=>true,
+    			 'subcol'=>[]]
     		],
     		'4'=>[
-    			['col'=>'Atlapma','subcol'=>[]],
-    			['col'=>'Atzapotzalco','subcol'=>[]],
-    			['col'=>'Cascada','subcol'=>[]],
-    			['col'=>'Coruña Hombres','subcol'=>[]],
-    			['col'=>'Coruña jovenes','subcol'=>[]],
-    			['col'=>'Cuautepec','subcol'=>[]],
-    			['col'=>'Cuemanco','subcol'=>[]],
-    			['col'=>'Villa Mujeres','subcol'=>[]],
-    			['col'=>'Plaza del Estudiante','subcol'=>[]],
-    			['col'=>'Torres de Potrero','subcol'=>[]],
-    			['col'=>'Hogar CDMX (emergente)','subcol'=>[]],
-    			['col'=>'Albergue Familiar DIF-CDMX','subcol'=>[]]
+    			['col'=>'Atlampa','editable'=>true,'subcol'=>[]],
+    			['col'=>'Atzapotzalco','editable'=>true,'subcol'=>[]],
+    			['col'=>'Cascada','editable'=>true,'subcol'=>[]],
+    			['col'=>'Coruña Hombres','editable'=>true,'subcol'=>[]],
+    			['col'=>'Coruña Jóvenes','editable'=>true,'subcol'=>[]],
+    			['col'=>'Cuautepec','editable'=>true,'subcol'=>[]],
+    			['col'=>'Cuemanco','editable'=>true,'subcol'=>[]],
+    			['col'=>'Villa Mujeres','editable'=>true,'subcol'=>[]],
+    			['col'=>'Plaza del Estudiante','editable'=>true,'subcol'=>[]],
+    			['col'=>'Torres de Potrero','editable'=>true,'subcol'=>[]],
+    			['col'=>'Hogar CDMX (emergente)','editable'=>true,'subcol'=>[]],
+    			['col'=>'Albergue Familiar DIF-CDMX','editable'=>true,'subcol'=>[]]
     		],
     		'5'=>[
-    			['col'=>'Atlapma','subcol'=>[]],
-    			['col'=>'Atzapotzalco','subcol'=>[]],
-    			['col'=>'Cascada','subcol'=>[]],
-    			['col'=>'Coruña Hombres','subcol'=>[]],
-    			['col'=>'Coruña jovenes','subcol'=>[]],
-    			['col'=>'Cuautepec','subcol'=>[]],
-    			['col'=>'Cuemanco','subcol'=>[]],
-    			['col'=>'Villa Mujeres','subcol'=>[]],
-    			['col'=>'Plaza del Estudiante','subcol'=>[]],
-    			['col'=>'Torres de Potrero','subcol'=>[]],
-    			['col'=>'Hogar CDMX (emergente)','subcol'=>[]],
-    			['col'=>'Albergue Familiar DIF-CDMX','subcol'=>[]]
+    			['col'=>'Atlampa','editable'=>true,'subcol'=>[]],
+    			['col'=>'Atzapotzalco','editable'=>true,'subcol'=>[]],
+    			['col'=>'Cascada','editable'=>true,'subcol'=>[]],
+    			['col'=>'Coruña Hombres','editable'=>true,'subcol'=>[]],
+    			['col'=>'Coruña Jóvenes','editable'=>true,'subcol'=>[]],
+    			['col'=>'Cuautepec','editable'=>true,'subcol'=>[]],
+    			['col'=>'Cuemanco','editable'=>true,'subcol'=>[]],
+    			['col'=>'Villa Mujeres','editable'=>true,'subcol'=>[]],
+    			['col'=>'Plaza del Estudiante','editable'=>true,'subcol'=>[]],
+    			['col'=>'Torres de Potrero','editable'=>true,'subcol'=>[]],
+    			['col'=>'Hogar CDMX (emergente)','editable'=>true,'subcol'=>[]],
+    			['col'=>'Albergue Familiar DIF-CDMX','editable'=>true,'subcol'=>[]]
     		],
     		'6'=>[
-    			['col'=>'No. de talleres realizados (oficios,terapia ocupacional,salud emocional,adicciones)','subcol'=>[]],
-    			['col'=>'No. de asistentes','No. de reuniones comunidades de apoyo','subcol'=>[]],
-    			['col'=>'No. de participantes','subcol'=>[]],
-    			['col'=>'No. de planes de vida elaborados','subcol'=>[]],
-    			['col'=>'No. puntos visitados (incluir cuales)','subcol'=>[]],
-    			['col'=>'No. atenciones y tipo','subcol'=>[]],
+    			['col'=>'No. de talleres realizados (oficios,terapia ocupacional,salud emocional,adicciones)',
+    			 'editable'=>true,
+    			 'subcol'=>[]],
+    			['col'=>'No. de asistentes',
+    			 'editable'=>true,'subcol'=>[]],
+    			['col'=>'No. de reuniones comunidades de apoyo',
+    			 'editable'=>true,'subcol'=>[]],
+    			['col'=>'No. de participantes','editable'=>true,'subcol'=>[]],
+    			['col'=>'No. de planes de vida elaborados','editable'=>true,'subcol'=>[]],
 
     		],
     		'7'=>[
-    			['col'=>'Hombres','subcol'=>[]],
-    			['col'=>'Mujeres','subcol'=>[]],
+    			['col'=>'No. puntos visitados (incluir cuales)','editable'=>true,'subcol'=>[]],
+    			['col'=>'No. atenciones y tipo','editable'=>true,'subcol'=>[]],
+
+    		],    		
+    		'8'=>[
+    			['col'=>'Hombres','editable'=>true,'subcol'=>[]],
+    			['col'=>'Mujeres','editable'=>true,'subcol'=>[]]
 
     		]
     	];
@@ -132,7 +175,7 @@ class ItemRolSeeder extends Seeder
 		    	$subitemrol = ItemRol::create(['rol_id' => $role->id,
 		        				 'item'   => $subvalue['col'],
 		        				 'parent_id' =>$itemrol->id,
-		        				 'editable' => true,
+		        				 'editable' => $subvalue['editable'],
 		        				 'order' => $suborder
 		    	]);
 

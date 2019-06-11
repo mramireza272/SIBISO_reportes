@@ -24,9 +24,9 @@ class ItemRolForm4 extends Seeder
 
 	    	$subs = [
 	    		'0'=>[
-	    			['col'=>'Foros y Conservatorios','subcol'=>[]],
-	    			['col'=>'Capacitación sobre DDHH y diversidad sexual a personas operadoras de LOCALTEL','subcol'=>[]],
-	    			['col'=>'Lunes de educación para la Paz','subcol'=>[]]
+	    			['col'=>'Foros y Conversatorios','subcol'=>[]],
+	    			['col'=>'Capacitación sobre DDHH y diversidad sexual a personas operadoras de Locatel','subcol'=>[]],
+	    			['col'=>'Lunes de Educación para la Paz','subcol'=>[]]
 
 	    		]
 	    	];

@@ -24,9 +24,24 @@ class ItemRolForm3 extends Seeder
 
 	    	$subs = [
 	    		'0'=>[
-	    			['col'=>'Personas Físicas','subcol'=>['Audiencias','Diálogos temáticos']],
-	    			['col'=>'Organizaciones de la Sociedad Civil','subcol'=>['Audiencias','Diálogos temáticos']],
-	    			['col'=>'Otros actores','subcol'=>['Audiencias','Diálogos temáticos']]
+	    			['col'=>'Personas Físicas','editable'=>false,
+	    					'subcol'=>[
+	    						['name'=>'Audiencias','editable'=>true],
+	    						['name'=>'Diálogos temáticos','editable'=>true]
+	    					]
+	    			],
+	    			['col'=>'Organizaciones de la Sociedad Civil','editable'=>false,
+	    					'subcol'=>[
+	    						['name'=>'Audiencias','editable'=>true],
+	    						['name'=>'Diálogos temáticos','editable'=>true]
+	    					]
+	    			],
+	    			['col'=>'Otros actores','editable'=>false,
+		    			'subcol'=>[
+		    				['name'=>'Audiencias','editable'=>true],
+		    				['name'=>'Diálogos temáticos','editable'=>true]
+		    			]
+	    			]
 
 	    		]
 	    	];
@@ -55,16 +70,16 @@ class ItemRolForm3 extends Seeder
 		    	$subitemrol = ItemRol::create(['rol_id' => $role->id,
 		        				 'item'   => $subvalue['col'],
 		        				 'parent_id' =>$itemrol->id,
-		        				 'editable' => true,
+		        				 'editable' => $subvalue['editable'],
 		        				 'order' => $suborder
 		    	]);
 
 		    	$subsuborder=0;
 		    	foreach ($subvalue['subcol'] as $subbval) {
 			    	$subsubitemrol = ItemRol::create(['rol_id' => $role->id,
-			        				 'item'   => $subbval,
+			        				 'item'   => $subbval['name'],
 			        				 'parent_id' =>$subitemrol->id,
-			        				 'editable' => true,
+			        				 'editable' => $subvalue['editable'],
 			        				 'order' => $subsuborder
 			    	]);
 			    	$subsuborder++;
