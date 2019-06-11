@@ -61,7 +61,9 @@
 	    <h2 class="panel-title">{{ isset($rol->name) ? $rol->name : '' }}</h2>
 	</div>
 	<div class="panel-body text-right">
-		<a href="{{ route('forma.create') }}" class="btn btn-primary">Nuevo Reporte</a>
+		@canany(['create_ined', 'create_cgib', 'create_asc', 'create_sdh', 'create_iapp'])
+			<a href="{{ route('forma.create') }}" class="btn btn-primary">Nuevo Reporte</a>
+		@endcanany
 	</div>
 	<div class="panel-body">
 		<div class="row">
