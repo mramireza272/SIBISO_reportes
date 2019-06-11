@@ -26,7 +26,7 @@ class ItemRolForm4 extends Seeder
 	    		'0'=>[
 	    			['col'=>'Foros y Conversatorios','subcol'=>[]],
 	    			['col'=>'Capacitación sobre DDHH y diversidad sexual a personas operadoras de Locatel','subcol'=>[]],
-	    			['col'=>'Lunes de Educación para la Paz','subcol'=>[]]
+	    			['col'=>'Lunes por la Educación para la Paz','subcol'=>[]]
 
 	    		]
 	    	];
