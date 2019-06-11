@@ -15,7 +15,12 @@ use Auth;
 class BuildForm extends Controller {
     function __construct() {
         $this->middleware('auth');
-        $this->middleware(['role:Instituto para el Envejecimiento Digno|Coordinación General de Inclusión y Bienestar|Atención Social y Ciudadana|Subsecretaría de Derechos Humanos|Instituto para la Atención a Poblaciones Prioritarias']);
+        /*$this->middleware(['role:Instituto para el Envejecimiento Digno|Coordinación General de Inclusión y Bienestar|Atención Social y Ciudadana|Subsecretaría de Derechos Humanos|Instituto para la Atención a Poblaciones Prioritarias']);*/
+        $this->middleware(['permission:create_ined|create_cgib|create_asc|create_sdh|create_iapp'])->only(['create', 'store']);
+        $this->middleware(['permission:index_ined|index_cgib|index_asc|index_sdh|index_iapp'])->only('index');
+        $this->middleware(['permission:edit_ined|edit_cgib|edit_asc|edit_sdh|edit_iapp'])->only(['edit', 'update']);
+        $this->middleware(['permission:show_ined|show_cgib|show_asc|show_sdh|show_iapp'])->only('show');
+        $this->middleware(['permission:delete_ined|delete_cgib|delete_asc|delete_sdh|delete_iapp'])->only('destroy');
     }
 
     /**

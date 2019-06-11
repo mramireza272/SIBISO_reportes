@@ -53,7 +53,15 @@ class Navigation
                 ];
             }
 
-            $roles = Role::where('name', '!=', 'Administrador')->get();
+            if(Auth::user()->hasAnyPermission(['index_ined', 'index_cgib', 'index_asc', 'index_sdh', 'index_iapp'])){
+                $this->menus['Reportes'] = [
+                    'url'    => url('/forma'),
+                    'active' => (strpos($url, str_replace(url('/'), '', '/forma')) !== false) ? ' class="active-sub"' : '',
+                    'icon'   => 'pli-notepad-2'
+                ];
+            }
+
+            /*$roles = Role::where('name', '!=', 'Administrador')->get();
 
             if(Auth::user()->hasAnyRole($roles)){
                 $this->menus['Reportes'] = [
@@ -61,7 +69,7 @@ class Navigation
                     'active' => (strpos($url, str_replace(url('/'), '', '/forma')) !== false) ? ' class="active-sub"' : '',
                     'icon'   => 'pli-notepad-2'
                 ];
-            }
+            }*/
         }
 
     }

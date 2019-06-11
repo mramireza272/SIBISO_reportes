@@ -18,28 +18,33 @@ class AddPermissionsSeeder extends Seeder
         Permission::create(['name' => 'delete_ined']);
         Permission::create(['name' => 'edit_ined']);
         Permission::create(['name' => 'index_ined']);
+        Permission::create(['name' => 'show_ined']);
 
         Permission::create(['name' => 'create_cgib']);
         Permission::create(['name' => 'delete_cgib']);
         Permission::create(['name' => 'edit_cgib']);
         Permission::create(['name' => 'index_cgib']);
+        Permission::create(['name' => 'show_cgib']);
 
         Permission::create(['name' => 'create_asc']);
         Permission::create(['name' => 'delete_asc']);
         Permission::create(['name' => 'edit_asc']);
         Permission::create(['name' => 'index_asc']);
+        Permission::create(['name' => 'show_asc']);
 
         Permission::create(['name' => 'create_sdh']);
         Permission::create(['name' => 'delete_sdh']);
         Permission::create(['name' => 'edit_sdh']);
         Permission::create(['name' => 'index_sdh']);
+        Permission::create(['name' => 'show_sdh']);
 
         Permission::create(['name' => 'create_iapp']);
         Permission::create(['name' => 'delete_iapp']);
         Permission::create(['name' => 'edit_iapp']);
         Permission::create(['name' => 'index_iapp']);
+        Permission::create(['name' => 'show_iapp']);
 
-        $role = Role::findByName('Administrador');
+        /*$role = Role::findByName('Administrador');
 
         $role->givePermissionTo('create_ined');
         $role->givePermissionTo('delete_ined');
@@ -67,7 +72,7 @@ class AddPermissionsSeeder extends Seeder
         $role->givePermissionTo('index_iapp');
 
         $user = User::findOrFail(1);
-        $user->syncRoles('Administrador');
+        $user->syncRoles('Administrador');*/
 
         $role2 = Role::create(['name' => 'Instituto para el Envejecimiento Digno']);
 
@@ -75,6 +80,7 @@ class AddPermissionsSeeder extends Seeder
         $role2->givePermissionTo('delete_ined');
         $role2->givePermissionTo('edit_ined');
         $role2->givePermissionTo('index_ined');
+        $role2->givePermissionTo('show_ined');
 
         $role3 = Role::create(['name' => 'Coordinación General de Inclusión y Bienestar']);
 
@@ -82,6 +88,7 @@ class AddPermissionsSeeder extends Seeder
         $role3->givePermissionTo('delete_cgib');
         $role3->givePermissionTo('edit_cgib');
         $role3->givePermissionTo('index_cgib');
+        $role3->givePermissionTo('show_cgib');
 
         $role4 = Role::create(['name' => 'Atención Social y Ciudadana']);
 
@@ -89,6 +96,7 @@ class AddPermissionsSeeder extends Seeder
         $role4->givePermissionTo('delete_asc');
         $role4->givePermissionTo('edit_asc');
         $role4->givePermissionTo('index_asc');
+        $role4->givePermissionTo('show_asc');
 
         $role5 = Role::create(['name' => 'Subsecretaría de Derechos Humanos']);
 
@@ -96,6 +104,7 @@ class AddPermissionsSeeder extends Seeder
         $role5->givePermissionTo('delete_sdh');
         $role5->givePermissionTo('edit_sdh');
         $role5->givePermissionTo('index_sdh');
+        $role5->givePermissionTo('show_sdh');
 
         $role6 = Role::create(['name' => 'Instituto para la Atención a Poblaciones Prioritarias']);
 
@@ -103,7 +112,7 @@ class AddPermissionsSeeder extends Seeder
         $role6->givePermissionTo('delete_iapp');
         $role6->givePermissionTo('edit_iapp');
         $role6->givePermissionTo('index_iapp');
-
+        $role6->givePermissionTo('show_iapp');
 
         $user = User::create([
                 'name' => $role2->name,
@@ -112,12 +121,7 @@ class AddPermissionsSeeder extends Seeder
                 'active' => 1,
                 'confirmed' => 1
             ]);
-        
-
-        
         $user->assignRole($role2->name);
-
-
 
         $user = User::create([
                 'name' => $role3->name,
@@ -127,6 +131,7 @@ class AddPermissionsSeeder extends Seeder
                 'confirmed' => 1,
             ]);
         $user->assignRole($role3->name);
+
         $user = User::create([
                 'name' => $role4->name,
                 'email' => 'rol4@rol.rol',
@@ -135,6 +140,7 @@ class AddPermissionsSeeder extends Seeder
                 'confirmed' => 1,
             ]);
         $user->assignRole($role4->name);
+
         $user = User::create([
                 'name' => $role5->name,
                 'email' => 'rol5@rol.rol',
@@ -143,7 +149,7 @@ class AddPermissionsSeeder extends Seeder
                 'confirmed' => 1,
             ]);
         $user->assignRole($role5->name);
-        
+
         $user = User::create([
                 'name' => $role6->name,
                 'email' => 'rol6@rol.rol',
@@ -152,8 +158,6 @@ class AddPermissionsSeeder extends Seeder
                 'confirmed' => 1,
             ]);
         $user->assignRole($role6->name);
-
-
     }
 
 }
