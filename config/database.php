@@ -62,7 +62,7 @@ return [
             'port' => env('DB_PORT', '5432'),
             'database' => env('DB_DATABASE', 'sibiso_reportes'),
             'username' => env('DB_USERNAME', 'postgres'),
-            'password' => env('DB_PASSWORD', 'cobos'),
+            'password' => env('DB_PASSWORD', 'mirror'),
             'charset' => 'utf8',
             'prefix' => '',
             'prefix_indexes' => true,

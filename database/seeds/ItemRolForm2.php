@@ -24,11 +24,29 @@ class ItemRolForm2 extends Seeder
 
 	    	$subs = [
 	    		'0'=>[
-	    			['col'=>'Actas de nacimiento extemporáneas Personas Mayores ','subcol'=>['Hombres','Mujeres']],
-	    			['col'=>'Personas Indígenas','subcol'=>['Hombres','Mujeres']],
-	    			['col'=>'Alianzas con empresas de entretenimiento','subcol'=>[]],
-	    			['col'=>'Alianzas con universidades públicas y privadas','subcol'=>[]],
-	    			['col'=>'Convenios de colaboración y coordinación','subcol'=>[]]
+	    			['col'=>'Actas de nacimiento extemporáneas Personas Mayores ',
+	    			 'editable'=>false,
+	    			 'subcol'=>[
+	    			 	['name'=>'Hombres','editable'=>true],
+	    			 	['name'=>'Mujeres','editable'=>true]
+	    			  ]
+	    			],
+	    			['col'=>'Personas Indígenas',
+	    			 'editable'=>false,
+	    			 'subcol'=>[
+	    			 	['name'=>'Hombres','editable'=>true],
+	    			 	['name'=>'Mujeres','editable'=>true]
+	    			 ]
+	    			],
+	    			['col'=>'Alianzas con empresas de entretenimiento',
+	    			 'editable'=>true,
+	    			 'subcol'=>[]],
+	    			['col'=>'Alianzas con universidades públicas y privadas',
+	    			 'editable'=>true,
+	    			 'subcol'=>[]],
+	    			['col'=>'Convenios de colaboración y coordinación',
+	    			 'editable'=>true,
+	    			 'subcol'=>[]]
 	    		]
 	    	];
 
@@ -56,16 +74,16 @@ class ItemRolForm2 extends Seeder
 		    	$subitemrol = ItemRol::create(['rol_id' => $role->id,
 		        				 'item'   => $subvalue['col'],
 		        				 'parent_id' =>$itemrol->id,
-		        				 'editable' => true,
+		        				 'editable' => $subvalue['editable'],
 		        				 'order' => $suborder
 		    	]);
 
 		    	$subsuborder=0;
 		    	foreach ($subvalue['subcol'] as $subbval) {
 			    	$subsubitemrol = ItemRol::create(['rol_id' => $role->id,
-			        				 'item'   => $subbval,
+			        				 'item'   => $subbval['name'],
 			        				 'parent_id' =>$subitemrol->id,
-			        				 'editable' => true,
+			        				 'editable' => $subbval['editable'],
 			        				 'order' => $subsuborder
 			    	]);
 			    	$subsuborder++;
