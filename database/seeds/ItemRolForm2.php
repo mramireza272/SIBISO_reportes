@@ -24,7 +24,11 @@ class ItemRolForm2 extends Seeder
 
 	    	$subs = [
 	    		'0'=>[
-	    			['col'=>'Actas de nacimiento extemporáneas Personas Mayores ',
+	    			['col'=>'Actas de nacimiento extemporáneas',
+	    			 'editable'=>false,
+	    			 'subcol'=>[]
+	    			],
+	    			['col'=>'Personas Mayores ',
 	    			 'editable'=>false,
 	    			 'subcol'=>[
 	    			 	['name'=>'Hombres','editable'=>true],
