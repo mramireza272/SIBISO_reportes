@@ -15,7 +15,6 @@ use Auth;
 class BuildForm extends Controller {
     function __construct() {
         $this->middleware('auth');
-        /*$this->middleware(['role:Instituto para el Envejecimiento Digno|Coordinación General de Inclusión y Bienestar|Atención Social y Ciudadana|Subsecretaría de Derechos Humanos|Instituto para la Atención a Poblaciones Prioritarias']);*/
         $this->middleware(['permission:create_ined|create_cgib|create_asc|create_sdh|create_iapp'])->only(['create', 'store']);
         $this->middleware(['permission:index_ined|index_cgib|index_asc|index_sdh|index_iapp'])->only('index');
         $this->middleware(['permission:edit_ined|edit_cgib|edit_asc|edit_sdh|edit_iapp'])->only(['edit', 'update']);
@@ -34,7 +33,6 @@ class BuildForm extends Controller {
             ['active', true],
             ['rol_id', $rol->id],
         ])->orderBy('created_at', 'desc')->get();
-        //dd($reports);
 
         return view('forms.index', compact('reports', 'rol'));
     }
@@ -101,7 +99,7 @@ class BuildForm extends Controller {
         $vals = [];
 
         foreach ($items_values as $itve) {
-            $vals[$itve->item_col_id][$itve->item_rol_id] =[
+            $vals[$itve->item_col_id][$itve->item_rol_id] = [
                 'value' => $itve->valore,
                 'id' => $itve->id
             ];
@@ -126,7 +124,7 @@ class BuildForm extends Controller {
             $vals = [];
 
             foreach ($items_values as $itve) {
-                $vals[$itve->item_col_id][$itve->item_rol_id] =[
+                $vals[$itve->item_col_id][$itve->item_rol_id] = [
                     'value' => $itve->valore,
                     'id' => $itve->id
                 ];

@@ -30,7 +30,7 @@ class ReportRequest extends FormRequest
         $endDate = $this->date_end;
         $reportsCount = 0;
 
-        if($this->action == 'edit') {
+        if($this->action == 'edit' && !empty($startDate) && !empty($endDate)) {
             $items_values = ItemValueReport::where('report_id', $this->report_id)->get();
             $vals = [];
 
@@ -62,7 +62,7 @@ class ReportRequest extends FormRequest
                     ]);
                 });
             })->count();
-        } elseif ($this->action == 'create') {
+        } elseif ($this->action == 'create' && !empty($startDate) && !empty($endDate)) {
             $reportsCount = Report::where('rol_id', $this->rol_id)->where(function ($query) use ($startDate, $endDate) {
                 $query->where(function ($query) use ($startDate, $endDate) {
                     $query->where([

@@ -48,7 +48,7 @@ class CrudFormController extends Controller
     	# add/row/ROL_ID/?parent=ITEMROLID
 
     	if($whre=='row'){
-    		
+
     		$parent = $request->get('parent');
     		$todos = ItemRol::all();
     		$added = ItemRol::create([
@@ -116,18 +116,18 @@ class CrudFormController extends Controller
     {
         $item_value = $request->get('item');
     	if($whre=='col'){
-    		
+
     		$item = RolStructureItem::find($id);
     		$item->columns=$item_value;
     		$item->save();
     	}
 
     	if($whre=='row'){
-    		
+
     		$item = ItemRol::find($id);
     		$item->item=$item_value;
     		$item->save();
-    	}        
+    	}
     }
 
     /**
@@ -136,8 +136,8 @@ class CrudFormController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    
-    # Para eliminar una columna o un renglon 
+
+    # Para eliminar una columna o un renglon
     # deberas mandar la url con el tipo de elemento que deseas eliminar, por ejemplo
     #ROW
     # /rm/row/ID
@@ -147,20 +147,20 @@ class CrudFormController extends Controller
     {
 
     	if($whre=='col'){
-    		
+
     		$item = RolStructureItem::find($id);
     		$item->delete();
     		dd('col removed succesfuly');
     	}
 
     	if($whre=='row'){
-    		
+
     		$item = ItemRol::find($id);
     		if($item)
     			$item->delete();
     		dd($item);
     	}
-        
+
 
     }
 }
