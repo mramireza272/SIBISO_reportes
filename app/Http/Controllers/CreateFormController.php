@@ -21,7 +21,7 @@ class CreateFormController extends Controller
      */
     public function index(Request $request,$id)
     {
-        
+
         $items = ItemRol::where('rol_id',$id)->where('parent_id',null)->orderBy('order')->get();
         print('<table>');
         foreach ($items as $itm) {
@@ -65,7 +65,7 @@ class CreateFormController extends Controller
         	}
 
         }
-        
+
         print('</table>');
     }
 
