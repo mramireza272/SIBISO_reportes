@@ -26,6 +26,9 @@ class ReportRequest extends FormRequest
     public function rules() {
         //dd($this->request->all());
         $items_rol = ItemRol::where('rol_id', $this->rol_id)->where('parent_id', null)->get();
+        $startDate = $this->date_start;
+        $endDate = $this->date_end;
+        $reportsCount = 0;
 
         if($this->action == 'edit') {
             $items_values = ItemValueReport::where('report_id', $this->report_id)->get();
@@ -37,29 +40,48 @@ class ReportRequest extends FormRequest
                     'id' => $itve->id
                 ];
             }
+
+            $reportsCount = Report::where([
+                ['rol_id', $this->rol_id],
+                ['id', '!=', $this->report_id],
+            ])->where(function ($query) use ($startDate, $endDate) {
+                $query->where(function ($query) use ($startDate, $endDate) {
+                    $query->where([
+                        ['date_start', '<=', $startDate],
+                        ['date_end', '>=', $startDate],
+                    ]);
+                })->orWhere(function ($query) use ($startDate, $endDate) {
+                    $query->where([
+                        ['date_start', '<=', $endDate],
+                        ['date_end', '>=', $endDate],
+                    ]);
+                })->orWhere(function ($query) use ($startDate, $endDate) {
+                    $query->where([
+                        ['date_start', '>=', $startDate],
+                        ['date_end', '<=', $endDate],
+                    ]);
+                });
+            })->count();
+        } elseif ($this->action == 'create') {
+            $reportsCount = Report::where('rol_id', $this->rol_id)->where(function ($query) use ($startDate, $endDate) {
+                $query->where(function ($query) use ($startDate, $endDate) {
+                    $query->where([
+                        ['date_start', '<=', $startDate],
+                        ['date_end', '>=', $startDate],
+                    ]);
+                })->orWhere(function ($query) use ($startDate, $endDate) {
+                    $query->where([
+                        ['date_start', '<=', $endDate],
+                        ['date_end', '>=', $endDate],
+                    ]);
+                })->orWhere(function ($query) use ($startDate, $endDate) {
+                    $query->where([
+                        ['date_start', '>=', $startDate],
+                        ['date_end', '<=', $endDate],
+                    ]);
+                });
+            })->count();
         }
-
-        $startDate = $this->date_start;
-        $endDate = $this->date_end;
-
-        $reportsCount = Report::where('rol_id', $this->rol_id)->where(function ($query) use ($startDate, $endDate) {
-            $query->where(function ($query) use ($startDate, $endDate) {
-                $query->where([
-                    ['date_start', '<=', $startDate],
-                    ['date_end', '>=', $startDate],
-                ]);
-            })->orWhere(function ($query) use ($startDate, $endDate) {
-                $query->where([
-                    ['date_start', '<=', $endDate],
-                    ['date_end', '>=', $endDate],
-                ]);
-            })->orWhere(function ($query) use ($startDate, $endDate) {
-                $query->where([
-                    ['date_start', '>=', $startDate],
-                    ['date_end', '<=', $endDate],
-                ]);
-            });
-        })->count();
 
         //dd($reportsCount);
 
