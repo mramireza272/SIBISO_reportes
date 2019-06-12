@@ -61,7 +61,9 @@
 	    <h2 class="panel-title">{{ isset($rol->name) ? $rol->name : '' }}</h2>
 	</div>
 	<div class="panel-body text-right">
-		<a href="{{ route('forma.create') }}" class="btn btn-primary">Nuevo Reporte</a>
+		@canany(['create_ined', 'create_cgib', 'create_asc', 'create_sdh', 'create_iapp'])
+			<a href="{{ route('forma.create') }}" class="btn btn-primary">Nuevo Reporte</a>
+		@endcanany
 	</div>
 	<div class="panel-body">
 		<div class="row">
@@ -77,37 +79,42 @@
 			            </tr>
 			        </thead>
 			        <tbody>
-			        	@foreach($reports as $report)
-				            <tr>
-				            	<td>{{ $loop->iteration }}</td>
-				                <td>{{ $report->date_start }}</td>
-				                <td>{{ $report->date_end }}</td>
-				                <td>{{ $report->created_at }}</td>
-				                <td>
-				                	<a href="{{ route('forma.show', $report->id) }}" class="btn btn-sm btn-primary">
-		                                Ver
-		                            </a>
-		                            @php
-		                            	$two_hours = date('Y-m-d H:i:s', strtotime('+2 hour', strtotime($report->created_at)));
-		                            	$now = date("Y-m-d H:i:s");
-		                            @endphp
-		                            @if($now <= $two_hours)
-				                	<a href="{{ route('forma.edit', $report->id) }}" class="btn btn-sm btn-warning">
-	                                	Editar
-	                            	</a>
-				                	<form class="delete" style="display: inline;" method="POST" action="{{ route('forma.destroy', $report->id) }}">
-	                                    {!! method_field('DELETE') !!}
-						                <input type="hidden" name="_token" value="{{ csrf_token() }}">
-						                <button title="Eliminar" class="btn btn-sm btn-danger">
-			        						Eliminar
-			        					</button>
-					                </form>
-					                @endif
-					            </td>
-				            </tr>
-			        	@endforeach
+		        	@foreach($reports as $report)
+			            <tr>
+			            	<td>{{ $loop->iteration }}</td>
+			                <td>{{ $report->date_start }}</td>
+			                <td>{{ $report->date_end }}</td>
+			                <td>{{ $report->created_at }}</td>
+			                <td>
+			                	<a href="{{ route('forma.show', $report->id) }}" class="btn btn-sm btn-primary">
+	                                Ver
+	                            </a>
+	                            @php
+	                            	$two_hours = date('Y-m-d H:i:s', strtotime('+2 hour', strtotime($report->created_at)));
+	                            	$now = date("Y-m-d H:i:s");
+	                            @endphp
+	                            @if($now <= $two_hours)
+		                            @canany(['edit_ined', 'edit_cgib', 'edit_asc', 'edit_sdh', 'edit_iapp'])
+					                	<a href="{{ route('forma.edit', $report->id) }}" class="btn btn-sm btn-warning">
+		                                	Editar
+		                            	</a>
+	                            	@endcanany
+	                            	@canany(['delete_ined', 'delete_cgib', 'delete_asc', 'delete_sdh', 'delete_iapp'])
+					                	<form class="delete" style="display: inline;" method="POST" action="{{ route('forma.destroy', $report->id) }}">
+		                                    {!! method_field('DELETE') !!}
+							                <input type="hidden" name="_token" value="{{ csrf_token() }}">
+							                <button title="Eliminar" class="btn btn-sm btn-danger">
+				        						Eliminar
+				        					</button>
+						                </form>
+					                @endcanany
+				                @endif
+				            </td>
+			            </tr>
+		        	@endforeach
 			        </tbody>
 			    </table>
+
 			</div>
 		</div>
 	</div>

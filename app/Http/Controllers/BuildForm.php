@@ -84,7 +84,7 @@ class BuildForm extends Controller {
             }
         }
 
-        return redirect()->route('forma.create')->with('info', 'Reporte creado satisfactoriamente.');
+        return redirect()->route('forma.create')->with('info', '<p style="text-align: justify;">Reporte creado satisfactoriamente. <strong>¡ IMPORTANTE !</strong> Puede editar o eliminar el registro hasta 2 horas después de haberlo creado. Le recomendamos consultarlo para estar seguro de que la información registrada es correcta. Si requiere eliminar o editar un registro después de este periodo, comunique su solicitud a <ins>formularios.sibiso@gmail.com</ins></p>');
     }
 
     /**
@@ -167,7 +167,7 @@ class BuildForm extends Controller {
                 }
             }
 
-            return redirect()->route('forma.edit', $id)->with('info', 'Reporte actualizado satisfactoriamente.');
+            return redirect()->route('forma.edit', $id)->with('info', '<p style="text-align: justify;">Reporte editado satisfactoriamente. <strong>¡ IMPORTANTE !</strong> Puede editar o eliminar el registro hasta 2 horas después de haberlo creado. Le recomendamos consultarlo para estar seguro de que la información registrada es correcta. Si requiere eliminar o editar un registro después de este periodo, comunique su solicitud a <ins>formularios.sibiso@gmail.com</ins></p>');
         }
 
         return redirect()->route('forma.index');
