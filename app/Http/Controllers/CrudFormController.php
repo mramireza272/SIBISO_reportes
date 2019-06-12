@@ -126,6 +126,7 @@ class CrudFormController extends Controller
     		
     		$item = ItemRol::find($id);
     		$item->item=$item_value;
+    		$item->editable = $request->get('editable');
     		$item->save();
     	}        
     }

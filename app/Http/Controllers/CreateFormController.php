@@ -27,7 +27,7 @@ class CreateFormController extends Controller
         foreach ($items as $itm) {
         	print('<tr>');
 
-        	print('<td>');
+        	print('<td>('.$itm->id.')');
         	print('<input type="text" name="" value="'.$itm->item.'">');
         	if($itm->editable)
         	print($itm->editable);
@@ -37,7 +37,7 @@ class CreateFormController extends Controller
 
 
         	foreach ($itm->cols as $col) {
-	        	print('<td class="col-form">');
+	        	print('<td class="col-form">('.$col->id.')');
 	        	print('<input type="text" name="col_'.$col->id.'" value="'.$col->columns.'">');
 	        	print('</td>');
         	}
@@ -58,7 +58,7 @@ class CreateFormController extends Controller
         	foreach ($itm->childs as $subitm) {
         		print('<tr>');
 	        	print('<td style="padding:0px 12px;">');
-	        	print('<input type="text" name="" value="'.$subitm->item.'">');
+	        	print('('.$subitm->id.')<input type="text" name="" value="'.$subitm->item.'">');
 	        	print('</td>');
 	        	print('</tr>');
 
