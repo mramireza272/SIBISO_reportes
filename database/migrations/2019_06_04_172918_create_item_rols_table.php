@@ -21,7 +21,7 @@ class CreateItemRolsTable extends Migration
             $table->text('item');
             $table->integer('parent_id')->nullable();
             $table->foreign('parent_id')->references('id')->on('item_rols');
-            $table->boolean('editable');
+            $table->boolean('editable')->default(true);
             $table->integer('order');
             $table->timestamps();
             $table->softDeletes();
