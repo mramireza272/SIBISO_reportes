@@ -23,3 +23,8 @@ Route::resource('form', 'saveForm');
 Route::post('saveform', 'saveForm@store');
 Route::get('edtform/{id?}','saveForm@edit');
 Route::post('updateform/','saveForm@update');
+Route::resource('edtrol/{id?}/','CreateFormController');
+Route::get('add/{dones?}/{id?}','CrudFormController@create');
+Route::get('rm/{dones?}/{id?}','CrudFormController@destroy');
+Route::get('update/{dones?}/{id?}','CrudFormController@update');
+

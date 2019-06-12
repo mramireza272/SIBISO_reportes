@@ -22,4 +22,13 @@ class ItemRol extends Model
 
 
 
+    protected $fillable = [
+        'rol_id',
+        'item',
+        'parent_id',
+        'editable',
+        'order'
+    ];
+
+
 }
