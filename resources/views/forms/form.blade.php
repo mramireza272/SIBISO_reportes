@@ -12,7 +12,7 @@
                 <thead>
                     <tr>
                         <th>
-                            <input type="text" name="" value="{{ $itm->item }}" @if($action == 'show') readonly @endif />
+                            <input type="text" name="" value="{{ $itm->item }}" data-type="item" data-id="{{ $itm->id }}" @if($action == 'show') readonly @endif />
                             {!! $errors->first('', '<small class="help-block text-danger">:message</small>')!!}
                         </th>
                         <th>
@@ -24,14 +24,20 @@
                         </th>
                         @foreach ($itm->cols as $col)
                             <th>
-                                <input type="text" name="col_{{ $col->id }}" value="{{ $col->columns }}" @if($action == 'show') readonly @endif />
+                                <input type="text" name="col_{{ $col->id }}" data-type="rol" data-id="{{ $col->id }}" value="{{ $col->columns }}" @if($action == 'show') readonly @endif />
                                 {!! $errors->first('col_'. $col->id, '<small class="help-block text-danger">:message</small>')!!}
                             </th>
                         @endforeach
 
+                        <th id="col" style="display: none;">
+                        </th>
+
                         @if(!$itm->editable && $action != 'show')
-                            <th>
+                            <th style="width: 100;">
                                 <a role="button" id="addCol" class="btn btn-info" value="{{ $itm->id }}">[+]</a>
+                                @if($itm->cols->count() > 0)
+                                <a role="button" id="removeCol" class="btn btn-danger" data-item="{{ $itm->id }}" data-structure="{{ isset($itm->cols->last()->id) ? $itm->cols->last()->id : '' }}">[-]</a>
+                                @endif
                             </th>
                         @endif
                     </tr>
@@ -40,7 +46,7 @@
                     @foreach ($itm->childs as $subitm)
                         <tr>
                             <td>
-                                <input type="text" name="" value="{{ $subitm->item }}">
+                                <input type="text" name="" data-type="item" data-id="{{ $subitm->id }}" value="{{ $subitm->item }}">
                             </td>
                         </tr>
                     @endforeach
@@ -85,7 +91,7 @@
 </div>
 <div class="panel-footer text-right">
     <a role="button" href="{{ route('formularios.index') }}" class="btn btn-primary">Regresar</a>
-    @if($action != 'show')
+   {{--  @if($action != 'show')
         <button type="submit" class="btn btn-primary">{{ isset($btnText) ? $btnText : 'Guardar'}}</button>
-    @endif
+    @endif --}}
 </div>

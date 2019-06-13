@@ -5,6 +5,18 @@
 @section('titulo_pagina', 'Nuevo Reporte')
 
 @section('customcss')
+	<style>
+        table {
+          table-layout:fixed;
+        }
+        table td {
+          word-wrap: break-word;
+          max-width: 400px;
+        }
+        #example td {
+          white-space: inherit;
+        }
+    </style>
     <!--Pace - Page Load Progress Par [OPTIONAL]-->
     <link href="/plugins/pace/pace.min.css" rel="stylesheet">
 @endsection

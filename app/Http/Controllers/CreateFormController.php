@@ -151,4 +151,50 @@ class CreateFormController extends Controller {
     {
         //
     }
+
+    public function buildCol($item_id) {
+        $all = RolStructureItem::all();
+        $added = RolStructureItem::create([
+            'item_rol_id'=> $item_id,
+            'order'=> count($all),
+            'columns' => ' nueva columna'
+        ]);
+
+        return $added;
+    }
+
+    public function destroyCol($item_rol_id, $rol_structure_id) {
+        RolStructureItem::findOrFail($rol_structure_id)->delete();
+        $rolStructureItem = RolStructureItem::where('item_rol_id', $item_rol_id)->orderBy('id', 'DESC')->first();
+
+        if(empty($rolStructureItem)) {
+            return $rol_structure_id;
+        } else {
+            return ($rol_structure_id .'&'. $item_rol_id .'&'. $rolStructureItem->id);
+        }
+    }
+
+    public function updateColName(Request $request) {
+        if($request->type == 'rol') {
+            RolStructureItem::findOrFail($request->id)->update(['columns' => $request->column]);
+        } elseif ($request->type == 'item') {
+            ItemRol::findOrFail($request->id)->update(['item' => $request->column]);
+        } else {
+            //
+        }
+
+        return;
+    }
+
+    public function updateEditable(Request $request) {
+        if($request->type == 'rol') {
+            RolStructureItem::findOrFail($request->id)->update(['columns' => $request->column]);
+        } elseif ($request->type == 'item') {
+            ItemRol::findOrFail($request->id)->update(['editable' => true]);
+        } else {
+            //
+        }
+
+        return;
+    }
 }
