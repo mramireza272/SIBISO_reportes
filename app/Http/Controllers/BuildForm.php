@@ -11,11 +11,11 @@ use App\Models\Report;
 use App\Models\RolStructureItem;
 use App\Models\ItemValueReport;
 use Auth;
-use Illuminate\Support\Facades\DB;
 
-class BuildFormController extends Controller {
+class BuildForm extends Controller {
     function __construct() {
         $this->middleware('auth');
+        /*$this->middleware(['role:Instituto para el Envejecimiento Digno|Coordinación General de Inclusión y Bienestar|Atención Social y Ciudadana|Subsecretaría de Derechos Humanos|Instituto para la Atención a Poblaciones Prioritarias']);*/
         $this->middleware(['permission:create_ined|create_cgib|create_asc|create_sdh|create_iapp'])->only(['create', 'store']);
         $this->middleware(['permission:index_ined|index_cgib|index_asc|index_sdh|index_iapp'])->only('index');
         $this->middleware(['permission:edit_ined|edit_cgib|edit_asc|edit_sdh|edit_iapp'])->only(['edit', 'update']);
@@ -34,8 +34,9 @@ class BuildFormController extends Controller {
             ['active', true],
             ['rol_id', $rol->id],
         ])->orderBy('created_at', 'desc')->get();
+        //dd($reports);
 
-        return view('reports.index', compact('reports', 'rol'));
+        return view('forms.index', compact('reports', 'rol'));
     }
 
     /**
@@ -48,7 +49,7 @@ class BuildFormController extends Controller {
         $items_rol = ItemRol::where('rol_id', $rol->id)->where('parent_id', null)->get();
         $vals = [];
 
-        return view('reports.create', compact('items_rol', 'rol', 'vals'));
+        return view('forms.create', compact('items_rol', 'rol', 'vals'));
     }
 
     /**
@@ -83,7 +84,7 @@ class BuildFormController extends Controller {
             }
         }
 
-        return redirect()->route('reportes.create')->with('info', '<p style="text-align: justify;">Reporte creado satisfactoriamente. <strong>¡ IMPORTANTE !</strong> Puede editar o eliminar el registro hasta 2 horas después de haberlo creado. Le recomendamos consultarlo para estar seguro de que la información registrada es correcta. Si requiere eliminar o editar un registro después de este periodo, comunique su solicitud a <ins>formularios.sibiso@gmail.com</ins></p>');
+        return redirect()->route('forma.create')->with('info', '<p style="text-align: justify;">Reporte creado satisfactoriamente. <strong>¡ IMPORTANTE !</strong> Puede editar o eliminar el registro hasta 2 horas después de haberlo creado. Le recomendamos consultarlo para estar seguro de que la información registrada es correcta. Si requiere eliminar o editar un registro después de este periodo, comunique su solicitud a <ins>formularios.sibiso@gmail.com</ins></p>');
     }
 
     /**
@@ -100,13 +101,13 @@ class BuildFormController extends Controller {
         $vals = [];
 
         foreach ($items_values as $itve) {
-            $vals[$itve->item_col_id][$itve->item_rol_id] = [
+            $vals[$itve->item_col_id][$itve->item_rol_id] =[
                 'value' => $itve->valore,
                 'id' => $itve->id
             ];
         }
 
-        return view('reports.show', compact('rol', 'report', 'items_rol', 'vals'));
+        return view('forms.show', compact('rol', 'report', 'items_rol', 'vals'));
     }
 
     /**
@@ -117,45 +118,33 @@ class BuildFormController extends Controller {
      */
     public function edit($id) {
         $report = Report::findOrFail($id);
-
         if($this->checkTime($report->created_at)) {
             $rol = Role::findOrFail($report->rol_id);
             $items_rol = ItemRol::where('rol_id', $report->rol_id)->where('parent_id', null)->get();
             $items_values = ItemValueReport::where('report_id', $report->id)->get();
             $vals = [];
 
-
-
-           #$forvaluesnotadde
-            $itemseditable = ItemRol::where('rol_id', $report->rol_id)->get();
-            
-            $rows = [];
-            foreach ($itemseditable as $rol) {
-
-            	foreach($rol->cols as $colss){
-            		foreach ($itemseditable as $interrol) {
-						$vals[$colss->id][$interrol->id]=[
-							'value'=>0,
-							'id'=>null
-						];            			
-            		}
-            	}
-            }
-
-            
             foreach ($items_values as $itve) {
-                $vals[$itve->item_col_id][$itve->item_rol_id] = [
+                $vals[$itve->item_col_id][$itve->item_rol_id] =[
                     'value' => $itve->valore,
                     'id' => $itve->id
                 ];
             }
+            dd($vals);
+            #$forvaluesnotadde
+            $itemseditable = ItemRol::where('rol_id', $report->rol_id)->where('editable', true)->get();
+            foreach ($itemseditable as $rol) {
+            	foreach($rol->cols as $colss){
+            		if(isset($vals[$colss->id][$rol->id])){
+            			$vals[$colss->id][$rol->id]=0;
+            		}
+            	}
+            }
 
-
-
-            return view('reports.edit', compact('rol', 'report', 'items_rol', 'vals'));
+            return view('forms.edit', compact('rol', 'report', 'items_rol', 'vals'));
         }
 
-        return redirect()->route('reportes.index');
+        return redirect()->route('forma.index');
     }
 
     /**
@@ -176,42 +165,21 @@ class BuildFormController extends Controller {
             $report->created_by = $post['created_by'];
             $report->save();
 
-            /*
             foreach ($post as $key => $value) {
                 $field = strpos($key, 'f_');
 
                 if($field>-1 and strlen($value)>-1){
                     $pices = explode('_', $key);
-
                     $ivr = ItemValueReport::findOrFail($pices[1]);
-
                     $ivr->valore = $value;
                     $ivr->save();
                 }
             }
-			*/
 
-       foreach ($post as $key => $value) {
-            $field = strpos($key, 'f_');
-
-            if($field>-1 and strlen($value)>-1){
-                $pices = explode('_', $key);
-                
-                $ivr = ItemValueReport::firstOrCreate([
-                    'report_id' => $report->id,
-                    'item_rol_id' => $pices[3],
-                    'item_col_id' => $pices[2]
-                ]);
-                $ivr->valore = $value;
-                $ivr->save();
-            }
+            return redirect()->route('forma.edit', $id)->with('info', '<p style="text-align: justify;">Reporte editado satisfactoriamente. <strong>¡ IMPORTANTE !</strong> Puede editar o eliminar el registro hasta 2 horas después de haberlo creado. Le recomendamos consultarlo para estar seguro de que la información registrada es correcta. Si requiere eliminar o editar un registro después de este periodo, comunique su solicitud a <ins>formularios.sibiso@gmail.com</ins></p>');
         }
 
-
-            return redirect()->route('reportes.edit', $id)->with('info', '<p style="text-align: justify;">Reporte editado satisfactoriamente. <strong>¡ IMPORTANTE !</strong> Puede editar o eliminar el registro hasta 2 horas después de haberlo creado. Le recomendamos consultarlo para estar seguro de que la información registrada es correcta. Si requiere eliminar o editar un registro después de este periodo, comunique su solicitud a <ins>formularios.sibiso@gmail.com</ins></p>');
-        }
-
-        return redirect()->route('reportes.index');
+        return redirect()->route('forma.index');
     }
 
     /**
@@ -227,10 +195,10 @@ class BuildFormController extends Controller {
             $report->delete();
             $itemValueReport = ItemValueReport::where('report_id', $id)->delete();
 
-            return redirect()->route('reportes.index')->with('info', 'Reporte eliminado satisfactoriamente.');
+            return redirect()->route('forma.index')->with('info', 'Reporte eliminado satisfactoriamente.');
         }
 
-        return redirect()->route('reportes.index');
+        return redirect()->route('forma.index');
     }
 
     private function checkTime($created_at) {

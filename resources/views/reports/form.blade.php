@@ -52,7 +52,7 @@
                                 <tr>
                                     <td>{{ $subch->item }}</td>
                                     @foreach ($itm->cols as $col)
-                                        @if($action == 'create')
+                                        @if('create' == 'create')
                                             @php($input_name = 'f_'. $rol->id .'_'. $col->id .'_'. $subch->id)
                                         @else
                                             @php($input_name = 'f_'. $vals[$col->id][$subch->id]['id'])
