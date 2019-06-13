@@ -55,8 +55,8 @@ class Navigation
 
             if(Auth::user()->hasAnyPermission(['index_ined', 'index_cgib', 'index_asc', 'index_sdh', 'index_iapp'])){
                 $this->menus['Reportes'] = [
-                    'url'    => url('/forma'),
-                    'active' => (strpos($url, str_replace(url('/'), '', '/forma')) !== false) ? ' class="active-sub"' : '',
+                    'url'    => url('/reportes'),
+                    'active' => (strpos($url, str_replace(url('/'), '', '/reportes')) !== false) ? ' class="active-sub"' : '',
                     'icon'   => 'pli-notepad-2'
                 ];
             }

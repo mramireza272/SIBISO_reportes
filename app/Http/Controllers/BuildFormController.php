@@ -12,7 +12,7 @@ use App\Models\RolStructureItem;
 use App\Models\ItemValueReport;
 use Auth;
 
-class BuildForm extends Controller {
+class BuildFormController extends Controller {
     function __construct() {
         $this->middleware('auth');
         $this->middleware(['permission:create_ined|create_cgib|create_asc|create_sdh|create_iapp'])->only(['create', 'store']);
@@ -34,7 +34,7 @@ class BuildForm extends Controller {
             ['rol_id', $rol->id],
         ])->orderBy('created_at', 'desc')->get();
 
-        return view('forms.index', compact('reports', 'rol'));
+        return view('reports.index', compact('reports', 'rol'));
     }
 
     /**
@@ -47,7 +47,7 @@ class BuildForm extends Controller {
         $items_rol = ItemRol::where('rol_id', $rol->id)->where('parent_id', null)->get();
         $vals = [];
 
-        return view('forms.create', compact('items_rol', 'rol', 'vals'));
+        return view('reports.create', compact('items_rol', 'rol', 'vals'));
     }
 
     /**
@@ -82,7 +82,7 @@ class BuildForm extends Controller {
             }
         }
 
-        return redirect()->route('forma.create')->with('info', '<p style="text-align: justify;">Reporte creado satisfactoriamente. <strong>¡ IMPORTANTE !</strong> Puede editar o eliminar el registro hasta 2 horas después de haberlo creado. Le recomendamos consultarlo para estar seguro de que la información registrada es correcta. Si requiere eliminar o editar un registro después de este periodo, comunique su solicitud a <ins>formularios.sibiso@gmail.com</ins></p>');
+        return redirect()->route('reportes.create')->with('info', '<p style="text-align: justify;">Reporte creado satisfactoriamente. <strong>¡ IMPORTANTE !</strong> Puede editar o eliminar el registro hasta 2 horas después de haberlo creado. Le recomendamos consultarlo para estar seguro de que la información registrada es correcta. Si requiere eliminar o editar un registro después de este periodo, comunique su solicitud a <ins>formularios.sibiso@gmail.com</ins></p>');
     }
 
     /**
@@ -105,7 +105,7 @@ class BuildForm extends Controller {
             ];
         }
 
-        return view('forms.show', compact('rol', 'report', 'items_rol', 'vals'));
+        return view('reports.show', compact('rol', 'report', 'items_rol', 'vals'));
     }
 
     /**
@@ -130,10 +130,10 @@ class BuildForm extends Controller {
                 ];
             }
 
-            return view('forms.edit', compact('rol', 'report', 'items_rol', 'vals'));
+            return view('reports.edit', compact('rol', 'report', 'items_rol', 'vals'));
         }
 
-        return redirect()->route('forma.index');
+        return redirect()->route('reportes.index');
     }
 
     /**
@@ -165,10 +165,10 @@ class BuildForm extends Controller {
                 }
             }
 
-            return redirect()->route('forma.edit', $id)->with('info', '<p style="text-align: justify;">Reporte editado satisfactoriamente. <strong>¡ IMPORTANTE !</strong> Puede editar o eliminar el registro hasta 2 horas después de haberlo creado. Le recomendamos consultarlo para estar seguro de que la información registrada es correcta. Si requiere eliminar o editar un registro después de este periodo, comunique su solicitud a <ins>formularios.sibiso@gmail.com</ins></p>');
+            return redirect()->route('reportes.edit', $id)->with('info', '<p style="text-align: justify;">Reporte editado satisfactoriamente. <strong>¡ IMPORTANTE !</strong> Puede editar o eliminar el registro hasta 2 horas después de haberlo creado. Le recomendamos consultarlo para estar seguro de que la información registrada es correcta. Si requiere eliminar o editar un registro después de este periodo, comunique su solicitud a <ins>formularios.sibiso@gmail.com</ins></p>');
         }
 
-        return redirect()->route('forma.index');
+        return redirect()->route('reportes.index');
     }
 
     /**
@@ -184,10 +184,10 @@ class BuildForm extends Controller {
             $report->delete();
             $itemValueReport = ItemValueReport::where('report_id', $id)->delete();
 
-            return redirect()->route('forma.index')->with('info', 'Reporte eliminado satisfactoriamente.');
+            return redirect()->route('reportes.index')->with('info', 'Reporte eliminado satisfactoriamente.');
         }
 
-        return redirect()->route('forma.index');
+        return redirect()->route('reportes.index');
     }
 
     private function checkTime($created_at) {
