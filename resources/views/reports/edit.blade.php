@@ -17,9 +17,7 @@
           white-space: inherit;
         }
     </style>
-<!--Bootstrap Validator [ OPTIONAL ]-->
-    <link href="/plugins/bootstrap-validator/bootstrapValidator.min.css" rel="stylesheet">
-        <!--Pace - Page Load Progress Par [OPTIONAL]-->
+    <!--Pace - Page Load Progress Par [OPTIONAL]-->
     <link href="/plugins/pace/pace.min.css" rel="stylesheet">
 @endsection
 
@@ -39,8 +37,6 @@
 	    	});
 	    });
 	</script>
-	<!--Bootstrap Validator [ OPTIONAL ]-->
-	<script src="/plugins/bootstrap-validator/bootstrapValidator.min.js"></script>
 	<script src="/plugins/pace/pace.min.js"></script>
 @endsection
 
@@ -66,5 +62,4 @@
 			</div>
 	    </div>
 	</div>
-
 @endsection

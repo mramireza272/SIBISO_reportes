@@ -122,9 +122,11 @@ class CreateFormController extends Controller {
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
-    {
-        //
+    public function edit($id) {
+        $rol = Role::findOrFail($id);
+        $items_rol = ItemRol::where('rol_id', $rol->id)->where('parent_id', null)->orderBy('order')->get();
+
+        return view('forms.edit', compact('rol', 'items_rol'));
     }
 
     /**
