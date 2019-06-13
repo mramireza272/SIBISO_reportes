@@ -113,6 +113,8 @@ class CreateFormController extends Controller {
         $rol = Role::findOrFail($id);
         $items_rol = ItemRol::where('rol_id', $rol->id)->where('parent_id', null)->orderBy('order')->get();
 
+        dd($items_rol[0]->childs);
+
         return view('forms.show', compact('rol', 'items_rol'));
     }
 
