@@ -43,12 +43,25 @@
                     </tr>
                 </thead>
                 <tbody>
+                    
                     @foreach ($itm->childs as $subitm)
+                    {{-- ESTS SON EDITABLES --}}
                         <tr>
                             <td>
                                 <input type="text" name="" data-type="item" data-id="{{ $subitm->id }}" value="{{ $subitm->item }}">
                             </td>
                         </tr>
+
+	                    @foreach ($subitm->childs as $subch)
+	                    	
+	                        <tr>
+	                            <td>
+	                                <input type="text" name="" value="{{ $subch->item }}">
+	                            </td>
+	                        </tr>
+	                    @endforeach
+
+
                     @endforeach
 
                 </tbody>
