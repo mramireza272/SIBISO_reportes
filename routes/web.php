@@ -21,8 +21,9 @@ Route::match(['get', 'post'], '/usuarios/busqueda', ['as' => 'usuarios.search', 
 Route::resource('reportes', 'BuildFormController');
 Route::get('/formularios/nuevaColumna/{id}', 'CreateFormController@buildCol');
 Route::get('/formularios/eliminarColumna/{item_id}/{structure_id}', 'CreateFormController@destroyCol');
-Route::put('/formularios/actualizarColumna', 'CreateFormController@updateColName');
+Route::put('/formularios/actualizarNombre', 'CreateFormController@updateInputName');
 Route::put('/formularios/actualizarEditable', 'CreateFormController@updateEditable');
+Route::get('/formularios/nuevaFila/{rol_id}/{parent_id}', 'CreateFormController@buildRow');
 Route::resource('formularios', 'CreateFormController');
 
 Route::resource('form', 'saveForm');

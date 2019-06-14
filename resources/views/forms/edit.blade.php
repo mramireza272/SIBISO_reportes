@@ -5,14 +5,13 @@
 @section('titulo_pagina', 'Editar Reporte')
 
 @section('customcss')
-    <!--Pace - Page Load Progress Par [OPTIONAL]-->
-    <link href="/plugins/pace/pace.min.css" rel="stylesheet">
 @endsection
 
 @section('customjs')
 	<script type="text/javascript">
 	    $(document).ready(function(){
-	    	$("#addCol").click(function(e){
+	    	$("#example").on('click', '.col-info', function(e){
+	    		alert('col info');
                 e.preventDefault();
                 var item_id = $(this).attr('value');
                 $.get('/formularios/nuevaColumna/'+ item_id, function(data){
@@ -25,7 +24,8 @@
 			    });
             });
 
-            $("#removeCol").click(function(e){
+            $("#example").on('click', '.col-danger', function(e){
+            	alert('col danger');
                 e.preventDefault();
                 var item_rol_id = $(this).attr('data-item');
                 var rol_structure_item = $(this).attr('data-structure');
@@ -48,6 +48,21 @@
 			    });
             });
 
+            $("#example").on('click', '.row-info', function(e){
+            	alert('row info');
+                e.preventDefault();
+                var rol_id = $(this).attr('data-rol');
+                var parent_id = $(this).attr('data-parent');
+                $.get('/formularios/nuevaFila/'+ rol_id +'/'+ parent_id, function(data){
+				    //esta el la peticion get, la cual se divide en tres partes. ruta,variables y funcion
+				    $('#row').show();
+				    var input = '<tr>td style="padding:0px 12px;"><input type="text" name="row_'+ data.id +'" data-type="item" data-id="'+ data.id +'" value="'+ data.item +'" /></td></tr>';
+				    $("#row").append(input);
+				    $('#removeRow').attr('data-rol', data.rol_id);
+				    $('#removeRow').attr('data-parent', data.parent_id);
+			    });
+            });
+
             $("#example").on('change', 'input[type=text]', function(e){
 	        	alert('aqui');
 		    	e.preventDefault();
@@ -60,7 +75,7 @@
 		    	$.ajax({
 					type: 'PUT',
 					dataType: 'JSON',
-					url: "{{ url('/formularios/actualizarColumna') }}",
+					url: "{{ url('/formularios/actualizarNombre') }}",
 					data: params,
 					success: function(data){
 						console.log(data);
@@ -75,12 +90,11 @@
 	        	alert('check');
 		    	e.preventDefault();
 		    	var params = {
-		        	"id" : $(this).attr('data-id'),
-		        	"type" : $(this).attr('data-type'),
-		        	"column" : $(this).val(),
+		        	"id" : $(this).attr('id'),
+		        	"checked" : this.checked,
 		            "_token" : '{{ csrf_token() }}'
 		        };
-		    	/*$.ajax({
+		    	$.ajax({
 					type: 'PUT',
 					dataType: 'JSON',
 					url: "{{ url('/formularios/actualizarEditable') }}",
@@ -91,7 +105,7 @@
 				    error: function(data, textStatus, errorThrown) {
 				        console.log('message=:' + data + ', text status=:' + textStatus + ', error thrown:=' + errorThrown);
 				    }
-				});*/
+				});
 		    });
 	    });
 	</script>

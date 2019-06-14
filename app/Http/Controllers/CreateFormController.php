@@ -15,6 +15,11 @@ use Auth;
 class CreateFormController extends Controller {
     function __construct() {
         $this->middleware('auth');
+        $this->middleware('permission:create_form')->only(['buildCol', 'buildRow']);
+        $this->middleware('permission:index_form')->only('index');
+        $this->middleware('permission:edit_form')->only(['edit', 'updateInputName', 'updateEditable']);
+        $this->middleware('permission:show_form')->only('show');
+        $this->middleware('permission:delete_form')->only('destroyCol');
     }
 
     public function index() {
@@ -113,8 +118,6 @@ class CreateFormController extends Controller {
         $rol = Role::findOrFail($id);
         $items_rol = ItemRol::where('rol_id', $rol->id)->where('parent_id', null)->orderBy('order')->get();
 
-        dd($items_rol[0]->childs);
-
         return view('forms.show', compact('rol', 'items_rol'));
     }
 
@@ -176,27 +179,35 @@ class CreateFormController extends Controller {
         }
     }
 
-    public function updateColName(Request $request) {
+    public function updateInputName(Request $request) {
         if($request->type == 'rol') {
             RolStructureItem::findOrFail($request->id)->update(['columns' => $request->column]);
         } elseif ($request->type == 'item') {
             ItemRol::findOrFail($request->id)->update(['item' => $request->column]);
-        } else {
-            //
         }
 
         return;
     }
 
     public function updateEditable(Request $request) {
-        if($request->type == 'rol') {
-            RolStructureItem::findOrFail($request->id)->update(['columns' => $request->column]);
-        } elseif ($request->type == 'item') {
-            ItemRol::findOrFail($request->id)->update(['editable' => true]);
-        } else {
-            //
-        }
+        ItemRol::findOrFail($request->id)->update(['editable' => $request->checked]);
 
         return;
+    }
+
+    public function buildRow($rol_id, $parent_id) {
+        $all_rol = ItemRol::where([
+            ['rol_id', $rol_id],
+            ['parent_id', $parent_id],
+        ])->get()->count();
+        $added = ItemRol::create([
+            'rol_id' => $rol_id,
+            'parent_id' => $parent_id,
+            'order' => $all_rol,
+            'item' => ' nuevo renglón',
+            'editable' => false
+        ]);
+
+        return $added;
     }
 }

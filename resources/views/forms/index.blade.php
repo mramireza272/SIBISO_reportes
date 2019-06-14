@@ -58,9 +58,9 @@
     	</div>
   	@endif
 	<div class="panel-body text-right">
-		{{-- @canany(['create_ined', 'create_cgib', 'create_asc', 'create_sdh', 'create_iapp']) --}}
+		{{-- @canany(['create_ined', 'create_cgib', 'create_asc', 'create_sdh', 'create_iapp'])
 			<a href="{{ route('formularios.create') }}" class="btn btn-primary">Nuevo Formulario</a>
-		{{-- @endcanany --}}
+		@endcanany --}}
 	</div>
 	<div class="panel-body">
 		<div class="row">
@@ -82,12 +82,12 @@
 			                	<a href="{{ route('formularios.show', $rol->id) }}" class="btn btn-sm btn-primary">
 	                                Ver
 	                            </a>
-	                            {{-- @canany(['edit_ined', 'edit_cgib', 'edit_asc', 'edit_sdh', 'edit_iapp']) --}}
+	                            @can('edit_form')
 				                	<a href="{{ route('formularios.edit', $rol->id) }}" class="btn btn-sm btn-warning">
 	                                	Editar
 	                            	</a>
-                            	{{-- @endcanany --}}
-                            	{{-- @canany(['delete_ined', 'delete_cgib', 'delete_asc', 'delete_sdh', 'delete_iapp']) --}}
+                            	@endcan
+                            	{{-- @can('delete_form')
 				                	<form class="delete" style="display: inline;" method="POST" action="{{ route('formularios.destroy', $rol->id) }}">
 	                                    {!! method_field('DELETE') !!}
 						                <input type="hidden" name="_token" value="{{ csrf_token() }}">
@@ -95,7 +95,7 @@
 			        						Eliminar
 			        					</button>
 					                </form>
-				                {{-- @endcanany --}}
+				                @endcan --}}
 				            </td>
 			            </tr>
 		        	@endforeach

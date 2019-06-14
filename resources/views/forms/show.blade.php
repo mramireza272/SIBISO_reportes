@@ -5,12 +5,9 @@
 @section('titulo_pagina', 'Ver Formulario')
 
 @section('customcss')
-  <!--Pace - Page Load Progress Par [OPTIONAL]-->
-  <link href="/plugins/pace/pace.min.css" rel="stylesheet">
 @endsection
 
 @section('customjs')
-	<script src="/plugins/pace/pace.min.js"></script>
 @endsection
 
 @section('content')

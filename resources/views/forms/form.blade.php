@@ -16,11 +16,11 @@
                             {!! $errors->first('', '<small class="help-block text-danger">:message</small>')!!}
                         </th>
                         <th>
-                            <input class="magic-checkbox" type="checkbox" name="" id="editable" @if($action == 'show') disabled @endif @if($itm->editable) checked @endif />
-                            <label for="editable">
+                            <input class="magic-checkbox" type="checkbox" name="" id="{{ $itm->id }}" @if($action == 'show' || ($itm->childs->count() > 0)) disabled @endif @if($itm->editable) checked @endif />
+                            <label for="{{ $itm->id }}">
                                 Editable
                             </label>
-                            {!! $errors->first('editable', '<small class="help-block text-danger">:message</small>')!!}
+                            {!! $errors->first('', '<small class="help-block text-danger">:message</small>')!!}
                         </th>
                         @foreach ($itm->cols as $col)
                             <th>
@@ -34,36 +34,58 @@
 
                         @if(!$itm->editable && $action != 'show')
                             <th style="width: 100;">
-                                <a role="button" id="addCol" class="btn btn-info" value="{{ $itm->id }}">[+]</a>
+                                <a role="button" id="addCol" class="btn btn-info col-info" value="{{ $itm->id }}">[+]</a>
                                 @if($itm->cols->count() > 0)
-                                <a role="button" id="removeCol" class="btn btn-danger" data-item="{{ $itm->id }}" data-structure="{{ isset($itm->cols->last()->id) ? $itm->cols->last()->id : '' }}">[-]</a>
+                                <a role="button" id="removeCol" class="btn btn-danger col-danger" data-item="{{ $itm->id }}" data-structure="{{ isset($itm->cols->last()->id) ? $itm->cols->last()->id : '' }}">[-]</a>
                                 @endif
                             </th>
                         @endif
                     </tr>
                 </thead>
                 <tbody>
-                    
+                    @php($subChild = false)
                     @foreach ($itm->childs as $subitm)
-                    {{-- ESTS SON EDITABLES --}}
                         <tr>
                             <td>
-                                <input type="text" name="" data-type="item" data-id="{{ $subitm->id }}" value="{{ $subitm->item }}">
+                                <input type="text" name="" data-type="item" data-id="{{ $subitm->id }}" value="{{ $subitm->item }}" @if($action == 'show') readonly @endif />
+                            </td>
+                            <td>
+                                <input class="magic-checkbox" type="checkbox" name="" id="{{ $subitm->id }}" @if($action == 'show') disabled @endif @if($subitm->editable) checked @endif />
+                                <label for="{{ $subitm->id }}">
+                                    Editable
+                                </label>
+                                {!! $errors->first('', '<small class="help-block text-danger">:message</small>')!!}
                             </td>
                         </tr>
-
 	                    @foreach ($subitm->childs as $subch)
-	                    	
 	                        <tr>
 	                            <td>
-	                                <input type="text" name="" value="{{ $subch->item }}">
+	                                <input type="text" name="row_{{ $subch->id }}" data-type="item" data-id="{{ $subch->id }}" value="{{ $subch->item }}" @if($action == 'show') readonly @endif />
 	                            </td>
 	                        </tr>
 	                    @endforeach
-
-
+                        @if($subitm->childs->count() > 0 && $action != 'show')
+                            @php($subChild = true)
+                            <tr id="rowSubChilds" style="display: none;">
+                            </tr>
+                            <tr style="width: 100;">
+                                <td>
+                                    <a role="button" id="addRow" class="btn btn-info row-info" data-rol="{{ $subitm->rol_id }}" data-parent="{{ $subitm->childs->first()->parent_id }}">[+]</a>
+                                    <a role="button" id="removeRow" class="btn btn-danger row-danger" data-item="{{ $subitm->id }}" data-structure="{{ isset($subitm->childs->last()->id) ? $subitm->childs->last()->id : '' }}">[-]</a>
+                                </td>
+                            </tr>
+                        @endif
                     @endforeach
-
+                    @if(!$subChild && $action != 'show')
+                        <tr id="rowChilds" style="display: none;">
+                        </tr>
+                        <tr style="width: 100;">
+                            <td>
+                                <a role="button" id="addRow" class="btn btn-info row-info" data-rol="{{ $subitm->rol_id }}" data-parent="{{ $subitm->parent_id }}">[+]</a>
+                                <a role="button" id="removeRow" class="btn btn-danger row-danger" data-item="{{ $subitm->id }}" data-structure="{{ isset($subitm->childs->last()->id) ? $subitm->childs->last()->id : '' }}">[-]</a>
+                            </td>
+                        </tr>
+                    @endif
                 </tbody>
             @endforeach
         </table>
@@ -71,7 +93,4 @@
 </div>
 <div class="panel-footer text-right">
     <a role="button" href="{{ route('formularios.index') }}" class="btn btn-primary">Regresar</a>
-   {{--  @if($action != 'show')
-        <button type="submit" class="btn btn-primary">{{ isset($btnText) ? $btnText : 'Guardar'}}</button>
-    @endif --}}
 </div>
