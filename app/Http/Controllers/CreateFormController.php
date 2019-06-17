@@ -210,4 +210,15 @@ class CreateFormController extends Controller {
 
         return $added;
     }
+
+    public function destroyRow($parent_id, $item_id) {
+        $item = ItemRol::findOrFail($item_id)->delete();
+        $itemRol = ItemRol::where('parent_id', $parent_id)->orderBy('id', 'DESC')->first();
+
+        if(empty($itemRol)) {
+            return $item_id;
+        } else {
+            return ($item_id .'&'. $itemRol->id .'&'. $itemRol->parent_id);
+        }
+    }
 }

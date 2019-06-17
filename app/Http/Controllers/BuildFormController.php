@@ -124,33 +124,28 @@ class BuildFormController extends Controller {
             $items_values = ItemValueReport::where('report_id', $report->id)->get();
             $vals = [];
 
-
-
            #$forvaluesnotadde
             $itemseditable = ItemRol::where('rol_id', $report->rol_id)->get();
-            
             $rows = [];
+
             foreach ($itemseditable as $rol) {
 
             	foreach($rol->cols as $colss){
             		foreach ($itemseditable as $interrol) {
-						$vals[$colss->id][$interrol->id]=[
-							'value'=>0,
-							'id'=>null
-						];            			
+						$vals[$colss->id][$interrol->id] = [
+							'value' => 0,
+							'id' => null
+						];
             		}
             	}
             }
 
-            
             foreach ($items_values as $itve) {
                 $vals[$itve->item_col_id][$itve->item_rol_id] = [
                     'value' => $itve->valore,
                     'id' => $itve->id
                 ];
             }
-
-
 
             return view('reports.edit', compact('rol', 'report', 'items_rol', 'vals'));
         }
@@ -191,22 +186,21 @@ class BuildFormController extends Controller {
             }
 			*/
 
-       foreach ($post as $key => $value) {
-            $field = strpos($key, 'f_');
+            foreach ($post as $key => $value) {
+                $field = strpos($key, 'f_');
 
-            if($field>-1 and strlen($value)>-1){
-                $pices = explode('_', $key);
-                
-                $ivr = ItemValueReport::firstOrCreate([
-                    'report_id' => $report->id,
-                    'item_rol_id' => $pices[3],
-                    'item_col_id' => $pices[2]
-                ]);
-                $ivr->valore = $value;
-                $ivr->save();
+                if($field>-1 and strlen($value)>-1){
+                    $pices = explode('_', $key);
+
+                    $ivr = ItemValueReport::firstOrCreate([
+                        'report_id' => $report->id,
+                        'item_rol_id' => $pices[3],
+                        'item_col_id' => $pices[2]
+                    ]);
+                    $ivr->valore = $value;
+                    $ivr->save();
             }
         }
-
 
             return redirect()->route('reportes.edit', $id)->with('info', '<p style="text-align: justify;">Reporte editado satisfactoriamente. <strong>¡ IMPORTANTE !</strong> Puede editar o eliminar el registro hasta 2 horas después de haberlo creado. Le recomendamos consultarlo para estar seguro de que la información registrada es correcta. Si requiere eliminar o editar un registro después de este periodo, comunique su solicitud a <ins>formularios.sibiso@gmail.com</ins></p>');
         }

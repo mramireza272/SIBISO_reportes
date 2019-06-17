@@ -24,6 +24,7 @@ Route::get('/formularios/eliminarColumna/{item_id}/{structure_id}', 'CreateFormC
 Route::put('/formularios/actualizarNombre', 'CreateFormController@updateInputName');
 Route::put('/formularios/actualizarEditable', 'CreateFormController@updateEditable');
 Route::get('/formularios/nuevaFila/{rol_id}/{parent_id}', 'CreateFormController@buildRow');
+Route::get('/formularios/eliminarFila/{parent_id}/{item_id}', 'CreateFormController@destroyRow');
 Route::resource('formularios', 'CreateFormController');
 
 Route::resource('form', 'saveForm');

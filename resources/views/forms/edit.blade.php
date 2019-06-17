@@ -39,7 +39,7 @@
 
 				    if(data.length > 1) {
 				    	item = data[1];
-				    	structure = data[2]
+				    	structure = data[2];
 				    }
 
 				    $('input[name='+ input +']').remove();
@@ -51,6 +51,7 @@
             $("#example").on('click', '.row-info', function(e){
             	alert('row info');
                 e.preventDefault();
+                var id = $(this).attr('data-id');
                 var rol_id = $(this).attr('data-rol');
                 var parent_id = $(this).attr('data-parent');
                 $.get('/formularios/nuevaFila/'+ rol_id +'/'+ parent_id, function(data){
@@ -58,8 +59,35 @@
 				    $('#row').show();
 				    var input = '<tr>td style="padding:0px 12px;"><input type="text" name="row_'+ data.id +'" data-type="item" data-id="'+ data.id +'" value="'+ data.item +'" /></td></tr>';
 				    $("#row").append(input);
-				    $('#removeRow').attr('data-rol', data.rol_id);
-				    $('#removeRow').attr('data-parent', data.parent_id);
+				    $('.row-danger[data-item="' + parent_id + '"][data-id="'+ id +'"]').attr('data-item', data.parent_id).attr('data-id', data.id);
+			    });
+            });
+
+            $("#example").on('click', '.row-danger', function(e){
+            	alert('row danger');
+                e.preventDefault();
+                var item_id = $(this).attr('data-id');
+                var parent_id = $(this).attr('data-item');
+                $.get('/formularios/eliminarFila/'+ parent_id +'/'+ item_id, function(data){
+				    //esta el la peticion get, la cual se divide en tres partes. ruta,variables y funcion
+				    alert(data);
+				    data = data.split('&');
+				    var input = "row_"+ data[0];
+				    var item = "";
+				    var id = "";
+
+				    if(data.length > 1) {
+				    	id = data[1];
+				    	item = data[2];
+				    }
+
+				    alert('parent_id: '+ parent_id);
+				    alert('item_id: '+ item_id);
+
+				    $('input[name='+ input +']').remove();
+				    $('.row-danger[data-item="' + parent_id + '"][data-id="'+ item_id +'"]').attr('data-item', item).attr('data-id', id);
+				    /*$('#removeCol').attr('data-item', item);
+				    $('#removeCol').attr('data-structure', structure);*/
 			    });
             });
 

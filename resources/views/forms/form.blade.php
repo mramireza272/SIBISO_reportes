@@ -70,8 +70,8 @@
                             </tr>
                             <tr style="width: 100;">
                                 <td>
-                                    <a role="button" id="addRow" class="btn btn-info row-info" data-rol="{{ $subitm->rol_id }}" data-parent="{{ $subitm->childs->first()->parent_id }}">[+]</a>
-                                    <a role="button" id="removeRow" class="btn btn-danger row-danger" data-item="{{ $subitm->id }}" data-structure="{{ isset($subitm->childs->last()->id) ? $subitm->childs->last()->id : '' }}">[-]</a>
+                                    <a role="button" id="addRow" class="btn btn-info row-info" data-id="{{ $subch->id }}" data-rol="{{ $subitm->rol_id }}" data-parent="{{ $subitm->childs->first()->parent_id }}">[+]</a>
+                                    <a role="button" id="removeRow" class="btn btn-danger row-danger" data-item="{{ $subitm->id }}" data-id="{{ isset($subitm->childs->last()->id) ? $subitm->childs->last()->id : '' }}">[-]</a>
                                 </td>
                             </tr>
                         @endif
@@ -81,8 +81,8 @@
                         </tr>
                         <tr style="width: 100;">
                             <td>
-                                <a role="button" id="addRow" class="btn btn-info row-info" data-rol="{{ $subitm->rol_id }}" data-parent="{{ $subitm->parent_id }}">[+]</a>
-                                <a role="button" id="removeRow" class="btn btn-danger row-danger" data-item="{{ $subitm->id }}" data-structure="{{ isset($subitm->childs->last()->id) ? $subitm->childs->last()->id : '' }}">[-]</a>
+                                <a role="button" id="addRow" class="btn btn-info row-info" data-id="{{ $subitm->id }}" data-rol="{{ $subitm->rol_id }}" data-parent="{{ $subitm->parent_id }}">[+]</a>
+                                <a role="button" id="removeRow" class="btn btn-danger row-danger" data-item="{{ $subitm->id }}" data-id="{{ isset($subitm->childs->last()->id) ? $subitm->childs->last()->id : '' }}">[-]</a>
                             </td>
                         </tr>
                     @endif
