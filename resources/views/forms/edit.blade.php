@@ -2,7 +2,7 @@
 
 @section('titulo', 'Sistema de Reportes SIBISO')
 
-@section('titulo_pagina', 'Editar Reporte')
+@section('titulo_pagina', 'Editar Formulario')
 
 @section('customcss')
 @endsection
@@ -56,9 +56,14 @@
                 var parent_id = $(this).attr('data-parent');
                 $.get('/formularios/nuevaFila/'+ rol_id +'/'+ parent_id, function(data){
 				    //esta el la peticion get, la cual se divide en tres partes. ruta,variables y funcion
-				    $('#row').show();
+				    if(data.parent_id === null) {
+				    	$('#rowChilds').show();
+				    } else {
+				    	$('#rowSubChilds').show();
+				    }
+
 				    var input = '<tr>td style="padding:0px 12px;"><input type="text" name="row_'+ data.id +'" data-type="item" data-id="'+ data.id +'" value="'+ data.item +'" /></td></tr>';
-				    $("#row").append(input);
+				    $('.row-danger[data-item="' + parent_id + '"][data-id="'+ id +'"]').append(input);
 				    $('.row-danger[data-item="' + parent_id + '"][data-id="'+ id +'"]').attr('data-item', data.parent_id).attr('data-id', data.id);
 			    });
             });
@@ -80,9 +85,6 @@
 				    	id = data[1];
 				    	item = data[2];
 				    }
-
-				    alert('parent_id: '+ parent_id);
-				    alert('item_id: '+ item_id);
 
 				    $('input[name='+ input +']').remove();
 				    $('.row-danger[data-item="' + parent_id + '"][data-id="'+ item_id +'"]').attr('data-item', item).attr('data-id', id);

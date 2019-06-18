@@ -26,13 +26,3 @@ Route::put('/formularios/actualizarEditable', 'CreateFormController@updateEditab
 Route::get('/formularios/nuevaFila/{rol_id}/{parent_id}', 'CreateFormController@buildRow');
 Route::get('/formularios/eliminarFila/{parent_id}/{item_id}', 'CreateFormController@destroyRow');
 Route::resource('formularios', 'CreateFormController');
-
-Route::resource('form', 'saveForm');
-Route::post('saveform', 'saveForm@store');
-Route::get('edtform/{id?}','saveForm@edit');
-Route::post('updateform/','saveForm@update');
-//Route::resource('edtrol/{id?}/','CreateFormController');
-Route::get('add/{dones?}/{id?}','CrudFormController@create');
-Route::get('rm/{dones?}/{id?}','CrudFormController@destroy');
-Route::get('update/{dones?}/{id?}','CrudFormController@update');
-

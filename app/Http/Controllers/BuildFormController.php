@@ -44,11 +44,11 @@ class BuildFormController extends Controller {
      * @return \Illuminate\Http\Response
      */
     public function create() {
-        $rol = auth()->user()->roles()->first();
-        $items_rol = ItemRol::where('rol_id', $rol->id)->where('parent_id', null)->get();
+        $role = auth()->user()->roles()->first();
+        $items_rol = ItemRol::where('rol_id', $role->id)->where('parent_id', null)->get();
         $vals = [];
 
-        return view('reports.create', compact('items_rol', 'rol', 'vals'));
+        return view('reports.create', compact('items_rol', 'role', 'vals'));
     }
 
     /**
@@ -94,7 +94,7 @@ class BuildFormController extends Controller {
      */
     public function show($id) {
         $report = Report::findOrFail($id);
-        $rol = Role::findOrFail($report->rol_id);
+        $role = Role::findOrFail($report->rol_id);
         $items_rol = ItemRol::where('rol_id', $report->rol_id)->where('parent_id', null)->get();
         $items_values = ItemValueReport::where('report_id', $report->id)->get();
         $vals = [];
@@ -106,7 +106,7 @@ class BuildFormController extends Controller {
             ];
         }
 
-        return view('reports.show', compact('rol', 'report', 'items_rol', 'vals'));
+        return view('reports.show', compact('role', 'report', 'items_rol', 'vals'));
     }
 
     /**
@@ -119,22 +119,20 @@ class BuildFormController extends Controller {
         $report = Report::findOrFail($id);
 
         if($this->checkTime($report->created_at)) {
-            $rol = Role::findOrFail($report->rol_id);
+            $role = Role::findOrFail($report->rol_id);
             $items_rol = ItemRol::where('rol_id', $report->rol_id)->where('parent_id', null)->get();
             $items_values = ItemValueReport::where('report_id', $report->id)->get();
             $vals = [];
 
-           #$forvaluesnotadde
+            #$forvaluesnotadde
             $itemseditable = ItemRol::where('rol_id', $report->rol_id)->get();
-            $rows = [];
 
             foreach ($itemseditable as $rol) {
-
             	foreach($rol->cols as $colss){
             		foreach ($itemseditable as $interrol) {
 						$vals[$colss->id][$interrol->id] = [
 							'value' => 0,
-							'id' => null
+							'id' => 0
 						];
             		}
             	}
@@ -147,7 +145,7 @@ class BuildFormController extends Controller {
                 ];
             }
 
-            return view('reports.edit', compact('rol', 'report', 'items_rol', 'vals'));
+            return view('reports.edit', compact('role', 'report', 'items_rol', 'vals'));
         }
 
         return redirect()->route('reportes.index');

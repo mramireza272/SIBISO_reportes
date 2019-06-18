@@ -34,6 +34,20 @@ class ReportRequest extends FormRequest
             $items_values = ItemValueReport::where('report_id', $this->report_id)->get();
             $vals = [];
 
+            #$forvaluesnotadde
+            $itemseditable = ItemRol::where('rol_id', $this->rol_id)->get();
+
+            foreach ($itemseditable as $rol) {
+                foreach($rol->cols as $colss){
+                    foreach ($itemseditable as $interrol) {
+                        $vals[$colss->id][$interrol->id] = [
+                            'value' => 0,
+                            'id' => 0
+                        ];
+                    }
+                }
+            }
+
             foreach ($items_values as $itve) {
                 $vals[$itve->item_col_id][$itve->item_rol_id] = [
                     'value' => $itve->valore,
@@ -96,7 +110,7 @@ class ReportRequest extends FormRequest
         foreach ($items_rol as $itm) {
             foreach($itm->childs as $ch) {
                 foreach ($itm->cols as $col) {
-                    if($this->action == 'create') {
+                    if('create' == 'create') {
                         $input_name = 'f_'. $this->rol_id .'_'. $col->id .'_'. $ch->id;
                     } else {
                         $input_name = 'f_'. $vals[$col->id][$ch->id]['id'];
@@ -109,10 +123,10 @@ class ReportRequest extends FormRequest
 
                 foreach ($ch->childs as $subch) {
                     foreach ($itm->cols as $col) {
-                        if($this->action == 'create') {
+                        if('create' == 'create') {
                             $input_name = 'f_'. $this->rol_id .'_'. $col->id .'_'. $subch->id;
                         } else {
-                            $input_name = 'f_'. (isset($vals[$col->id][$subch->id]['id']) ? $vals[$col->id][$subch->id]['id'] : '');
+                            $input_name = 'f_'. $vals[$col->id][$subch->id]['id'];
                         }
 
                         $rule[$input_name] = 'required|integer';
