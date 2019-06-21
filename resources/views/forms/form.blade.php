@@ -13,19 +13,16 @@
                     <tr>
                         <th>
                             <input type="text" name="" value="{{ $itm->item }}" data-type="item" data-id="{{ $itm->id }}" @if($action == 'show') readonly @endif />
-                            {!! $errors->first('', '<small class="help-block text-danger">:message</small>')!!}
                         </th>
                         <th>
                             <input class="magic-checkbox" type="checkbox" name="" id="{{ $itm->id }}" @if($action == 'show' || ($itm->childs->count() > 0)) disabled @endif @if($itm->editable) checked @endif />
                             <label for="{{ $itm->id }}">
                                 Editable
                             </label>
-                            {!! $errors->first('', '<small class="help-block text-danger">:message</small>')!!}
                         </th>
                         @foreach ($itm->cols as $col)
                             <th>
                                 <input type="text" name="col_{{ $col->id }}" data-type="rol" data-id="{{ $col->id }}" value="{{ $col->columns }}" @if($action == 'show') readonly @endif />
-                                {!! $errors->first('col_'. $col->id, '<small class="help-block text-danger">:message</small>')!!}
                             </th>
                         @endforeach
 
@@ -47,14 +44,13 @@
                     @foreach ($itm->childs as $subitm)
                         <tr>
                             <td>
-                                <input type="text" name="" data-type="item" data-id="{{ $subitm->id }}" value="{{ $subitm->item }}" @if($action == 'show') readonly @endif />
+                                <input type="text" name="row_{{ $subitm->id }}" data-type="item" data-id="{{ $subitm->id }}" value="{{ $subitm->item }}" @if($action == 'show') readonly @endif />
                             </td>
                             <td>
                                 <input class="magic-checkbox" type="checkbox" name="" id="{{ $subitm->id }}" @if($action == 'show') disabled @endif @if($subitm->editable) checked @endif />
                                 <label for="{{ $subitm->id }}">
                                     Editable
                                 </label>
-                                {!! $errors->first('', '<small class="help-block text-danger">:message</small>')!!}
                             </td>
                         </tr>
 	                    @foreach ($subitm->childs as $subch)
@@ -82,7 +78,7 @@
                         <tr style="width: 100;">
                             <td>
                                 <a role="button" id="addRow" class="btn btn-info row-info" data-id="{{ $subitm->id }}" data-rol="{{ $subitm->rol_id }}" data-parent="{{ $subitm->parent_id }}">[+]</a>
-                                <a role="button" id="removeRow" class="btn btn-danger row-danger" data-item="{{ $subitm->id }}" data-id="{{ isset($subitm->childs->last()->id) ? $subitm->childs->last()->id : '' }}">[-]</a>
+                                <a role="button" id="removeRow" class="btn btn-danger row-danger" data-item="{{ $itm->id }}" data-id="{{ isset($itm->childs->last()->id) ? $itm->childs->last()->id : '' }}">[-]</a>
                             </td>
                         </tr>
                     @endif

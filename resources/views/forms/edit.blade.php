@@ -56,14 +56,16 @@
                 var parent_id = $(this).attr('data-parent');
                 $.get('/formularios/nuevaFila/'+ rol_id +'/'+ parent_id, function(data){
 				    //esta el la peticion get, la cual se divide en tres partes. ruta,variables y funcion
+				    var input = '<tr><td style="padding:12px;"><input type="text" name="row_'+ data.id +'" data-type="item" data-id="'+ data.id +'" value="'+ data.item +'" /></td></tr>';
+
 				    if(data.parent_id === null) {
 				    	$('#rowChilds').show();
+				    	$('#rowChilds').append(input);
 				    } else {
 				    	$('#rowSubChilds').show();
+				    	$('#rowSubChilds').append(input);
 				    }
 
-				    var input = '<tr>td style="padding:0px 12px;"><input type="text" name="row_'+ data.id +'" data-type="item" data-id="'+ data.id +'" value="'+ data.item +'" /></td></tr>';
-				    $('.row-danger[data-item="' + parent_id + '"][data-id="'+ id +'"]').append(input);
 				    $('.row-danger[data-item="' + parent_id + '"][data-id="'+ id +'"]').attr('data-item', data.parent_id).attr('data-id', data.id);
 			    });
             });
@@ -86,15 +88,12 @@
 				    	item = data[2];
 				    }
 
-				    $('input[name='+ input +']').remove();
+				    $('input[name='+ input +']').parent().parent().remove();
 				    $('.row-danger[data-item="' + parent_id + '"][data-id="'+ item_id +'"]').attr('data-item', item).attr('data-id', id);
-				    /*$('#removeCol').attr('data-item', item);
-				    $('#removeCol').attr('data-structure', structure);*/
 			    });
             });
 
             $("#example").on('change', 'input[type=text]', function(e){
-	        	alert('aqui');
 		    	e.preventDefault();
 		    	var params = {
 		        	"id" : $(this).attr('data-id'),
