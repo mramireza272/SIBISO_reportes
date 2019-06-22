@@ -29,3 +29,4 @@ Route::get('add/{dones?}/{id?}','CrudFormController@create');
 Route::get('rm/{dones?}/{id?}','CrudFormController@destroy');
 Route::get('update/{dones?}/{id?}','CrudFormController@update');
 
+Route::resource('result/', 'ResultController');
