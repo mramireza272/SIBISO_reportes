@@ -31,6 +31,16 @@ class Navigation
                 ];
             }
 
+            /*'''
+            if(Auth::user()->hasPermissionTo('index_form')){
+                $this->menus['Formularios'] = [
+                    'url'    => url('/formularios'),
+                    'active' => (strpos($url, str_replace(url('/'), '', '/formularios')) !== false) ? ' class="active-sub"' : '',
+                    'icon'   => 'pli-full-view-2'
+                ];
+            }
+            '''
+            */
             if(Auth::user()->hasPermissionTo('index_user')){
                 $this->menus['Usuarios'] = [
                     'url'    => url('/usuarios'),
@@ -60,16 +70,6 @@ class Navigation
                     'icon'   => 'pli-notepad-2'
                 ];
             }
-
-            /*$roles = Role::where('name', '!=', 'Administrador')->get();
-
-            if(Auth::user()->hasAnyRole($roles)){
-                $this->menus['Reportes'] = [
-                    'url'    => url('/forma'),
-                    'active' => (strpos($url, str_replace(url('/'), '', '/forma')) !== false) ? ' class="active-sub"' : '',
-                    'icon'   => 'pli-notepad-2'
-                ];
-            }*/
         }
 
     }
@@ -81,10 +81,9 @@ class Navigation
      * @param  \Closure  $next
      * @return mixed
      */
-    public function handle($request, Closure $next)
-    {
+    public function handle($request, Closure $next) {
         $menu = collect($this->menus);
-        \Session::put('Current.menu',$menu);
+        \Session::put('Current.menu', $menu);
         return $next($request);
     }
 }

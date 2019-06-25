@@ -14,7 +14,7 @@ class ItemRolSeeder extends Seeder
      */
     public function run()
     {
-        
+
     	$role = Role::findByName('Instituto para la Atención a Poblaciones Prioritarias');
 
 
@@ -47,7 +47,7 @@ class ItemRolSeeder extends Seeder
     			'editable'=>false,
     			'subcol'=>['Hombres','Mujeres']
     			],
-    			['col'=>'Atzapotzalco',
+    			['col'=>'Azcapotzalco',
     			 'editable'=>false,
     			 'subcol'=>['Hombres','Mujeres']],
     			['col'=>'Cascada',
@@ -102,7 +102,7 @@ class ItemRolSeeder extends Seeder
     		],
     		'4'=>[
     			['col'=>'Atlampa','editable'=>true,'subcol'=>[]],
-    			['col'=>'Atzapotzalco','editable'=>true,'subcol'=>[]],
+    			['col'=>'Azcapotzalco','editable'=>true,'subcol'=>[]],
     			['col'=>'Cascada','editable'=>true,'subcol'=>[]],
     			['col'=>'Coruña Hombres','editable'=>true,'subcol'=>[]],
     			['col'=>'Coruña Jóvenes','editable'=>true,'subcol'=>[]],
@@ -116,7 +116,7 @@ class ItemRolSeeder extends Seeder
     		],
     		'5'=>[
     			['col'=>'Atlampa','editable'=>true,'subcol'=>[]],
-    			['col'=>'Atzapotzalco','editable'=>true,'subcol'=>[]],
+    			['col'=>'Azcapotzalco','editable'=>true,'subcol'=>[]],
     			['col'=>'Cascada','editable'=>true,'subcol'=>[]],
     			['col'=>'Coruña Hombres','editable'=>true,'subcol'=>[]],
     			['col'=>'Coruña Jóvenes','editable'=>true,'subcol'=>[]],
@@ -144,7 +144,7 @@ class ItemRolSeeder extends Seeder
     			['col'=>'No. puntos visitados (incluir cuales)','editable'=>true,'subcol'=>[]],
     			['col'=>'No. atenciones y tipo','editable'=>true,'subcol'=>[]],
 
-    		],    		
+    		],
     		'8'=>[
     			['col'=>'Hombres','editable'=>true,'subcol'=>[]],
     			['col'=>'Mujeres','editable'=>true,'subcol'=>[]]
@@ -160,7 +160,7 @@ class ItemRolSeeder extends Seeder
 	        				 'editable' => false,
 	        				 'order' => $key
 	    	]);
-	    	
+
 	    	foreach ($columnsmain[$order] as $ckey => $cvalue) {
 		    	$itemstruct = RolStructureItem::create(['item_rol_id' => $itemrol->id,
 		        				 'columns'   => $cvalue,
