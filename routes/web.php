@@ -26,3 +26,4 @@ Route::put('/formularios/actualizarEditable', 'CreateFormController@updateEditab
 Route::get('/formularios/nuevaFila/{rol_id}/{parent_id}', 'CreateFormController@buildRow');
 Route::get('/formularios/eliminarFila/{parent_id}/{item_id}', 'CreateFormController@destroyRow');
 Route::resource('formularios', 'CreateFormController');
+Route::resource('result/', 'ResultController');
