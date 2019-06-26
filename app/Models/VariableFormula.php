@@ -11,6 +11,14 @@ class VariableFormula extends Model
   use SoftDeletes;
   protected $dates = ['deleted_at'];
 
+      public function rows(){
+      	return $this->hasMany('App\Models\ItemRol','id','itemrol_id');
+      }
+
+      public function cols(){
+      	return $this->hasMany('App\Models\RolStructureItem','id','itemstructure_id');
+      }
+
 
 
 

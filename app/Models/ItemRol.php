@@ -21,6 +21,12 @@ class ItemRol extends Model
     }
 
 
+    public function item_parent(){
+    	return $this->hasMany('App\Models\ItemRol','id','parent_id');
+    }
+
+
+
 
     protected $fillable = [
         'rol_id',

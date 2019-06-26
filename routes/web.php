@@ -26,4 +26,14 @@ Route::put('/formularios/actualizarEditable', 'CreateFormController@updateEditab
 Route::get('/formularios/nuevaFila/{rol_id}/{parent_id}', 'CreateFormController@buildRow');
 Route::get('/formularios/eliminarFila/{parent_id}/{item_id}', 'CreateFormController@destroyRow');
 Route::resource('formularios', 'CreateFormController');
+#DISPATCHERS FOR RESULTS
 Route::resource('result/', 'ResultController');
+Route::resource('makeresult/', 'buildResultController');
+
+Route::get('addresult/', 'buildResultController@addresult');
+Route::get('rmresult/', 'buildResultController@rmresult');
+Route::get('addformula/', 'buildResultController@addformula');
+Route::get('rmformula/', 'buildResultController@rmformula');
+
+Route::resource('makeformula/', 'buildFormulaController');
+Route::get('/savevariables/', 'buildFormulaController@create');

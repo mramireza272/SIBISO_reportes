@@ -31,7 +31,7 @@ class Navigation
                 ];
             }
 
-            /*'''
+            
             if(Auth::user()->hasPermissionTo('index_form')){
                 $this->menus['Formularios'] = [
                     'url'    => url('/formularios'),
@@ -39,8 +39,7 @@ class Navigation
                     'icon'   => 'pli-full-view-2'
                 ];
             }
-            '''
-            */
+            
             if(Auth::user()->hasPermissionTo('index_user')){
                 $this->menus['Usuarios'] = [
                     'url'    => url('/usuarios'),
