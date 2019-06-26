@@ -68,6 +68,26 @@ class buildResultController extends Controller
     }
 
 
+    public function addgoal(Request $request)
+    {
+    	$data = [
+        	'result_id'=>$request->get('result_id'),
+        	'goal_txt'=>$request->get('goal_txt'),
+        	'goal_formula'=>$request->get('goal_formula'),
+        	'goal_unit'=>$request->get('goal_unit')
+        ];
+
+
+
+
+        $result = Goal::create($data);
+
+        print($result);
+    }
+
+
+
+
     public function addformula(Request $request)
     {
         $result = FormulaResult::create([
