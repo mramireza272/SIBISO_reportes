@@ -29,68 +29,10 @@ class CreateFormController extends Controller {
     }
 
     /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function index2(Request $request,$id)
-    {
-
-        $items = ItemRol::where('rol_id',$id)->where('parent_id',null)->orderBy('order')->get();
-        print('<table>');
-        foreach ($items as $itm) {
-        	print('<tr>');
-
-        	print('<td>('.$itm->id.')');
-        	print('<input type="text" name="" value="'.$itm->item.'">');
-        	if($itm->editable)
-        	print($itm->editable);
-        	else
-        	print('0');
-        	print('</td>');
-
-
-        	foreach ($itm->cols as $col) {
-	        	print('<td class="col-form">('.$col->id.')');
-	        	print('<input type="text" name="col_'.$col->id.'" value="'.$col->columns.'">');
-	        	print('</td>');
-        	}
-
-
-
-        	# PARA EL BOTON DE AREGAR COLUMNA
-        	if(!$itm->editable)
-        	{
-	        	print('<td>');
-	        	print('<a href="#addCol">'.$itm->id.'[+]</a>');
-	        	print('</td>');
-	        }
-
-        	print('</tr>');
-
-
-        	foreach ($itm->childs as $subitm) {
-        		print('<tr>');
-	        	print('<td style="padding:0px 12px;">');
-	        	print('('.$subitm->id.')<input type="text" name="" value="'.$subitm->item.'">');
-	        	print('</td>');
-	        	print('</tr>');
-
-        	}
-
-        }
-
-        print('</table>');
-    }
-
-    /**
      * Show the form for creating a new resource.
      *
      * @return \Illuminate\Http\Response
      */
-
-
-
     public function create()
     {
     	#

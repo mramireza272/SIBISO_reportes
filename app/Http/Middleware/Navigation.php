@@ -31,15 +31,21 @@ class Navigation
                 ];
             }
 
-            
+
             if(Auth::user()->hasPermissionTo('index_form')){
                 $this->menus['Formularios'] = [
                     'url'    => url('/formularios'),
                     'active' => (strpos($url, str_replace(url('/'), '', '/formularios')) !== false) ? ' class="active-sub"' : '',
                     'icon'   => 'pli-full-view-2'
                 ];
+
+                $this->menus['Informes'] = [
+                    'url'    => url('/informes'),
+                    'active' => (strpos($url, str_replace(url('/'), '', '/informes')) !== false) ? ' class="active-sub"' : '',
+                    'icon'   => 'pli-bar-chart-2'
+                ];
             }
-            
+
             if(Auth::user()->hasPermissionTo('index_user')){
                 $this->menus['Usuarios'] = [
                     'url'    => url('/usuarios'),

@@ -19,7 +19,7 @@ class buildFormulaController extends Controller
      */
     public function index(Request $request)
     {
-        
+
     	$rows = ItemRol::where('rol_id',$request->rolid)->where('parent_id',null)->get();
     	$formula = $result = FormulaResult::where('id',$request->formulaid)->get()->first();
 
@@ -54,11 +54,11 @@ class buildFormulaController extends Controller
 		    		print('<td>');
 		    			if(isset($actives[$ch->id][$innercol->id]))
 		    				$checked = 'checked="true"';
-		    				
+
 		    			else
 		    				$checked = '';
 		  			if($ch->editable==true)
-		  			print('<input type="checkbox" name="check_'.$ch->id.'[]"  value="'.$ch->id.'_'.$innercol->id.'"   '.$checked.' /></td>');	
+		  			print('<input type="checkbox" name="check_'.$ch->id.'[]"  value="'.$ch->id.'_'.$innercol->id.'"   '.$checked.' /></td>');
 
 		    		}
 		    	print('</td>');
@@ -74,15 +74,15 @@ class buildFormulaController extends Controller
 		    		print('<td>');
 		    			if(isset($actives[$sbch->id][$innercol->id]))
 		    				$checked = 'checked="true"';
-		    				
+
 		    			else
 		    				$checked = '';
-		  			print('<input type="checkbox" name="check[]"  value="'.$sbch->id.'_'.$innercol->id.'" '.$checked.' /></td>');	
+		  			print('<input type="checkbox" name="check[]"  value="'.$sbch->id.'_'.$innercol->id.'" '.$checked.' /></td>');
 
 		    		}
 
 
-	    			
+
 	    			print('</tr>');
 	    		}
 
@@ -111,7 +111,7 @@ class buildFormulaController extends Controller
     public function create(Request $request)
     {
     	$variables = VariableFormula::where('formula_id',$request->get('formulaid'))->delete();
-    	
+
     	foreach($request->get('check') as $variable){
     		$pices = explode('_',$variable);
     		var_dump($pices);

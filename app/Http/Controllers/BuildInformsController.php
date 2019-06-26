@@ -3,42 +3,31 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Http\Requests\ResultRequest;
+use \Spatie\Permission\Models\Role;
 use App\Models\Result;
 use App\Models\Goal;
 use App\Models\ItemValueReport;
 use App\Models\FormulaResult;
 
-class buildResultController extends Controller
-{
+class BuildInformsController extends Controller {
+    function __construct() {
+        $this->middleware('auth');
+        /*$this->middleware('permission:create_form')->only(['buildCol', 'buildRow']);
+        $this->middleware('permission:index_form')->only('index');
+        $this->middleware('permission:edit_form')->only(['edit', 'updateInputName', 'updateEditable']);
+        $this->middleware('permission:show_form')->only('show');
+        $this->middleware('permission:delete_form')->only('destroyCol');*/
+    }
     /**
      * Display a listing of the resource.
      *
      * @return \Illuminate\Http\Response
      */
-    public function index(Request $request)
-    {
-        if($request->id){
-          $result = Result::where('rol_id',$request->id)->get();
+    public function index(){
+        $results = Result::with('rol')->orderBy('rol_id')->get();
 
-          foreach($result as $r){
-	          print('<div>');
-	          print('<div>'.$r->theme_result.'</div>');
-
-	          foreach($r->formulas as $formula){
-	          	print('<div>Formula '.$formula->id.' </div>');
-	          }
-
-	          print('</div>');
-          }
-
-
-	          print('<div>');
-	          print('agregar tema');
-	          print('</div>');
-
-
-
-        }
+        return view('informs.index', compact('results'));
     }
 
     /**
@@ -46,9 +35,10 @@ class buildResultController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create()
-    {
-        //
+    public function create(){
+        $roles = Role::all()->sortBy('name')->except(1);
+
+        return view('informs.create', compact('roles'));
     }
 
     /**
@@ -57,44 +47,12 @@ class buildResultController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function addresult(Request $request)
-    {
-        $result = Result::create([
-        	'rol_id'=>$request->get('rolid'),
-        	'theme_result'=>$request->get('text')
-        ]);
+    public function store(ResultRequest $request) {
+        //dd($request->all());
+        Result::create($request->all());
 
-        print($result);
+        return redirect()->route('informes.create')->with('info', 'Informe creado satisfactoriamente.');
     }
-
-
-    public function addformula(Request $request)
-    {
-        $result = FormulaResult::create([
-        	'result_id'=>$request->get('resultid'),
-        	'formula'=>'sum'
-        ]);
-
-        print($result);
-    }
-
-
-
-    public function rmformula(Request $request)
-    {
-        $result = FormulaResult::where('id',$request->get('fid'))->delete();
-        print($result);
-    }
-
-
-    public function rmresult(Request $request)
-    {
-        $result = Result::where('id',$request->get('id'))->delete();
-        print($result);
-    }
-
-
-
 
     /**
      * Display the specified resource.
