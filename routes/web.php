@@ -34,6 +34,7 @@ Route::get('addresult/', 'buildResultController@addresult');
 Route::get('rmresult/', 'buildResultController@rmresult');
 Route::get('addformula/', 'buildResultController@addformula');
 Route::get('rmformula/', 'buildResultController@rmformula');
+Route::get('addgoal/', 'buildResultController@addgoal');
 
 Route::resource('makeformula/', 'buildFormulaController');
 Route::get('/savevariables/', 'buildFormulaController@create');

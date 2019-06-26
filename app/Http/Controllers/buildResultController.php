@@ -22,8 +22,15 @@ class buildResultController extends Controller
           
           foreach($result as $r){
 	          print('<div>');
-	          print('<div>'.$r->theme_result.'</div>');
+	          print('<div><b>TEMA </b>'.$r->theme_result.'</div>');
 	          
+
+	          foreach($r->goals as $goal){
+	          	print('<div>META: '.$goal->goal_txt.' </div>');
+	          }
+
+
+
 	          foreach($r->formulas as $formula){
 	          	print('<div>Formula '.$formula->id.' </div>');
 	          }
@@ -66,6 +73,23 @@ class buildResultController extends Controller
 
         print($result);
     }
+
+
+    public function addgoal(Request $request)
+    {
+    	$data = [
+        	'result_id'=>$request->get('result_id'),
+        	'goal_txt'=>$request->get('goal_txt'),
+        	'goal_formula'=>$request->get('goal_formula'),
+        	'goal_unit'=>$request->get('goal_unit')
+        ];
+
+        $result = Goal::create($data);
+
+        print($result);
+    }
+
+
 
 
     public function addformula(Request $request)
