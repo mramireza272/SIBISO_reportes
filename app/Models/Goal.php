@@ -12,7 +12,7 @@ class Goal extends Model
     protected $dates = ['deleted_at'];
 
     protected $fillable = [
-      'result_id','gloal_txt',
+      'result_id','goal_txt',
       'goal_formula','goal_unit'
     ];
 
