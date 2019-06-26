@@ -84,6 +84,9 @@ class buildResultController extends Controller
         	'goal_unit'=>$request->get('goal_unit')
         ];
 
+
+
+
         $result = Goal::create($data);
 
         print($result);
