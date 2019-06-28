@@ -36,6 +36,8 @@ Route::get('/formularios/eliminarFila/{parent_id}/{item_id}', 'CreateFormControl
 Route::resource('formularios', 'CreateFormController');
 
 //CRUD reportes - Administrador
+Route::get('/informes/crearmeta/{id}', ['as' => 'informes.creategoal', 'uses' => 'BuildInformsController@createGoal']);
+Route::post('/informes/guardarmeta/', ['as' => 'informes.storegoal', 'uses' => 'BuildInformsController@storeGoal']);
 Route::resource('informes', 'BuildInformsController');
 
 #DISPATCHERS FOR RESULTS

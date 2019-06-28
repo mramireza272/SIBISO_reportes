@@ -71,9 +71,9 @@
 			        <thead>
 			            <tr>
 			                <th class="text-center" style="width: 5%">#</th>
-			                <th style="width: 50%">Unidad Administrativa Responsable</th>
-			                <th style="width: 25%">Tema</th>
-			                <th style="width: 25%">Acciones</th>
+			                <th style="width: 45%">Unidad Administrativa Responsable</th>
+			                <th style="width: 20%">Tema</th>
+			                <th style="width: 35%">Acciones</th>
 			            </tr>
 			        </thead>
 			        <tbody>
@@ -86,8 +86,14 @@
 			                	<a href="{{ route('informes.show', $result->id) }}" class="btn btn-sm btn-primary">
 	                                Ver
 	                            </a>
-	                            @can('edit_form')
-				                	<a href="{{ route('informes.edit', $result->id) }}" class="btn btn-sm btn-warning">
+			                	@can('edit_form')
+				                	<a href="{{ route('informes.creategoal', $result->id) }}" class="btn btn-sm btn-info">
+		                                Agregar Meta
+		                            </a>
+				                	<a href="{{ route('informes.edit', $result->id) }}" class="btn btn-sm btn-info">
+	                                	Agregar Variable
+	                            	</a>
+	                            	<a href="{{ route('informes.edit', $result->id) }}" class="btn btn-sm btn-warning">
 	                                	Editar
 	                            	</a>
                             	@endcan

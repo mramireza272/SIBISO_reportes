@@ -19,7 +19,7 @@ class CreateGoalsTable extends Migration
             $table->integer('result_id');
             $table->foreign('result_id')->references('id')->on('results');
             $table->string('goal_txt');
-            $table->string('goal_formula');
+            $table->string('goal_formula')->nullable();
             $table->string('goal_unit')->nullable();
             $table->softDeletes();
             $table->timestamps();

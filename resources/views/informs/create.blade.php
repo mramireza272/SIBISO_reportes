@@ -29,8 +29,7 @@
 		    @endif
 			<div class="panel">
 				<form method="POST" action="{{ route('informes.store') }}" class="panel-body form-horizontal form-padding">
-					<input type="hidden" name="created_by" value="{{ auth()->user()->id }}">
-					@include('informs.form', ['inform' => new \App\Models\Result])
+					@include('informs.form', ['result' => new \App\Models\Result, 'action' => 'create'])
 				</form>
 			</div>
 		</div>
