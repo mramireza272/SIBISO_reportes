@@ -17,5 +17,4 @@ class ItemValueReport extends Model
         'item_col_id',
         'valore'
     ];
-
 }

@@ -1,8 +1,9 @@
 <input type="hidden" name="_token" value="{{ csrf_token() }}">
+<input type="hidden" name="action" value="{{ $action }}">
 <div class="form-group">
     <label class="col-md-3 control-label" for="rol_id"><strong>Unidad Administrativa Responsable*</strong></label>
     <div class="col-md-9">
-        <select data-placeholder="Seleccione una Unidad Administrativa Responsable" id="rol_id" name="rol_id" class="form-control">
+        <select data-placeholder="Seleccione una Unidad Administrativa Responsable" id="rol_id" name="rol_id" class="form-control" @if($action == 'edit') disabled @endif>
         	<option value=""></option>
         	@foreach($roles as $role)
                 <option value="{{ $role->id }}" {{ old('rol_id', $result->rol_id) == $role->id ? 'selected' : '' }}> {{ $role->name }}</option>

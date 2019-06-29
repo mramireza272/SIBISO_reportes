@@ -20,5 +20,7 @@ class Report extends Model
         'active'
     ];
 
-
+    public function childs(){
+        return $this->hasMany('App\Models\ItemValueReport', 'report_id', 'id');
+    }
 }

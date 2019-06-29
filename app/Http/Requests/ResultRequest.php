@@ -21,10 +21,16 @@ class ResultRequest extends FormRequest
      * @return array
      */
     public function rules() {
-        return [
-            'theme_result'       => 'required|max:255',
-            'rol_id'             => 'required',
-        ];
+        if($this->action == 'edit') {
+            return [
+                'theme_result'       => 'required|max:255',
+            ];
+        } else {
+            return [
+                'theme_result'       => 'required|max:255',
+                'rol_id'             => 'required',
+            ];
+        }
     }
 
     /**

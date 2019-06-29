@@ -5,11 +5,14 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Http\Requests\ResultRequest;
 use App\Http\Requests\GoalRequest;
+use App\Http\Requests\VariableRequest;
 use \Spatie\Permission\Models\Role;
 use App\Models\Result;
 use App\Models\Goal;
 use App\Models\ItemValueReport;
+use App\Models\ItemRol;
 use App\Models\FormulaResult;
+use App\Models\VariableFormula;
 
 class BuildInformsController extends Controller {
     function __construct() {
@@ -128,5 +131,54 @@ class BuildInformsController extends Controller {
         Goal::create($request->all());
 
         return redirect()->route('informes.creategoal', $request->result_id)->with('info', 'Meta creada satisfactoriamente.');
+    }
+
+    /**
+     * Show the form for creating a new resource.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function createVariable($id){
+        $result = Result::findOrFail($id);
+        $formulaResult = FormulaResult::firstOrCreate([
+            'result_id' => $result->id,
+            'formula' => 'sum'
+        ]);
+        $rows = ItemRol::where([
+            ['rol_id', $result->rol_id],
+            ['parent_id', null]
+        ])->get();
+        $actives = [];
+
+        foreach($formulaResult->variables as $fova){
+            $actives[$fova->itemrol_id][$fova->itemstructure_id] = 'checked';
+        }
+
+        $variable = VariableFormula::where('formula_id', $formulaResult->id)->count();
+        $variable = ($variable > 0) ? 'Editar Variable' : 'Nueva Variable';
+
+        return view('informs.variable', compact('result', 'formulaResult', 'rows', 'actives', 'variable'));
+    }
+
+    /**
+     * Store a newly created resource in storage.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\Http\Response
+     */
+    public function storeVariable(Request $request) {
+        //dd($request->all());
+        VariableFormula::where('formula_id', $request->formula_id)->delete();
+
+        foreach($request->check as $variable) {
+            $pices = explode('_', $variable);
+            VariableFormula::create([
+                'formula_id' => $request->formula_id,
+                'itemrol_id' => $pices[0],
+                'itemstructure_id' => $pices[1]
+            ]);
+        }
+
+        return redirect()->route('informes.createvariable', $request->result_id)->with('info', 'Variable creada satisfactoriamente.');
     }
 }

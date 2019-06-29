@@ -6,6 +6,7 @@ use Auth;
 use Illuminate\Http\Request;
 use App\Models\Result;
 use App\Models\Goal;
+use App\Models\Report;
 use App\Models\ItemValueReport;
 
 class ResultController extends Controller
@@ -19,15 +20,14 @@ class ResultController extends Controller
     {
 
         if($request->id){
-          $result = Result::where('rol_id',$request->id)->get()->first();
+          $result = Result::where('rol_id', $request->id)->with('formulas')->get();
+          //$result = Result::all();
+          //dd($result);
 
-          print('<div>');
-          print($result->	theme_result);
+        foreach ($result as $result) {
+             print('<div>');
+          print($result->theme_result);
           print('</div>');
-
-
-
-
             foreach ($result->formulas as $formula) {
 
               $valus = [];
@@ -35,7 +35,6 @@ class ResultController extends Controller
                 $valus[] = ItemValueReport::where('item_rol_id',$variable->itemrol_id)->
                                             where('item_col_id',$variable->itemstructure_id)->
                                             sum('valore');
-
               }
 
               $total_value = array_sum($valus);
@@ -55,7 +54,7 @@ class ResultController extends Controller
 
             }
 
-
+        }
 
 
         }
@@ -76,7 +75,13 @@ class ResultController extends Controller
      */
     public function create()
     {
-        //
+        //el ver más
+        $valus[] = Report::where('rol_id',$variable->rol_id)->
+                           where('between de las fechas que elija')->with('childs')->get();
+
+        //hay que hacer un foreach de los childs y todos sus values se van a tratar como el valus
+
+
     }
 
     /**

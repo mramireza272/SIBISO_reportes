@@ -38,6 +38,8 @@ Route::resource('formularios', 'CreateFormController');
 //CRUD reportes - Administrador
 Route::get('/informes/crearmeta/{id}', ['as' => 'informes.creategoal', 'uses' => 'BuildInformsController@createGoal']);
 Route::post('/informes/guardarmeta/', ['as' => 'informes.storegoal', 'uses' => 'BuildInformsController@storeGoal']);
+Route::get('/informes/crearvariable/{id}', ['as' => 'informes.createvariable', 'uses' => 'BuildInformsController@createVariable']);
+Route::post('/informes/guardarvariable/', ['as' => 'informes.storevariable', 'uses' => 'BuildInformsController@storeVariable']);
 Route::resource('informes', 'BuildInformsController');
 
 #DISPATCHERS FOR RESULTS

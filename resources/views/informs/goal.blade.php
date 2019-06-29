@@ -31,7 +31,7 @@
 					<input type="hidden" name="_token" value="{{ csrf_token() }}">
 					<input type="hidden" name="result_id" value="{{ $result->id }}">
 					<div class="panel-heading">
-	                    <h3 class="panel-title"><strong>{{ $result->rol->name }}</strong></h3>
+	                    <h3 class="panel-title"><strong>{{ $result->rol->name .' - '. $result->theme_result }}</strong></h3>
 	                </div>
 					<div class="form-group">
 					    <label class="col-md-3 control-label" for="goal_txt"><strong>Nombre*</strong></label>
