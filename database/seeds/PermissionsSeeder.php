@@ -14,7 +14,7 @@ class PermissionsSeeder extends Seeder
      */
     public function run()
     {
-    	
+
     	Permission::create(['name' => 'create_user']);
     	Permission::create(['name' => 'delete_user']);
     	Permission::create(['name' => 'edit_user']);
@@ -26,7 +26,7 @@ class PermissionsSeeder extends Seeder
         Permission::create(['name' => 'index_roles']);
         Permission::create(['name' => 'show_roles']);
 
-        $role = Role::create(['name' => 'Administrador']);      
+        $role = Role::create(['name' => 'Administrador']);
 
         $role->givePermissionTo('create_user');
         $role->givePermissionTo('delete_user');
@@ -39,8 +39,7 @@ class PermissionsSeeder extends Seeder
         $role->givePermissionTo('index_roles');
         $role->givePermissionTo('show_roles');
 
-        $user =  User::findOrFail(1);
+        $user = User::findOrFail(1);
         $user->assignRole('Administrador');
-
     }
 }
