@@ -16,7 +16,7 @@ class Result extends Model
 
 
     public function goals(){
-    	return $this->hasMany('App\Models\Goal', 'result_id','id');
+    	return $this->hasMany('App\Models\Goal', 'result_id','id')->orderBy('id');
     }
 
     public function formulas(){
@@ -24,6 +24,6 @@ class Result extends Model
     }
 
     public function rol(){
-        return $this->belongsTo('Spatie\Permission\Models\Role', 'rol_id', 'id');
+        return $this->belongsTo('Spatie\Permission\Models\Role', 'rol_id', 'id')->orderBy('name');
     }
 }

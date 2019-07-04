@@ -28,7 +28,7 @@
                 	<input type="hidden" name="formula_id" value="{{ $formulaResult->id }}">
                 	<input type="hidden" name="result_id" value="{{ $result->id }}">
 	        		<div class="panel-heading">
-	                    <h3 class="panel-title"><strong>{{ $result->rol->name .' - '. $result->theme_result}}</strong></h3>
+	                    <h3 class="panel-title"><strong>{{ $result->rol->name .' - '. $result->theme_result }}</strong></h3>
 	                </div>
 					<div class="panel-body">
 		                <div class="table-responsive">
@@ -59,7 +59,7 @@
 			    												@php($checked = '')
 			    											@endif
 		  													@if($ch->editable == true)
-		  														<input class="magic-checkbox" type="checkbox" name="check_{{ $ch->id }}[]" id="check_{{ $ch->id }}[]" value="{{ $ch->id .'_'. $innercol->id }}" {{ $checked }} />
+		  														<input class="magic-checkbox" type="checkbox" name="check[]" id="check_{{ $ch->id }}[]" value="{{ $ch->id .'_'. $innercol->id }}" {{ $checked }} />
 		  														<label for="check_{{ $ch->id }}[]"></label>
 		  													@endif
 		  												</td>

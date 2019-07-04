@@ -40,10 +40,14 @@ Route::get('/informes/crearmeta/{id}', ['as' => 'informes.creategoal', 'uses' =>
 Route::post('/informes/guardarmeta/', ['as' => 'informes.storegoal', 'uses' => 'BuildInformsController@storeGoal']);
 Route::get('/informes/crearvariable/{id}', ['as' => 'informes.createvariable', 'uses' => 'BuildInformsController@createVariable']);
 Route::post('/informes/guardarvariable/', ['as' => 'informes.storevariable', 'uses' => 'BuildInformsController@storeVariable']);
+Route::put('/informes/updateMeta', 'BuildInformsController@updateGoal');
 Route::resource('informes', 'BuildInformsController');
 
+//Resultados reportes - Administrador
+Route::resource('resultados', 'ResultController')->only(['index', 'show']);
+
 #DISPATCHERS FOR RESULTS
-Route::resource('result/', 'ResultController');
+//Route::resource('result/', 'ResultController');
 Route::resource('makeresult/', 'buildResultController');
 
 Route::get('addresult/', 'buildResultController@addresult');

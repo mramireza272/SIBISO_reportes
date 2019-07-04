@@ -42,6 +42,12 @@ class Navigation
                 $this->menus['Informes'] = [
                     'url'    => url('/informes'),
                     'active' => (strpos($url, str_replace(url('/'), '', '/informes')) !== false) ? ' class="active-sub"' : '',
+                    'icon'   => 'pli-formula'
+                ];
+
+                $this->menus['Resultados'] = [
+                    'url'    => url('/resultados'),
+                    'active' => (strpos($url, str_replace(url('/'), '', '/resultados')) !== false) ? ' class="active-sub"' : '',
                     'icon'   => 'pli-bar-chart-2'
                 ];
             }

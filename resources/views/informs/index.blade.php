@@ -23,7 +23,7 @@
     </style>
 @endsection
 @section('customjs')
-<script src="/plugins/datatables/media/js/jquery.dataTables.min.js"></script>
+	<script src="/plugins/datatables/media/js/jquery.dataTables.min.js"></script>
 	<script>
 	 	$(document).ready(function() {
 		    $('#example').DataTable({

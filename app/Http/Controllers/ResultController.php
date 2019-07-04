@@ -9,14 +9,66 @@ use App\Models\Goal;
 use App\Models\Report;
 use App\Models\ItemValueReport;
 
-class ResultController extends Controller
-{
+class ResultController extends Controller {
+    function __construct() {
+        $this->middleware('auth');
+        $this->middleware('permission:index_form')->only('index');
+        $this->middleware('permission:show_form')->only('show');
+    }
+
     /**
      * Display a listing of the resource.
      *
      * @return \Illuminate\Http\Response
      */
-    public function index(Request $request)
+    public function index() {
+        $results = Result::orderBy('rol_id')->get();
+        $reports = [];
+
+        foreach ($results as $result) {
+            $report['id'] = $result->id;
+            $report['role'] = $result->rol->name;
+            $report['theme_result'] = $result->theme_result;
+
+            foreach ($result->formulas as $formula) {
+                $valus = [];
+
+                foreach($formula->variables as $variable){
+                    $valus[] = ItemValueReport::where([
+                        ['item_rol_id', $variable->itemrol_id],
+                        ['item_col_id', $variable->itemstructure_id]
+                    ])->sum('valore');
+                }
+
+                $report['total_value'] = array_sum($valus);
+                $goals = [];
+
+                foreach ($result->goals as $goal) {
+                    $dividendo = floatval($goal->goal_unit);
+                    $each_goal['goal_txt'] = $goal->goal_txt;
+                    $each_goal['goal_unit'] = $goal->goal_unit;
+                    $percent = ($report['total_value'] / $dividendo) * 100;
+                    $each_goal['percent'] = round($percent, 2) .' %';
+                    $goals[] = $each_goal;
+                    $each_goal = [];
+                }
+
+                $report['goals'] = $goals;
+            }
+
+            $reports[] = $report;
+            $report = [];
+        }
+
+        return view('results.index', compact('reports'));
+    }
+
+    /**
+     * Display a listing of the resource.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function index2(Request $request)
     {
 
         if($request->id){
@@ -101,9 +153,11 @@ class ResultController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
-    {
-        //
+    public function show($id) {
+        $result = Result::where('id', $id)->with('rol')->get()->first();
+        //dd($result);
+
+        return view('results.show', compact('result'));
     }
 
     /**

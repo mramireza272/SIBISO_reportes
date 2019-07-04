@@ -5,12 +5,73 @@
 @section('titulo_pagina', 'Nueva Meta')
 
 @section('customcss')
+	<link href="/plugins/datatables/media/css/jquery.dataTables.min.css" rel="stylesheet" type="text/css">
+    <link href="/plugins/datatables/media/css/dataTables.bootstrap.min.css">
+    <link href="/plugins/datatables/extensions/Responsive/css/responsive.dataTables.min.css">
+    <link href="/plugins/datatables/extensions/Buttons/css/buttons.dataTables.min.css">
+    <style>
+        table {
+          table-layout:fixed;
+        }
+        table td {
+          word-wrap: break-word;
+          max-width: 400px;
+        }
+        #example td {
+          white-space:inherit;
+        }
+    </style>
 @endsection
 
 @section('customjs')
-	<script type="text/javascript">
-	    $(document).ready(function(){
-	    });
+	<script src="/plugins/datatables/media/js/jquery.dataTables.min.js"></script>
+	<script>
+	 	$(document).ready(function() {
+		    $('#example').DataTable({
+		    	"language": {
+		            "url": "//cdn.datatables.net/plug-ins/1.10.19/i18n/Spanish.json"
+		        },
+		        "responsive": true,
+		        "paging"    : true,
+		        "ordering"	: false
+		    });
+
+		    $("#example input[name=goal_txt]").on('change', function(e){
+		    	e.preventDefault();
+		    	var params = {
+		        	"id" : $(this).attr('data-id'),
+		        	"goal_txt" : $(this).val(),
+		            "_token": '{{ csrf_token() }}'
+		        };
+		    	$.ajax({
+					type: 'PUT',
+					dataType: 'JSON',
+					url: "{{ url('/informes/updateMeta') }}",
+					data: params,
+					success: function(data){
+						console.log(data);
+					}
+				});
+		    });
+
+		    $("#example input[name=goal_unit]").on('change', function(e){
+		    	e.preventDefault();
+		    	var params = {
+		        	"id" : $(this).attr('data-id'),
+		        	"goal_unit" : $(this).val(),
+		            "_token": '{{ csrf_token() }}'
+		        };
+		    	$.ajax({
+					type: 'PUT',
+					dataType: 'JSON',
+					url: "{{ url('/informes/updateMeta') }}",
+					data: params,
+					success: function(data){
+						console.log(data);
+					}
+				});
+		    });
+		});
 	</script>
 @endsection
 
@@ -26,6 +87,38 @@
 		        	</div>
 			    </div>
 		    @endif
+		    <div class="panel">
+		    	<div class="panel-heading">
+                    <h3 class="panel-title"><strong>{{ $result->rol->name .' - '. $result->theme_result }}</strong></h3>
+                </div>
+                <div class="panel-body">
+					<div class="row">
+			            <div class="col-sm-12 col-md-12 col-lg-12 col-xl-12">
+					    	<table id="example" class="display" style="width:100%">
+						        <thead>
+						            <tr>
+						                <th class="text-center" style="width: 5%">#</th>
+						                <th style="width: 45%">Meta</th>
+						                <th style="width: 25%">Unidad</th>
+						            </tr>
+						        </thead>
+						        <tbody>
+					        	@foreach($goals as $goal)
+						            <tr>
+						            	<td>{{ $loop->iteration }}</td>
+						                <td>
+						                	<strong><input class="form-control" type="text" name="goal_txt" value="{{ $goal->goal_txt }}" data-id="{{ $goal->id }}"/></strong>
+						                </td>
+						                <td><strong><input class="form-control" type="text" name="goal_unit" value="{{ $goal->goal_unit }}" data-id="{{ $goal->id }}"/></strong>
+						                </td>
+						            </tr>
+					        	@endforeach
+						        </tbody>
+						    </table>
+						</div>
+					</div>
+				</div>
+			</div>
 			<div class="panel">
 				<form method="POST" action="{{ route('informes.storegoal') }}" class="panel-body form-horizontal form-padding">
 					<input type="hidden" name="_token" value="{{ csrf_token() }}">

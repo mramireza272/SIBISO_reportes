@@ -16,7 +16,7 @@
 	        <div class="panel">
 	        	<form class="panel-body form-horizontal form-padding">
 	        		<div class="panel-heading">
-	                    <h3 class="panel-title"><strong>{{ $result->rol->name .' - '. $result->theme_result}}</strong></h3>
+	                    <h3 class="panel-title"><strong>{{ $result->rol->name .' - '. $result->theme_result }}</strong></h3>
 	                </div>
 					<div class="panel-body">
 		                <div class="panel-heading">

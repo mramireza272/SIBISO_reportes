@@ -17,12 +17,13 @@ use App\Models\VariableFormula;
 class BuildInformsController extends Controller {
     function __construct() {
         $this->middleware('auth');
-        /*$this->middleware('permission:create_form')->only(['buildCol', 'buildRow']);
+        $this->middleware('permission:create_form')->only(['create', 'store', 'createGoal', 'storeGoal', 'createVariable', 'storeVariable']);
         $this->middleware('permission:index_form')->only('index');
-        $this->middleware('permission:edit_form')->only(['edit', 'updateInputName', 'updateEditable']);
+        $this->middleware('permission:edit_form')->only(['edit', 'update', 'updateGoal']);
         $this->middleware('permission:show_form')->only('show');
-        $this->middleware('permission:delete_form')->only('destroyCol');*/
+        $this->middleware('permission:delete_form')->only('destroyCol');
     }
+
     /**
      * Display a listing of the resource.
      *
@@ -116,8 +117,9 @@ class BuildInformsController extends Controller {
      */
     public function createGoal($id){
         $result = Result::findOrFail($id);
+        $goals = Goal::where('result_id', $result->id)->orderBy('goal_txt')->get();
 
-        return view('informs.goal', compact('result'));
+        return view('informs.goal', compact('result', 'goals'));
     }
 
     /**
@@ -131,6 +133,16 @@ class BuildInformsController extends Controller {
         Goal::create($request->all());
 
         return redirect()->route('informes.creategoal', $request->result_id)->with('info', 'Meta creada satisfactoriamente.');
+    }
+
+    public function updateGoal(Request $request) {
+        if($request->filled('goal_txt')) {
+            Goal::where('id', $request->id)->update(['goal_txt' => $request->goal_txt]);
+        } elseif($request->filled('goal_unit')) {
+            Goal::where('id', $request->id)->update(['goal_unit' => $request->goal_unit]);
+        }
+
+        return;
     }
 
     /**
