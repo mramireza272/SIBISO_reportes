@@ -1,25 +1,16 @@
 @extends('templates.master')
 
-@section('titulo')
-	Sistema de Reportes SIBISO | Acceso al sistema
-@endsection
+@section('titulo', 'Sistema de Reportes SIBISO | Acceso al sistema')
 
-@section('titulo_pagina')
-	Permiso
-@endsection
+@section('titulo_pagina', 'Permiso')
 
-@section('content')  
+@section('content')
 <div class="panel">
-    <div class="panel-body">
-		<h2 class="panel-title"><strong>{{ $role->slug }}</strong></h2>
-		<p><strong>Descripción</strong> {{ $role->description }}</p>
-		<p><strong>Permisos</strong> 
-			<ul>
-				@foreach($role->permissions as $permission)
-					<li><strong>{{$permission->name}}</strong> <em>{{$permission->description}}</em></li>
-				@endforeach
-			</ul>
-		</p>
+   <div class="panel-body">
+		<h2 class="panel-title"><strong>{{ $permission->name }}</strong></h2>
     </div>
+    <div class="panel-footer text-right">
+    	<a role="button" href="{{ route('permisos.index') }}" class="btn btn-primary">Regresar</a>
+	</div>
 </div>
 @endsection

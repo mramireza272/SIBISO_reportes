@@ -10,7 +10,7 @@
 
 @section('content')
     <div class="row">
-	    <div class="col-lg-12">
+	    <div class="col-sm-12 col-md-12 col-lg-12 col-xl-12">
 	        <div class="panel">
 	        	@if(session()->has('info'))
 		        	<div class="panel-heading">
@@ -24,7 +24,7 @@
 
 	            <form method="POST" action="{{ route('usuarios.store') }}" enctype="multipart/form-data"
 	                  class="panel-body form-horizontal form-padding">
-	                  <input type="hidden" name="created_by" value="{{auth()->user()->id}}">
+	                  <input type="hidden" name="created_by" value="{{ auth()->user()->id }}">
 	                  @php($default = true)
 	                  @include('Users.form', ['user' => new App\User])
 				</form>

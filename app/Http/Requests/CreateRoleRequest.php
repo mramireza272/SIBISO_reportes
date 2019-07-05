@@ -21,19 +21,18 @@ class CreateRoleRequest extends FormRequest
      *
      * @return array
      */
-    public function rules()
-    {
+    public function rules() {
         return [
-            'name' => 'required',
+            'name' => 'required|max:255',
             'permissions' => 'required'
         ];
     }
 
-    public function messages()
-    {
+    public function messages() {
         return [
-            'name.required' => 'El campo Nombre es obligatorio.',
-            'permissions.required' => 'Debe seleccionar al menos un permiso'
+            'name.required' => 'El Nombre del Rol es obligatorio',
+            'permissions.required' => 'Debe seleccionar al menos un permiso',
+            'max' => 'El Nombre del Rol no debe ser mayor a :max caracteres',
         ];
     }
 }
