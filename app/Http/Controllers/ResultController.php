@@ -245,7 +245,7 @@ class ResultController extends Controller {
                 $report['goals'] = $goals;
             }
 
-            return response()->json(['result' => $report, 'prueba' => $reports]);
+            return response()->json(['result' => $report]);
         }
 
         return response()->json(['error' => $validator->errors()->all()]);
