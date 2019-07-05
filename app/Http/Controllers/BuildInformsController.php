@@ -117,7 +117,7 @@ class BuildInformsController extends Controller {
      */
     public function createGoal($id){
         $result = Result::findOrFail($id);
-        $goals = Goal::where('result_id', $result->id)->orderBy('goal_txt')->get();
+        $goals = Goal::where('result_id', $result->id)->orderBy('id')->get();
 
         return view('informs.goal', compact('result', 'goals'));
     }
@@ -168,8 +168,9 @@ class BuildInformsController extends Controller {
 
         $variable = VariableFormula::where('formula_id', $formulaResult->id)->count();
         $variable = ($variable > 0) ? 'Editar Variable' : 'Nueva Variable';
+        $btnText = ($variable == 'Editar Variable') ? 'Actualizar' : 'Guardar';
 
-        return view('informs.variable', compact('result', 'formulaResult', 'rows', 'actives', 'variable'));
+        return view('informs.variable', compact('result', 'formulaResult', 'rows', 'actives', 'variable', 'btnText'));
     }
 
     /**
@@ -178,7 +179,7 @@ class BuildInformsController extends Controller {
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function storeVariable(Request $request) {
+    public function storeVariable(VariableRequest $request) {
         //dd($request->all());
         VariableFormula::where('formula_id', $request->formula_id)->delete();
 

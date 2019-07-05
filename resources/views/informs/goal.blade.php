@@ -109,7 +109,7 @@
 						                <td>
 						                	<strong><input class="form-control" type="text" name="goal_txt" value="{{ $goal->goal_txt }}" data-id="{{ $goal->id }}"/></strong>
 						                </td>
-						                <td><strong><input class="form-control" type="text" name="goal_unit" value="{{ $goal->goal_unit }}" data-id="{{ $goal->id }}"/></strong>
+						                <td><strong><input class="form-control" type="text" name="goal_unit" value="{{ $goal->goal_unit }}" oninput="this.value = this.value.replace(/[^0-9]/g, ''); this.value = this.value.replace(/(\..*)\./g, '$1');" data-id="{{ $goal->id }}"/></strong>
 						                </td>
 						            </tr>
 					        	@endforeach
@@ -136,7 +136,7 @@
 					<div class="form-group">
 					    <label class="col-md-3 control-label" for="goal_unit"><strong>Unidad*</strong></label>
 					    <div class="col-md-9">
-					        <input type="text" id="goal_unit" name="goal_unit" class="form-control" placeholder="Ingrese la unidad" value="{{ old('goal_unit') }}" oninput="this.value = this.value.replace(/[^0-9.]/g, ''); this.value = this.value.replace(/(\..*)\./g, '$1');" />
+					        <input type="text" id="goal_unit" name="goal_unit" class="form-control" placeholder="Ingrese la unidad" value="{{ old('goal_unit') }}" oninput="this.value = this.value.replace(/[^0-9]/g, ''); this.value = this.value.replace(/(\..*)\./g, '$1');" />
 					        {!! $errors->first('goal_unit', '<small class="help-block text-danger">:message</small>') !!}
 					    </div>
 					</div>

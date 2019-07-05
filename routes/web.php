@@ -44,6 +44,7 @@ Route::put('/informes/updateMeta', 'BuildInformsController@updateGoal');
 Route::resource('informes', 'BuildInformsController');
 
 //Resultados reportes - Administrador
+Route::post('/resultados/generaravance','ResultController@buildProgress');
 Route::resource('resultados', 'ResultController')->only(['index', 'show']);
 
 #DISPATCHERS FOR RESULTS

@@ -59,8 +59,8 @@
 			    												@php($checked = '')
 			    											@endif
 		  													@if($ch->editable == true)
-		  														<input class="magic-checkbox" type="checkbox" name="check[]" id="check_{{ $ch->id }}[]" value="{{ $ch->id .'_'. $innercol->id }}" {{ $checked }} />
-		  														<label for="check_{{ $ch->id }}[]"></label>
+		  														<input class="magic-checkbox" type="checkbox" name="check[]" id="check_{{ $ch->id .'_'. $innercol->id }}[]" value="{{ $ch->id .'_'. $innercol->id }}" {{ $checked }} />
+		  														<label for="check_{{ $ch->id .'_'. $innercol->id }}[]"></label>
 		  													@endif
 		  												</td>
 												    @endforeach
@@ -78,8 +78,8 @@
 			    											@else
 			    												@php($checked = '')
 			    											@endif
-			  												<input class="magic-checkbox" type="checkbox" name="check[]" id="check_{{ $sbch->id }}[]" value="{{ $sbch->id .'_'. $innercol->id }}" {{ $checked }} />
-			  												<label for="check_{{ $sbch->id }}[]"></label>
+			  												<input class="magic-checkbox" type="checkbox" name="check[]" id="check_{{ $sbch->id .'_'. $innercol->id }}[]" value="{{ $sbch->id .'_'. $innercol->id }}" {{ $checked }} />
+			  												<label for="check_{{ $sbch->id .'_'. $innercol->id }}[]"></label>
 		  												</td>
 		  											@endforeach
 						                        </tr>
@@ -91,8 +91,9 @@
 					    </div>
 		            </div>
 					<div class="panel-footer text-right">
+						{!! $errors->first('check', '<small class="help-block text-danger">:message</small>') !!}
 						<a role="button" href="{{ route('informes.index') }}" class="btn btn-primary">Regresar</a>
-						<button type="submit" class="btn btn-primary">{{ isset($btnText) ? $btnText : 'Guardar'}}</button>
+						<button type="submit" class="btn btn-primary">{{ isset($btnText) ? $btnText : 'Guardar' }}</button>
 					</div>
 				</form>
 			</div>
