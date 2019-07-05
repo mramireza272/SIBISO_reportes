@@ -8,6 +8,7 @@ use App\Models\Result;
 use App\Models\Goal;
 use App\Models\Report;
 use App\Models\ItemValueReport;
+use \Spatie\Permission\Models\Role;
 use Validator;
 
 class ResultController extends Controller {
@@ -23,8 +24,11 @@ class ResultController extends Controller {
      * @return \Illuminate\Http\Response
      */
     public function index() {
+        //dd($request->all());
+        $roles = Role::all()->sortBy('name')->except(1);
         $results = Result::orderBy('rol_id')->get();
         $reports = [];
+        $role_id = '';
 
         foreach ($results as $result) {
             $report['id'] = $result->id;
@@ -61,7 +65,7 @@ class ResultController extends Controller {
             $report = [];
         }
 
-        return view('results.index', compact('reports'));
+        return view('results.index', compact('reports', 'roles', 'role_id'));
     }
 
     /**
@@ -193,6 +197,56 @@ class ResultController extends Controller {
     public function destroy($id)
     {
         //
+    }
+
+    /**
+     * Display a listing of the resource.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function search(Request $request) {
+        //dd($request->all());
+        $roles = Role::all()->sortBy('name')->except(1);
+        $results = Result::where('rol_id', $request->uar)->get();
+        $reports = [];
+        $role_id = $request->uar;
+
+        foreach ($results as $result) {
+            $report['id'] = $result->id;
+            $report['role'] = $result->rol->name;
+            $report['theme_result'] = $result->theme_result;
+
+            foreach ($result->formulas as $formula) {
+                $valus = [];
+
+                foreach($formula->variables as $variable){
+                    $valus[] = ItemValueReport::where([
+                        ['item_rol_id', $variable->itemrol_id],
+                        ['item_col_id', $variable->itemstructure_id]
+                    ])->sum('valore');
+                }
+
+                $report['total_value'] = array_sum($valus);
+                $goals = [];
+
+                foreach ($result->goals as $goal) {
+                    $dividendo = floatval($goal->goal_unit);
+                    $each_goal['goal_txt'] = $goal->goal_txt;
+                    $each_goal['goal_unit'] = $goal->goal_unit;
+                    $percent = ($report['total_value'] / $dividendo) * 100;
+                    $each_goal['percent'] = round($percent, 2) .' %';
+                    $goals[] = $each_goal;
+                    $each_goal = [];
+                }
+
+                $report['goals'] = $goals;
+            }
+
+            $reports[] = $report;
+            $report = [];
+        }
+
+        return view('results.index', compact('reports', 'roles', 'role_id'));
     }
 
     public function buildProgress(Request $request) {
