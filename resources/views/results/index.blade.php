@@ -17,9 +17,41 @@
 @endsection
 
 @section('customjs')
+	<script type="application/javascript" >
+		$(document).ready(function() {
+		    $('select').chosen({no_results_text: "Sin resultados encontrados", width: "100%", allow_single_deselect:true});
+		    });
+	</script>
 @endsection
 
 @section('content')
+	<div class="row">
+		<div class="col-sm-12 col-md-12 col-lg-12 col-xl-12">
+			<div class="panel">
+				<form method="POST" action="{{ route('resultados.search') }}" class="panel-body form-horizontal form-padding">
+					<input type="hidden" name="_token" value="{{ csrf_token() }}">
+					<div class="panel-heading">
+				        <h3 class="panel-title"><strong>Filtro</strong></h3>
+				    </div>
+				    <div class="form-group">
+				    	<label class="control-label col-sm-3 col-md-3 col-lg-3 col-xl-3 text-right"><strong>Unidad Administrativa Responsable: </strong></label>
+					    <div class="col-sm-4 col-md-4 col-lg-4 col-xl-4">
+					        <select data-placeholder="Selecciona la Unidad Administrativa Responsable" class="form-control" name="uar">
+		                        <option value=""></option>
+		                        @foreach($roles as $role)
+		                        	<option value="{{ $role->id }}" @if($role->id == $role_id) selected @endif> {{ $role->name }}</option>
+		                        @endforeach
+		                    </select>
+		                </div>
+		                <div class="col-sm-4 col-md-4 col-lg-4 col-xl-4">
+		                	<button type="submit" class="btn btn-primary">Filtrar</button>
+		                	<a role="button" href="{{ route('resultados.index') }}" class="btn btn-info">Borrar filtro</a>
+		                </div>
+		            </div>
+				</form>
+			</div>
+		</div>
+	</div>
 	@foreach($reports as $report)
 		<div class="row">
 			<div class="col-sm-12 col-md-12 col-lg-12 col-xl-12">
