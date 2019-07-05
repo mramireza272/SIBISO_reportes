@@ -135,7 +135,7 @@
 						</div>
 		            </div>
 					<div class="panel-footer text-right">
-						<a role="button" href="{{ route('resultados.index') }}" class="btn btn-primary">Regresar</a>
+						<a role="button" href="javascript:history.back(1)" class="btn btn-primary">Regresar</a>
 					</div>
 				</form>
 			</div>
