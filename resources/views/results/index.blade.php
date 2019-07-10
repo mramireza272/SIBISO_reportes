@@ -6,10 +6,6 @@
 
 @section('customcss')
 	<style>
-		table {
-	      table-layout:`fixed;
-	    }
-
 	    table thead, th, tbody, td {
 	      text-align: center;
 	    }
@@ -56,15 +52,17 @@
 		<div class="row">
 			<div class="col-sm-12 col-md-12 col-lg-12 col-xl-12">
 				<div class="panel">
-					<form class="panel-body form-horizontal form-padding">
-						<div class="panel-heading">
-							<div class="col-md-6">
-				                <h3 class="panel-title">Reporte: <strong>{{ $report['theme_result'] }}</strong></h3>
-				            </div>
-				            <div class="col-md-6">
-				                <h3 class="panel-title text-right">Área: <strong>{{ $report['role'] }}</strong></h3>
-				            </div>
-		                </div>
+					<form class="form-horizontal form-padding">
+						<div class="panel-body">
+							<div class="panel-heading">
+								<div class="col-sm-6 col-md-6 col-lg-6 col-xl-6">
+					                <h3 class="panel-title">Reporte: <strong>{{ $report['theme_result'] }}</strong></h3>
+					            </div>
+					            <div class="col-sm-6 col-md-6 col-lg-6 col-xl-6">
+					                <h3 class="panel-title text-right" title="{{ $report['role'] }}">Área: <strong>{{ $report['role'] }}</strong></h3>
+					            </div>
+			                </div>
+			            </div>
 		                <div class="panel-body">
 		                	@isset($report['goals'])
 			                	@if(count($report['goals']) > 0)
@@ -114,7 +112,7 @@
 										             <tr>
 										             	@foreach($report['goals'] as $goal)
 											             	<td>
-											             		{{ $report['total_value'] .' ('. $goal['percent'] .')' }}
+											             		{{  $report['total_value'] .' ('. $goal['percent'] .')' }}
 											             	</td>
 										             	@endforeach
 										             </tr>

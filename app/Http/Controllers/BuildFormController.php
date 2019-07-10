@@ -83,7 +83,7 @@ class BuildFormController extends Controller {
             }
         }
 
-        return redirect()->route('reportes.create')->with('info', '<p style="text-align: justify;">Reporte creado satisfactoriamente. <strong>¡ IMPORTANTE !</strong> Puede editar o eliminar el registro hasta 2 horas después de haberlo creado. Le recomendamos consultarlo para estar seguro de que la información registrada es correcta. Si requiere eliminar o editar un registro después de este periodo, comunique su solicitud a <ins>formularios.sibiso@gmail.com</ins></p>');
+        return redirect()->route('reportes.create')->with('info', '<p style="text-align: justify;">Registro creado satisfactoriamente. <strong>¡ IMPORTANTE !</strong> Puede editar o eliminar el registro hasta 2 horas después de haberlo creado. Le recomendamos consultarlo para estar seguro de que la información registrada es correcta. Si requiere eliminar o editar un registro después de este periodo, comunique su solicitud a <ins>formularios.sibiso@gmail.com</ins></p>');
     }
 
     /**
@@ -200,7 +200,7 @@ class BuildFormController extends Controller {
             }
         }
 
-            return redirect()->route('reportes.edit', $id)->with('info', '<p style="text-align: justify;">Reporte editado satisfactoriamente. <strong>¡ IMPORTANTE !</strong> Puede editar o eliminar el registro hasta 2 horas después de haberlo creado. Le recomendamos consultarlo para estar seguro de que la información registrada es correcta. Si requiere eliminar o editar un registro después de este periodo, comunique su solicitud a <ins>formularios.sibiso@gmail.com</ins></p>');
+            return redirect()->route('reportes.edit', $id)->with('info', '<p style="text-align: justify;">Registro editado satisfactoriamente. <strong>¡ IMPORTANTE !</strong> Puede editar o eliminar el registro hasta 2 horas después de haberlo creado. Le recomendamos consultarlo para estar seguro de que la información registrada es correcta. Si requiere eliminar o editar un registro después de este periodo, comunique su solicitud a <ins>formularios.sibiso@gmail.com</ins></p>');
         }
 
         return redirect()->route('reportes.index');
@@ -219,7 +219,7 @@ class BuildFormController extends Controller {
             $report->delete();
             $itemValueReport = ItemValueReport::where('report_id', $id)->delete();
 
-            return redirect()->route('reportes.index')->with('info', 'Reporte eliminado satisfactoriamente.');
+            return redirect()->route('reportes.index')->with('info', 'Registro eliminado satisfactoriamente.');
         }
 
         return redirect()->route('reportes.index');

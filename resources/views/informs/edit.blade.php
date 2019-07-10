@@ -2,7 +2,7 @@
 
 @section('titulo', 'Sistema de Reportes SIBISO')
 
-@section('titulo_pagina', 'Editar Informe')
+@section('titulo_pagina', 'Editar Reporte')
 
 @section('customcss')
 @endsection

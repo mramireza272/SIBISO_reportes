@@ -105,8 +105,7 @@ class BuildInformsController extends Controller {
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
-    {
+    public function destroy($id){
         //
     }
 
@@ -143,6 +142,19 @@ class BuildInformsController extends Controller {
         }
 
         return;
+    }
+
+    /**
+     * Remove the specified resource from storage.
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function destroyGoal(Request $request){
+        //dd($request->all());
+        Goal::findOrFail($request->id)->delete();
+
+        return redirect()->route('informes.creategoal', $request->result_id)->with('info', 'Meta eliminada satisfactoriamente.');
     }
 
     /**

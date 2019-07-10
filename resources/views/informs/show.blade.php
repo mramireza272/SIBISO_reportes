@@ -14,7 +14,7 @@
     <div class="row">
 	    <div class="col-sm-12 col-md-12 col-lg-12 col-xl-12">
 	        <div class="panel">
-	        	<form class="panel-body form-horizontal form-padding">
+	        	<form class="form-horizontal form-padding">
 	        		<div class="panel-heading">
 	                    <h3 class="panel-title"><strong>{{ $result->rol->name .' - '. $result->theme_result }}</strong></h3>
 	                </div>

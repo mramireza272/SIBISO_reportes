@@ -10,9 +10,6 @@
     <link href="/plugins/datatables/extensions/Responsive/css/responsive.dataTables.min.css">
     <link href="/plugins/datatables/extensions/Buttons/css/buttons.dataTables.min.css">
     <style>
-        table {
-          table-layout:fixed;
-        }
         table td {
           word-wrap: break-word;
           max-width: 400px;
@@ -71,6 +68,15 @@
 					}
 				});
 		    });
+
+		    $("#example").on('click', '.delete', function(e){
+		    	e.preventDefault();
+		        var $form = $(this);
+			    $('#confirm').modal({ backdrop: 'static', keyboard: false })
+			        .on('click', '#delete-btn', function(){
+			            $form.submit();
+			    });
+		    });
 		});
 	</script>
 @endsection
@@ -100,6 +106,7 @@
 						                <th class="text-center" style="width: 5%">#</th>
 						                <th style="width: 45%">Meta</th>
 						                <th style="width: 25%">Unidad</th>
+						                <th style="width: 25%">Acciones</th>
 						            </tr>
 						        </thead>
 						        <tbody>
@@ -109,12 +116,43 @@
 						                <td>
 						                	<strong><input class="form-control" type="text" name="goal_txt" value="{{ $goal->goal_txt }}" data-id="{{ $goal->id }}"/></strong>
 						                </td>
-						                <td><strong><input class="form-control" type="text" name="goal_unit" value="{{ $goal->goal_unit }}" oninput="this.value = this.value.replace(/[^0-9]/g, ''); this.value = this.value.replace(/(\..*)\./g, '$1');" data-id="{{ $goal->id }}"/></strong>
+						                <td><strong><input class="form-control" type="text" name="goal_unit" value="{{ number_format($goal->goal_unit) }}" oninput="this.value = this.value.replace(/[^0-9]/g, ''); this.value = this.value.replace(/(\..*)\./g, '$1');" data-id="{{ $goal->id }}"/></strong>
+						                </td>
+						                <td>
+						                	@can('delete_form')
+							                	<form class="delete" style="display: inline;" method="POST" action="{{ route('informes.destroyGoal') }}">
+				                                    {!! method_field('DELETE') !!}
+									                <input type="hidden" name="_token" value="{{ csrf_token() }}">
+									                <input type="hidden" name="result_id" value="{{ $result->id }}">
+									                <input type="hidden" name="id" value="{{ $goal->id }}">
+									                <button title="Eliminar" class="btn btn-sm btn-danger">
+						        						Eliminar
+						        					</button>
+								                </form>
+							                @endcan
 						                </td>
 						            </tr>
 					        	@endforeach
 						        </tbody>
 						    </table>
+
+						    <div class="modal" id="confirm">
+							    <div class="modal-dialog modal-sm">
+							        <div class="modal-content">
+							            <div class="modal-header">
+							                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+							                <h4 class="modal-title" style="text-align: center;">Atención</h4>
+							            </div>
+							            <div class="modal-body" style="text-align: center;">
+							                <p>¿Está seguro de eliminar?</p>
+							            </div>
+							            <div class="modal-footer">
+							                <button type="button" class="btn btn-sm btn-default" data-dismiss="modal">Cerrar</button>
+								            <button type="button" class="btn btn-sm btn-primary" id="delete-btn">Eliminar</button>
+							            </div>
+							        </div>
+							    </div>
+							</div>
 						</div>
 					</div>
 				</div>

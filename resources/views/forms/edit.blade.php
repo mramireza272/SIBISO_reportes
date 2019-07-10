@@ -11,7 +11,6 @@
 	<script type="text/javascript">
 	    $(document).ready(function(){
 	    	$("#example").on('click', '.col-info', function(e){
-	    		alert('col info');
                 e.preventDefault();
                 var item_id = $(this).attr('value');
                 $.get('/formularios/nuevaColumna/'+ item_id, function(data){
@@ -25,13 +24,11 @@
             });
 
             $("#example").on('click', '.col-danger', function(e){
-            	alert('col danger');
                 e.preventDefault();
                 var item_rol_id = $(this).attr('data-item');
                 var rol_structure_item = $(this).attr('data-structure');
                 $.get('/formularios/eliminarColumna/'+ item_rol_id +'/'+ rol_structure_item, function(data){
 				    //esta el la peticion get, la cual se divide en tres partes. ruta,variables y funcion
-				    alert(data);
 				    data = data.split('&');
 				    var input = "col_"+ data[0];
 				    var structure = "";
@@ -49,21 +46,27 @@
             });
 
             $("#example").on('click', '.row-info', function(e){
-            	alert('row info');
                 e.preventDefault();
                 var id = $(this).attr('data-id');
                 var rol_id = $(this).attr('data-rol');
                 var parent_id = $(this).attr('data-parent');
+                var print_row = $(this).attr('data-row');
                 $.get('/formularios/nuevaFila/'+ rol_id +'/'+ parent_id, function(data){
 				    //esta el la peticion get, la cual se divide en tres partes. ruta,variables y funcion
 				    var input = '<tr><td style="padding:12px;"><input type="text" name="row_'+ data.id +'" data-type="item" data-id="'+ data.id +'" value="'+ data.item +'" /></td></tr>';
 
 				    if(data.parent_id === null) {
-				    	$('#rowChilds').show();
-				    	$('#rowChilds').append(input);
+				    	$('#rowChilds_'+ id).show();
+				    	$('#rowChilds_'+ id).append(input);
+				    } else if(print_row == 'child') {
+				    	$('#rowSubChilds_'+ id).show();
+				    	$('#rowSubChilds_'+ id).append(input);
+				    } else if(print_row == 'childlast') {
+				    	$('#rowSubChildsLast').show();
+				    	$('#rowSubChildsLast').append(input);
 				    } else {
-				    	$('#rowSubChilds').show();
-				    	$('#rowSubChilds').append(input);
+				    	$('#rowChilds_'+ id).show();
+				    	$('#rowChilds_'+ id).append(input);
 				    }
 
 				    $('.row-danger[data-item="' + parent_id + '"][data-id="'+ id +'"]').attr('data-item', data.parent_id).attr('data-id', data.id);
@@ -71,13 +74,11 @@
             });
 
             $("#example").on('click', '.row-danger', function(e){
-            	alert('row danger');
                 e.preventDefault();
                 var item_id = $(this).attr('data-id');
                 var parent_id = $(this).attr('data-item');
                 $.get('/formularios/eliminarFila/'+ parent_id +'/'+ item_id, function(data){
 				    //esta el la peticion get, la cual se divide en tres partes. ruta,variables y funcion
-				    alert(data);
 				    data = data.split('&');
 				    var input = "row_"+ data[0];
 				    var item = "";
@@ -116,7 +117,6 @@
 		    });
 
 		    $("#example").on('change', 'input[type=checkbox]', function(e){
-	        	alert('check');
 		    	e.preventDefault();
 		    	var params = {
 		        	"id" : $(this).attr('id'),
