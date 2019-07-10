@@ -27,11 +27,17 @@ class ResultController extends Controller {
         //dd($request->all());
         $roles = Role::all()->sortBy('name')->except(1);
         //$results = Result::orderBy('rol_id')->get();
-        $results = Result::all()->sortBy('theme_result')->sortBy('rol_id');
+        /*$results = Result::orderBy('theme_result')->get()->groupBy(function($item) {
+            return $item->rol_id;
+        });*/
+        $results = Result::all()->sortBy('theme_result')->groupBy('rol_id');
+        //dd($results);
+        //$results = $results->groupBy('rol_id');
         $reports = [];
         $role_id = '';
 
-        foreach ($results as $result) {
+        foreach($results as $results_list) {
+          foreach ($results_list as $result) {
             $report['id'] = $result->id;
             $report['role'] = $result->rol->name;
             $report['theme_result'] = $result->theme_result;
@@ -64,6 +70,7 @@ class ResultController extends Controller {
 
             $reports[] = $report;
             $report = [];
+          }
         }
 
         return view('results.index', compact('reports', 'roles', 'role_id'));
