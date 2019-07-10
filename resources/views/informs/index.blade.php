@@ -68,9 +68,10 @@
 			        <thead>
 			            <tr>
 			                <th class="text-center" style="width: 5%">#</th>
-			                <th style="width: 45%">Unidad Administrativa Responsable</th>
-			                <th style="width: 25%">Tema</th>
-			                <th style="width: 30%">Acciones</th>
+			                <th style="width: 35%">Unidad Administrativa Responsable</th>
+			                <th style="width: 20%">Tema</th>
+			                <th style="width: 20%">Descripción</th>
+			                <th style="width: 20%">Acciones</th>
 			            </tr>
 			        </thead>
 			        <tbody>
@@ -79,6 +80,7 @@
 			            	<td>{{ $loop->iteration }}</td>
 			                <td>{{ $result->rol->name }}</td>
 			                <td>{{ $result->theme_result }}</td>
+			                <td>{{ $result->description }}</td>
 			                <td>
 			                	<a href="{{ route('informes.show', $result->id) }}" class="btn btn-sm btn-primary">
 	                                Ver

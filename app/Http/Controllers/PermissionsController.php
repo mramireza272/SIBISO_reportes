@@ -26,7 +26,7 @@ class PermissionsController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function index() {
-        $permissions = Permission::all();
+        $permissions = Permission::all()->sortBy('id');
 
         return view('permissions.index', compact('permissions'));
     }
@@ -105,7 +105,7 @@ class PermissionsController extends Controller
         ], $messages);
 
         $permission = Permission::findOrFail($id);
-        $permission->update(['name' => $request->name]);
+        $permission->update(['name' => $request->name, 'description' => $request->description]);
 
         return redirect()->route('permisos.edit', $permission->id)->with('info', 'Permiso actualizado satisfactoriamente.');
     }

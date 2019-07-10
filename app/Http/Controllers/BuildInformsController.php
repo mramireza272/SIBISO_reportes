@@ -30,7 +30,7 @@ class BuildInformsController extends Controller {
      * @return \Illuminate\Http\Response
      */
     public function index(){
-        $results = Result::with('rol')->orderBy('rol_id')->get();
+        $results = Result::all()->sortBy('rol_id')->sortBy('theme_result');
 
         return view('informs.index', compact('results'));
     }
