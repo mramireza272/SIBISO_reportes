@@ -207,7 +207,7 @@ class ResultController extends Controller {
     public function search(Request $request) {
         //dd($request->all());
         $roles = Role::all()->sortBy('name')->except(1);
-        $results = Result::where('rol_id', $request->uar)->get();
+        $results = Result::where('rol_id', $request->uar)->orderBy('theme_result')->get();
         $reports = [];
         $role_id = $request->uar;
 
