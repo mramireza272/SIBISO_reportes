@@ -27,7 +27,7 @@ class ResultController extends Controller {
         //dd($request->all());
         $roles = Role::all()->sortBy('name')->except(1);
         //$results = Result::orderBy('rol_id')->get();
-        $results = Result::all()->sortBy('rol_id')->sortBy('theme_result');
+        $results = Result::all()->sortBy('theme_result')->sortBy('rol_id');
         $reports = [];
         $role_id = '';
 
@@ -207,7 +207,7 @@ class ResultController extends Controller {
     public function search(Request $request) {
         //dd($request->all());
         $roles = Role::all()->sortBy('name')->except(1);
-        $results = Result::where('rol_id', $request->uar)->get();
+        $results = Result::where('rol_id', $request->uar)->orderBy('theme_result')->get();
         $reports = [];
         $role_id = $request->uar;
 
