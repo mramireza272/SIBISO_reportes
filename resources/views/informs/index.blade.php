@@ -75,38 +75,40 @@
 			            </tr>
 			        </thead>
 			        <tbody>
-		        	@foreach($results as $result)
-			            <tr>
-			            	<td>{{ $loop->iteration }}</td>
-			                <td>{{ $result->rol->name }}</td>
-			                <td>{{ $result->theme_result }}</td>
-			                <td>{{ $result->description }}</td>
-			                <td>
-			                	<a href="{{ route('informes.show', $result->id) }}" class="btn btn-sm btn-primary">
-	                                Ver
-	                            </a>
-			                	@can('edit_form')
-				                	<a href="{{ route('informes.creategoal', $result->id) }}" class="btn btn-sm btn-info">
-		                                Meta
+		        	@foreach($results as $result_list)
+		        		@foreach ($result_list as $result)
+				            <tr>
+				            	<td>{{ $loop->iteration }}</td>
+				                <td>{{ $result->rol->name }}</td>
+				                <td>{{ $result->theme_result }}</td>
+				                <td>{{ $result->description }}</td>
+				                <td>
+				                	<a href="{{ route('informes.show', $result->id) }}" class="btn btn-sm btn-primary">
+		                                Ver
 		                            </a>
-				                	<a href="{{ route('informes.createvariable', $result->id) }}" class="btn btn-sm btn-info">
-	                                	Variable
-	                            	</a>
-	                            	<a href="{{ route('informes.edit', $result->id) }}" class="btn btn-sm btn-warning">
-	                                	Editar
-	                            	</a>
-                            	@endcan
-                            	{{-- @can('delete_form')
-				                	<form class="delete" style="display: inline;" method="POST" action="{{ route('informes.destroy', $result->id) }}">
-	                                    {!! method_field('DELETE') !!}
-						                <input type="hidden" name="_token" value="{{ csrf_token() }}">
-						                <button title="Eliminar" class="btn btn-sm btn-danger">
-			        						Eliminar
-			        					</button>
-					                </form>
-				                @endcan --}}
-				            </td>
-			            </tr>
+				                	@can('edit_form')
+					                	<a href="{{ route('informes.creategoal', $result->id) }}" class="btn btn-sm btn-info">
+			                                Meta
+			                            </a>
+					                	<a href="{{ route('informes.createvariable', $result->id) }}" class="btn btn-sm btn-info">
+		                                	Variable
+		                            	</a>
+		                            	<a href="{{ route('informes.edit', $result->id) }}" class="btn btn-sm btn-warning">
+		                                	Editar
+		                            	</a>
+	                            	@endcan
+	                            	{{-- @can('delete_form')
+					                	<form class="delete" style="display: inline;" method="POST" action="{{ route('informes.destroy', $result->id) }}">
+		                                    {!! method_field('DELETE') !!}
+							                <input type="hidden" name="_token" value="{{ csrf_token() }}">
+							                <button title="Eliminar" class="btn btn-sm btn-danger">
+				        						Eliminar
+				        					</button>
+						                </form>
+					                @endcan --}}
+					            </td>
+				            </tr>
+			            @endforeach
 		        	@endforeach
 			        </tbody>
 			    </table>
