@@ -23,14 +23,16 @@ class PermissionRequest extends FormRequest
      */
     public function rules() {
         return [
-            'name' => 'required|max:255',
+            'name'        => 'required|max:255',
+            'description' => 'max:255',
         ];
     }
 
     public function messages() {
         return [
-            'name.required' => 'El Nombre del Permiso es obligatorio',
-            'max' => 'El Nombre del Permiso no debe ser mayor a :max caracteres',
+            'name.required'   => 'El Nombre del Permiso es obligatorio',
+            'description.max' => 'La Descripción del Permiso no debe ser mayor a :max caracteres',
+            'max'             => 'El Nombre del Permiso no debe ser mayor a :max caracteres',
         ];
     }
 }

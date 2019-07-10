@@ -10,9 +10,6 @@
     <link href="/plugins/datatables/extensions/Responsive/css/responsive.dataTables.min.css">
     <link href="/plugins/datatables/extensions/Buttons/css/buttons.dataTables.min.css">
     <style>
-        table {
-          table-layout:fixed;
-        }
         table td {
           word-wrap: break-word;
           max-width: 400px;

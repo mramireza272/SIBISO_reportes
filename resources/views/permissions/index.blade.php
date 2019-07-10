@@ -11,17 +11,17 @@
 @endsection
 @section('content')
 <div class="panel">
+	@if(session()->has('info'))
+    	<div class="panel-heading">
+        	<div class="alert alert-success">{{ session('info') }}
+        		<button class="close" data-dismiss="alert">
+                	<i class="pci-cross pci-circle"></i>
+            	</button>
+        	</div>
+	    </div>
+	    <br>
+    @endif
     <div class="panel-body">
-    	@if(session()->has('info'))
-        	<div class="panel-heading">
-	        	<div class="alert alert-success">{{ session('info') }}
-	        		<button class="close" data-dismiss="alert">
-                    	<i class="pci-cross pci-circle"></i>
-                	</button>
-	        	</div>
-		    </div>
-		    <br>
-	    @endif
         @can('create_roles')
         <a href="{{ route('permisos.create') }}" class="btn btn-primary">
             Nuevo Permiso
@@ -43,6 +43,7 @@
 	    		<tr>
 	    			<th class="col-sm-1">#</th>
 	    			<th>Permiso</th>
+	    			<th>Descripción</th>
 	    			<th class="col-lg-3">Acciones</th>
 	    		</tr>
 	    	</thead>
@@ -51,6 +52,7 @@
 	                <tr>
 	                    <td>{{ $loop->iteration }}</td>
 	                    <td>{{ $permission->name }}</td>
+	                    <td>{{ $permission->description }}</td>
 	                    <td>
 	                        @can('show_roles')
 	                            <a href="{{ route('permisos.show', $permission->id) }}" class="btn btn-sm btn-primary">

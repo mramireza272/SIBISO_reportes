@@ -7,6 +7,11 @@
             	<input class="form-control" type="text" name="name" value="{{ $permission->name ?? old('name')}}">
                 {!! $errors->first('name', '<small class="help-block text-danger">:message</small>')!!}
             </div>
+            <div class="form-group">
+              <label class="control-label" for="description"><strong>Descripción</strong></label>
+              <input class="form-control" type="text" name="description" value="{{ $permission->description ?? old('description')}}">
+                {!! $errors->first('description', '<small class="help-block text-danger">:message</small>')!!}
+            </div>
       	</div>
         <div class="text-right">
             <a role="button" href="{{ route('permisos.index') }}" type="submit" class="btn btn-primary">Regresar</a>

@@ -26,7 +26,8 @@ class ResultController extends Controller {
     public function index() {
         //dd($request->all());
         $roles = Role::all()->sortBy('name')->except(1);
-        $results = Result::orderBy('rol_id')->get();
+        //$results = Result::orderBy('rol_id')->get();
+        $results = Result::all()->sortBy('rol_id')->sortBy('theme_result');
         $reports = [];
         $role_id = '';
 
@@ -45,13 +46,13 @@ class ResultController extends Controller {
                     ])->sum('valore');
                 }
 
-                $report['total_value'] = array_sum($valus);
+                $report['total_value'] = number_format(array_sum($valus));
                 $goals = [];
 
                 foreach ($result->goals as $goal) {
                     $dividendo = floatval($goal->goal_unit);
                     $each_goal['goal_txt'] = $goal->goal_txt;
-                    $each_goal['goal_unit'] = $goal->goal_unit;
+                    $each_goal['goal_unit'] = number_format($goal->goal_unit);
                     $percent = ($report['total_value'] / $dividendo) * 100;
                     $each_goal['percent'] = round($percent, 2) .' %';
                     $goals[] = $each_goal;
@@ -194,9 +195,8 @@ class ResultController extends Controller {
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
-    {
-        //
+    public function destroy($id) {
+
     }
 
     /**
@@ -226,13 +226,13 @@ class ResultController extends Controller {
                     ])->sum('valore');
                 }
 
-                $report['total_value'] = array_sum($valus);
+                $report['total_value'] = number_format(array_sum($valus));
                 $goals = [];
 
                 foreach ($result->goals as $goal) {
                     $dividendo = floatval($goal->goal_unit);
                     $each_goal['goal_txt'] = $goal->goal_txt;
-                    $each_goal['goal_unit'] = $goal->goal_unit;
+                    $each_goal['goal_unit'] = number_format($goal->goal_unit);
                     $percent = ($report['total_value'] / $dividendo) * 100;
                     $each_goal['percent'] = round($percent, 2) .' %';
                     $goals[] = $each_goal;
@@ -283,13 +283,13 @@ class ResultController extends Controller {
                     ])->whereIn('report_id', $reports)->sum('valore');
                 }
 
-                $report['total_value'] = array_sum($valus);
+                $report['total_value'] = number_format(array_sum($valus));
                 $goals = [];
 
                 foreach ($result->goals as $goal) {
                     $dividendo = floatval($goal->goal_unit);
                     $each_goal['goal_txt'] = $goal->goal_txt;
-                    $each_goal['goal_unit'] = $goal->goal_unit;
+                    $each_goal['goal_unit'] = number_format($goal->goal_unit);
                     $percent = ($report['total_value'] / $dividendo) * 100;
                     $each_goal['percent'] = round($percent, 2) .' %';
                     $goals[] = $each_goal;

@@ -8,6 +8,7 @@
 <div class="panel-body">
     <div class="table-responsive">
         <table id="example" class="table table-striped" style="width: 100%">
+            @php($subChild = false)
             @foreach ($items_rol as $itm)
                 <thead>
                     <tr>
@@ -40,14 +41,13 @@
                     </tr>
                 </thead>
                 <tbody>
-                    @php($subChild = false)
                     @foreach ($itm->childs as $subitm)
                         <tr>
                             <td>
                                 <input type="text" name="row_{{ $subitm->id }}" data-type="item" data-id="{{ $subitm->id }}" value="{{ $subitm->item }}" @if($action == 'show') readonly @endif />
                             </td>
                             <td>
-                                <input class="magic-checkbox" type="checkbox" name="" id="{{ $subitm->id }}" @if($action == 'show') disabled @endif @if($subitm->editable) checked @endif />
+                                <input class="magic-checkbox" type="checkbox" name="{{ $subitm->id }}" id="{{ $subitm->id }}" @if($action == 'show') disabled @endif @if($subitm->editable) checked @endif />
                                 <label for="{{ $subitm->id }}">
                                     Editable
                                 </label>
@@ -62,18 +62,28 @@
 	                    @endforeach
                         @if($subitm->childs->count() > 0 && $action != 'show')
                             @php($subChild = true)
-                            <tr id="rowSubChilds" style="display: none;">
+                            <tr id="rowSubChilds_{{ $subch->id }}" style="display: none;">
                             </tr>
                             <tr style="width: 100;">
                                 <td>
-                                    <a role="button" id="addRow" class="btn btn-info row-info" data-id="{{ $subch->id }}" data-rol="{{ $subitm->rol_id }}" data-parent="{{ $subitm->childs->first()->parent_id }}">[+]</a>
+                                    <a role="button" id="addRow" class="btn btn-info row-info" data-id="{{ $subch->id }}" data-rol="{{ $subitm->rol_id }}" data-parent="{{ $subitm->childs->first()->parent_id }}" data-row="child">[+]</a>
                                     <a role="button" id="removeRow" class="btn btn-danger row-danger" data-item="{{ $subitm->id }}" data-id="{{ isset($subitm->childs->last()->id) ? $subitm->childs->last()->id : '' }}">[-]</a>
+                                </td>
+                            </tr>
+                        @endif
+                        @if(($subitm->childs->count() == 0) && ($loop->last) && $subChild && ($action != 'show'))
+                            <tr id="rowSubChildsLast" style="display: none;">
+                            </tr>
+                            <tr style="width: 100;">
+                                <td>
+                                    <a role="button" id="addRow" class="btn btn-info row-info" data-id="{{ $subitm->id }}" data-rol="{{ $subitm->rol_id }}" data-parent="{{ $subitm->parent_id }}" data-row="childlast">[+]</a>
+                                    <a role="button" id="removeRow" class="btn btn-danger row-danger" data-item="{{ $subitm->parent_id }}" data-id="{{ isset($subitm->id) ? $subitm->id : '' }}">[-]</a>
                                 </td>
                             </tr>
                         @endif
                     @endforeach
                     @if(!$subChild && $action != 'show')
-                        <tr id="rowChilds" style="display: none;">
+                        <tr id="rowChilds_{{ $subitm->id }}" style="display: none;">
                         </tr>
                         <tr style="width: 100;">
                             <td>
@@ -83,6 +93,7 @@
                         </tr>
                     @endif
                 </tbody>
+                @php($subChild = false)
             @endforeach
         </table>
     </div>

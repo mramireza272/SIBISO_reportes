@@ -41,6 +41,7 @@ Route::post('/informes/guardarmeta/', ['as' => 'informes.storegoal', 'uses' => '
 Route::get('/informes/crearvariable/{id}', ['as' => 'informes.createvariable', 'uses' => 'BuildInformsController@createVariable']);
 Route::post('/informes/guardarvariable/', ['as' => 'informes.storevariable', 'uses' => 'BuildInformsController@storeVariable']);
 Route::put('/informes/updateMeta', 'BuildInformsController@updateGoal');
+Route::delete('/informes/eliminarmeta', ['as' => 'informes.destroyGoal', 'uses' => 'BuildInformsController@destroyGoal']);
 Route::resource('informes', 'BuildInformsController');
 
 //Resultados reportes - Administrador

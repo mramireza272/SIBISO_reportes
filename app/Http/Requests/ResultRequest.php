@@ -24,11 +24,13 @@ class ResultRequest extends FormRequest
         if($this->action == 'edit') {
             return [
                 'theme_result'       => 'required|max:255',
+                'description'        => 'max:255',
             ];
         } else {
             return [
-                'theme_result'       => 'required|max:255',
                 'rol_id'             => 'required',
+                'theme_result'       => 'required|max:255',
+                'description'        => 'max:255',
             ];
         }
     }
@@ -41,7 +43,7 @@ class ResultRequest extends FormRequest
     public function messages() {
         return [
             'required' => 'El campo :attribute es obligatorio',
-            'max' => 'El campo :attribute no debe ser mayor a :max caracteres',
+            'max'      => 'El campo :attribute no debe ser mayor a :max caracteres',
         ];
     }
 
@@ -52,8 +54,9 @@ class ResultRequest extends FormRequest
      */
     public function attributes() {
         return [
+            'rol_id'       => 'Unidad Administrativa Responsable',
             'theme_result' => 'Tema',
-            'rol_id' => 'Unidad Administrativa Responsable',
+            'description'  => 'Descripción',
         ];
     }
 }

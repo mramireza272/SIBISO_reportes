@@ -6,10 +6,6 @@
 
 @section('customcss')
 	<style>
-		table {
-	      table-layout:`fixed;
-	    }
-
 	    table thead, th, tbody, td {
 	      text-align: center;
 	    }
@@ -50,7 +46,7 @@
 	                    	html = '';
 
 	                    	if(response.result.goals.length > 0) {
-	                    		html += '<div class="col-md-6"><div class="table-responsive"><table id="goals" class="table table-striped table-bordered" style="width: 100%"><thead><tr><th colspan="3">Metas</th></tr></thead><tbody><tr>';
+	                    		html += '<div class="col-sm-6 col-md-6 col-lg-6 col-xl-6"><div class="table-responsive"><table id="goals" class="table table-striped table-bordered" style="width: 100%"><thead><tr><th colspan="3">Metas</th></tr></thead><tbody><tr>';
 
 	                    		for (var i = 0; i < response.result.goals.length; i++) {
 	                    			html += '<td>'+ response.result.goals[i].goal_txt +'</td>';
@@ -62,7 +58,7 @@
 	                    			html += '<td>'+ response.result.goals[i].goal_unit +'</td>';
 	                    		}
 
-								html += '</tr></tbody></table></div></div><div class="col-md-6"><div class="table-responsive"><table id="results" class="table table-striped table-bordered" style="width: 100%"><thead><tr><th colspan="3">Avance al periodo de búsqueda</th></tr></thead><tbody><tr>';
+								html += '</tr></tbody></table></div></div><div class="col-sm-6 col-md-6 col-lg-6 col-xl-6"><div class="table-responsive"><table id="results" class="table table-striped table-bordered" style="width: 100%"><thead><tr><th colspan="3">Avance al periodo de búsqueda</th></tr></thead><tbody><tr>';
 
 								for (var i = 0; i < response.result.goals.length; i++) {
 	                    			html += '<td>'+ response.result.goals[i].goal_txt +'</td>';

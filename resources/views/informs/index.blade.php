@@ -2,7 +2,7 @@
 
 @section('titulo', 'Sistema de Reportes SIBISO')
 
-@section('titulo_pagina', 'Informes')
+@section('titulo_pagina', 'Reportes')
 
 @section('customcss')
 	<link href="/plugins/datatables/media/css/jquery.dataTables.min.css" rel="stylesheet" type="text/css">
@@ -10,9 +10,6 @@
     <link href="/plugins/datatables/extensions/Responsive/css/responsive.dataTables.min.css">
     <link href="/plugins/datatables/extensions/Buttons/css/buttons.dataTables.min.css">
     <style>
-        table {
-          table-layout:fixed;
-        }
         table td {
           word-wrap: break-word;
           max-width: 400px;
@@ -60,20 +57,21 @@
 	<div class="panel-body text-right">
 		@can('create_form')
 	        <a href="{{ route('informes.create') }}" class="btn btn-primary">
-	            Nuevo Informe
+	            Nuevo Reporte
 	        </a>
         @endcan
 	</div>
 	<div class="panel-body">
 		<div class="row">
-            <div class="col-sm-12 col-md-12 col-lg-12 col-xl-12">
+           <div class="table-responsive">
 		    	<table id="example" class="display" style="width:100%">
 			        <thead>
 			            <tr>
 			                <th class="text-center" style="width: 5%">#</th>
-			                <th style="width: 45%">Unidad Administrativa Responsable</th>
-			                <th style="width: 25%">Tema</th>
-			                <th style="width: 30%">Acciones</th>
+			                <th style="width: 35%">Unidad Administrativa Responsable</th>
+			                <th style="width: 20%">Tema</th>
+			                <th style="width: 20%">Descripción</th>
+			                <th style="width: 20%">Acciones</th>
 			            </tr>
 			        </thead>
 			        <tbody>
@@ -82,6 +80,7 @@
 			            	<td>{{ $loop->iteration }}</td>
 			                <td>{{ $result->rol->name }}</td>
 			                <td>{{ $result->theme_result }}</td>
+			                <td>{{ $result->description }}</td>
 			                <td>
 			                	<a href="{{ route('informes.show', $result->id) }}" class="btn btn-sm btn-primary">
 	                                Ver

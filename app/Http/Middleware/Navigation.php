@@ -23,13 +23,13 @@ class Navigation
         ];
 
         if(Auth::check()){
-            if(Auth::user()->hasRole(['SIBISO', 'Administrador'])){
+            /*if(Auth::user()->hasRole(['SIBISO', 'Administrador'])){
                 $this->menus['Bitácora'] = [
                     'url'     => route('bitacora.index'),
                     'active' => (strpos($url, str_replace(url('/'), '', '/bitacora')) !== false) ? ' class="active-sub"' : '',
                     'icon'   => 'pli-bulleted-list'
                 ];
-            }
+            }*/
 
 
             if(Auth::user()->hasPermissionTo('index_form')){
@@ -39,7 +39,7 @@ class Navigation
                     'icon'   => 'pli-full-view-2'
                 ];
 
-                $this->menus['Informes'] = [
+                $this->menus['Reportes'] = [
                     'url'    => url('/informes'),
                     'active' => (strpos($url, str_replace(url('/'), '', '/informes')) !== false) ? ' class="active-sub"' : '',
                     'icon'   => 'pli-formula'
@@ -75,7 +75,7 @@ class Navigation
             }
 
             if(Auth::user()->hasAnyPermission(['index_ined', 'index_cgib', 'index_asc', 'index_sdh', 'index_iapp'])){
-                $this->menus['Reportes'] = [
+                $this->menus['Registros'] = [
                     'url'    => url('/reportes'),
                     'active' => (strpos($url, str_replace(url('/'), '', '/reportes')) !== false) ? ' class="active-sub"' : '',
                     'icon'   => 'pli-notepad-2'

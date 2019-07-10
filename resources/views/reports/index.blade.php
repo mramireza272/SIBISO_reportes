@@ -2,7 +2,7 @@
 
 @section('titulo', 'Sistema de Reportes SIBISO')
 
-@section('titulo_pagina', 'Reportes')
+@section('titulo_pagina', 'Registros')
 
 @section('customcss')
 	<link href="/plugins/datatables/media/css/jquery.dataTables.min.css" rel="stylesheet" type="text/css">
@@ -10,9 +10,6 @@
     <link href="/plugins/datatables/extensions/Responsive/css/responsive.dataTables.min.css">
     <link href="/plugins/datatables/extensions/Buttons/css/buttons.dataTables.min.css">
     <style>
-        table {
-          table-layout:fixed;
-        }
         table td {
           word-wrap: break-word;
           max-width: 400px;
@@ -62,12 +59,12 @@
 	</div>
 	<div class="panel-body text-right">
 		@canany(['create_ined', 'create_cgib', 'create_asc', 'create_sdh', 'create_iapp'])
-			<a href="{{ route('reportes.create') }}" class="btn btn-primary">Nuevo Reporte</a>
+			<a href="{{ route('reportes.create') }}" class="btn btn-primary">Nuevo Registro</a>
 		@endcanany
 	</div>
 	<div class="panel-body">
 		<div class="row">
-            <div class="col-sm-12 col-md-12 col-lg-12 col-xl-12">
+            <div class="table-responsive">
 		    	<table id="example" class="display" style="width:100%">
 			        <thead>
 			            <tr>
