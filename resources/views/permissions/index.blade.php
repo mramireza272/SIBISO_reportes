@@ -1,12 +1,9 @@
 @extends('templates.master')
 
-@section('titulo')
-	Sistema de Reportes SIBISO | Acceso al sistema
-@endsection
+@section('titulo', 'Sistema de Reportes SIBISO | Acceso al sistema')
 
-@section('titulo_pagina')
-	Permisos
-@endsection
+@section('titulo_pagina', 'Permisos')
+
 @section('customcss')
 	<link href="/plugins/bootstrap-table/bootstrap-table.min.css" rel="stylesheet">
     <link href="/plugins/font-awesome/css/font-awesome.min.css" rel="stylesheet">
@@ -14,6 +11,16 @@
 @endsection
 @section('content')
 <div class="panel">
+	@if(session()->has('info'))
+    	<div class="panel-heading">
+        	<div class="alert alert-success">{{ session('info') }}
+        		<button class="close" data-dismiss="alert">
+                	<i class="pci-cross pci-circle"></i>
+            	</button>
+        	</div>
+	    </div>
+	    <br>
+    @endif
     <div class="panel-body">
         @can('create_roles')
         <a href="{{ route('permisos.create') }}" class="btn btn-primary">
@@ -21,7 +28,7 @@
         </a>
         @endcan
 
-        <table id="table-proyectos"
+        <table id="table-permisos"
 	               data-search="true"
 	               data-show-refresh="true"
 	               data-show-toggle="true"
@@ -29,35 +36,36 @@
 	               data-sort-name="id"
 	               data-page-list="[5, 10, 20]"
 	               data-page-size="10"
-	               data-pagination="true" 
+	               data-pagination="true"
 	               data-show-pagination-switch="true"
 	               data-locale="es-MX">
 	    	<thead>
 	    		<tr>
-	    			<th class="col-sm-1"></th>
+	    			<th class="col-sm-1">#</th>
 	    			<th>Permiso</th>
-	    			<th class="col-lg-3"></th>
+	    			<th>Descripción</th>
+	    			<th class="col-lg-3">Acciones</th>
 	    		</tr>
 	    	</thead>
 	    	<tbody>
                 @foreach($permissions as $permission)
 	                <tr>
-	                    <td>{{ $permission->id }}</td>
+	                    <td>{{ $loop->iteration }}</td>
 	                    <td>{{ $permission->name }}</td>
+	                    <td>{{ $permission->description }}</td>
 	                    <td>
 	                        @can('show_roles')
-	                            <a href="{{ route('permisos.show', $permission->id)}}" class="btn btn-sm btn-primary">
+	                            <a href="{{ route('permisos.show', $permission->id) }}" class="btn btn-sm btn-primary">
 	                                Ver
 	                            </a>
 	                        @endcan
 	                        @can('edit_roles')
-	                            <a href="{{ route('permisos.edit', $permission->id)}}" class="btn btn-sm btn-warning">
+	                            <a href="{{ route('permisos.edit', $permission->id) }}" class="btn btn-sm btn-warning">
 	                                Editar
 	                            </a>
 	                        @endcan
 	                        @can('delete_roles')
-	                            <form action="{{ route('permisos.destroy', $permission->id) }}" 
-		        					  style="display: inline;" method="POST">
+	                            <form class="delete" action="{{ route('permisos.destroy', $permission->id) }}" style="display: inline;" method="POST">
 		        					{!! method_field('DELETE') !!}
 									<input type="hidden" name="_token" value="{{ csrf_token() }}">
 			        				<button title="Eliminar" class="btn btn-sm btn-danger">
@@ -70,6 +78,24 @@
                 @endforeach
             </tbody>
 	    </table>
+    </div>
+</div>
+
+<div class="modal" id="confirm">
+    <div class="modal-dialog modal-sm">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                <h4 class="modal-title" style="text-align: center;">Atención</h4>
+            </div>
+            <div class="modal-body" style="text-align: center;">
+                <p>¿Está seguro de eliminar?</p>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-sm btn-default" data-dismiss="modal">Cerrar</button>
+                <button type="button" class="btn btn-sm btn-primary" id="delete-btn">Eliminar</button>
+            </div>
+        </div>
     </div>
 </div>
 @endsection
@@ -89,8 +115,18 @@
 		        detailClose: 'psi-remove'
 		    }
 
-		    $('#table-proyectos').bootstrapTable();
+		    $('#table-permisos').bootstrapTable();
+		});
 
+		$(document).ready(function() {
+			$("#table-permisos").on('click', '.delete', function(e){
+		    	e.preventDefault();
+		        var $form = $(this);
+			    $('#confirm').modal({ backdrop: 'static', keyboard: false })
+			        .on('click', '#delete-btn', function(){
+			            $form.submit();
+			    });
+		    });
 		});
     </script>
 @endsection

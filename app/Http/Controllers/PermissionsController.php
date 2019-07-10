@@ -4,14 +4,14 @@ namespace App\Http\Controllers;
 
 use Auth;
 use Illuminate\Http\Request;
+use App\Http\Requests\PermissionRequest;
 use Spatie\Permission\Models\Role;
 use Spatie\Permission\Models\Permission;
 
 class PermissionsController extends Controller
 {
     private $event;
-    public function __construct()
-    {
+    public function __construct() {
         $this->middleware('auth');
         $this->middleware('permission:create_roles')->only(['create', 'store']);
         $this->middleware('permission:index_roles')->only('index');
@@ -25,10 +25,9 @@ class PermissionsController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
-    {
-       
-        $permissions = Permission::all();
+    public function index() {
+        $permissions = Permission::all()->sortBy('id');
+
         return view('permissions.index', compact('permissions'));
     }
 
@@ -37,10 +36,9 @@ class PermissionsController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create()
-    {
-        
+    public function create() {
         $permissions = Permission::orderBy('created_at', 'desc')->get();
+
         return view('permissions.create', compact('permissions'));
     }
 
@@ -50,12 +48,18 @@ class PermissionsController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
-    {
+    public function store(PermissionRequest $request) {
+        $messages = [
+            'name.unique' => 'El Nombre del Permiso ya ha sido registrado',
+        ];
+
+        $request->validate([
+            'name' => 'unique:permissions,name'
+        ], $messages);
         //create role
         $permission = Permission::create($request->all());
-        
-        return redirect()->route('permisos.edit', $permission->id)->with('info', 'Permiso guardado con éxito');
+
+        return redirect()->route('permisos.edit', $permission->id)->with('info', 'Permiso creado satisfactoriamente.');
     }
 
     /**
@@ -64,10 +68,10 @@ class PermissionsController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show(permission $permission)
-    {
-        
-        return view('permissions.show', compact('permissions'));
+    public function show($id) {
+        $permission = Permission::findOrFail($id);
+
+        return view('permissions.show', compact('permission'));
     }
 
     /**
@@ -76,12 +80,10 @@ class PermissionsController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
-    {
-        $permission = Permission::where('id',$id)->get();
-       
+    public function edit($id) {
+        $permission = Permission::where('id', $id)->first();
         $permissions = Permission::orderBy('created_at', 'desc')->get();
-        $permission = $permission->first();
+
         //dd($role->permissions->toArray());
         return view('permissions.edit', compact('permission', 'permissions'));
     }
@@ -93,9 +95,19 @@ class PermissionsController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
-    {
-        //
+    public function update(PermissionRequest $request, $id) {
+        $messages = [
+            'name.unique' => 'El Nombre del Permiso ya ha sido registrado',
+        ];
+
+        $request->validate([
+            'name' => 'unique:permissions,name,'. $id
+        ], $messages);
+
+        $permission = Permission::findOrFail($id);
+        $permission->update(['name' => $request->name, 'description' => $request->description]);
+
+        return redirect()->route('permisos.edit', $permission->id)->with('info', 'Permiso actualizado satisfactoriamente.');
     }
 
     /**
@@ -104,9 +116,9 @@ class PermissionsController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy(permission $permission)
-    {
-        $permission->delete();
-        return back()->with('info', 'Permiso eliminado Correctamente');
+    public function destroy($id) {
+        $permission = Permission::where('id', $id)->delete();
+
+        return redirect()->route('permisos.index')->with('info', 'Permiso eliminado satisfactoriamente.');
     }
 }

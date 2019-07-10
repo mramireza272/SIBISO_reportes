@@ -10,8 +10,7 @@ use DB;
 
 class UserController extends Controller
 {
-    function __construct()
-    {
+    function __construct() {
         $this->middleware('auth');
         $this->middleware('permission:create_user')->only(['create', 'store']);
         $this->middleware('permission:index_user')->only('index');
@@ -24,30 +23,24 @@ class UserController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
-    {
-        $users = User::where('active', true);
-        $users = $users->get();
+    public function index() {
+        $users = User::where('active', true)->orderBy('created_at', 'desc')->get();
         $search = "";
         return view('Users.index', compact('users', 'search'));
     }
 
-    private function getRoles(){
-        $roles = Role::pluck('name', 'name');
-
-        return $roles;  
-    }
     /**
      * Show the form for creating a new resource.
      *
      * @return \Illuminate\Http\Response
      */
-    public function create()
-    {
-        
+    public function create() {
+        $roles = array();
+
         if(\Auth::user()->hasRole(['Administrador'])){
             $roles = $this->getRoles();
         }
+
         return view('Users.create', compact('roles'));
     }
 
@@ -57,8 +50,15 @@ class UserController extends Controller
      * @param  \App\Http\Requests\UserRequest  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(UserRequest $request)
-    {
+    public function store(UserRequest $request) {
+        $messages = [
+            'email.unique' => 'El Correo Personal ya ha sido registrado',
+        ];
+
+        $request->validate([
+            'email' => 'unique:users,email'
+        ], $messages);
+
         $input = $request->all();
         $user = User::create($input);
         $user->assignRole($request->input('roles'));
@@ -83,8 +83,7 @@ class UserController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
-    {
+    public function edit($id) {
         $user = User::findOrFail($id);
         $roles = $this->getRoles();
         $btnText = 'Actualizar';
@@ -99,8 +98,15 @@ class UserController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(UserRequest $request, $id)
-    {
+    public function update(UserRequest $request, $id) {
+        $messages = [
+            'email.unique' => 'El Correo Personal ya ha sido registrado',
+        ];
+
+        $request->validate([
+            'email' => 'unique:users,email,'. $id
+        ], $messages);
+
         $user = User::findOrFail($id);
         $input = $request->all();
         $user->update($input);
@@ -117,10 +123,35 @@ class UserController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
-    {
+    public function destroy($id) {
         $user = User::where('id', $id)->update(['created_by' => \Auth::user()->id, 'active' => false]);
 
         return redirect()->route('usuarios.index')->with('info', 'Usuario(a) deshabilitado(a) satisfactoriamente.');
+    }
+
+    /**
+     * Search resource in storage.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\Http\Response
+     */
+    public function search(Request $request) {
+        $users = User::where([
+            ['active', true],
+            ['name', 'ilike', '%'. $request->search .'%'],
+        ])->orWhere([
+            ['active', true],
+            ['email', 'ilike', '%'. $request->search .'%'],
+        ])->orderBy('name', 'ASC')->get();
+        //$userscount = $users->count();
+        $search = $request->search;
+
+        return view('Users.index', compact('users', 'search'));
+    }
+
+    private function getRoles() {
+        $roles = Role::orderBy('name')->pluck('name', 'name');
+
+        return $roles;
     }
 }
