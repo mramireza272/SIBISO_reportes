@@ -33,7 +33,7 @@ Route::put('/formularios/actualizarNombre', 'CreateFormController@updateInputNam
 Route::put('/formularios/actualizarEditable', 'CreateFormController@updateEditable');
 Route::get('/formularios/nuevaFila/{rol_id}/{parent_id}', 'CreateFormController@buildRow');
 Route::get('/formularios/eliminarFila/{parent_id}/{item_id}', 'CreateFormController@destroyRow');
-Route::resource('formularios', 'CreateFormController');
+Route::resource('formularios', 'CreateFormController')->only(['index', 'show', 'edit']);
 
 //CRUD reportes - Administrador
 Route::get('/informes/crearmeta/{id}', ['as' => 'informes.creategoal', 'uses' => 'BuildInformsController@createGoal']);
@@ -42,9 +42,9 @@ Route::get('/informes/crearvariable/{id}', ['as' => 'informes.createvariable', '
 Route::post('/informes/guardarvariable/', ['as' => 'informes.storevariable', 'uses' => 'BuildInformsController@storeVariable']);
 Route::put('/informes/updateMeta', 'BuildInformsController@updateGoal');
 Route::delete('/informes/eliminarmeta', ['as' => 'informes.destroyGoal', 'uses' => 'BuildInformsController@destroyGoal']);
-Route::resource('informes', 'BuildInformsController');
+Route::resource('informes', 'BuildInformsController')->except(['destroy']);
 
 //Resultados reportes - Administrador
-Route::post('/resultados/generaravance','ResultController@buildProgress');
+Route::post('/resultados/generaravance', 'ResultController@buildProgress');
 Route::post('/resultados/filtro', ['as' => 'resultados.search', 'uses' => 'ResultController@search']);
 Route::resource('resultados', 'ResultController')->only(['index', 'show']);

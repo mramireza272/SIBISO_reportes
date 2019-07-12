@@ -18,16 +18,16 @@
 @section('content')
 	<div class="row">
 		<div class="col-sm-12 col-md-12 col-lg-12 col-xl-12">
-			@if(session()->has('info'))
-		    	<div class="panel">
-		        	<div class="alert alert-success">{{ session('info') }}
-		        		<button class="close" data-dismiss="alert">
-	                    	<i class="pci-cross pci-circle"></i>
-	                	</button>
-		        	</div>
-			    </div>
-		    @endif
 			<div class="panel">
+				@if(session()->has('info'))
+			    	<div class="panel">
+			        	<div class="alert alert-success">{{ session('info') }}
+			        		<button class="close" data-dismiss="alert">
+		                    	<i class="pci-cross pci-circle"></i>
+		                	</button>
+			        	</div>
+				    </div>
+			    @endif
 				<form method="POST" action="{{ route('informes.store') }}" class="panel-body form-horizontal form-padding">
 					@include('informs.form', ['result' => new \App\Models\Result, 'action' => 'create'])
 				</form>

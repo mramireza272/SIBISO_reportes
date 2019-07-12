@@ -6,7 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
 
-    <title>Seguimiento Territorial | Jefatura de Gobierno</title>
+    <title>Sistema de Reportes | SIBISO</title>
 
 
     <!--STYLESHEET-->
@@ -30,7 +30,7 @@
 
     <!--=================================================-->
 
-            
+
     <!--=================================================
 
     REQUIRED
@@ -56,7 +56,7 @@
     Detailed information and more samples can be found in the document.
 
     =================================================-->
-        
+
 </head>
 
 <!--TIPS-->
@@ -64,12 +64,12 @@
 
 <body>
     <div id="container" class="cls-container">
-        
-		
-		
+
+
+
 		<!-- CONTENT -->
 		<!--===================================================-->
-		
+
 		<div class="cls-content">
 			<div class="cls-content-sm panel">
 				<div class="panel-body">
@@ -85,16 +85,16 @@
 		    </div>
 		    <hr class="new-section-sm bord-no">
             <div class="pad-top"><a class="btn btn-primary" href="{{ route('login') }}">Iniciar Sesión</a></div>
-		   
+
 		</div>
-		
-		
+
+
     </div>
     <!--===================================================-->
     <!-- END OF CONTAINER -->
 
 
-        
+
     <!--JAVASCRIPT-->
     <!--=================================================-->
 

@@ -16,7 +16,7 @@
                 $.get('/formularios/nuevaColumna/'+ item_id, function(data){
 				    //esta el la peticion get, la cual se divide en tres partes. ruta,variables y funcion
 				    $('#col').show();
-				    var input = '<th style="padding:0px 12px;"><input type="text" name="col_'+ data.id +'" data-type="rol" data-id="'+ data.id +'" value="'+ data.columns +'" /></th>';
+				    var input = '<th style="padding:0px 12px;"><input class="form-control" type="text" name="col_'+ data.id +'" data-type="rol" data-id="'+ data.id +'" value="'+ data.columns +'" /></th>';
 				    $("#col").append(input);
 				    $('#removeCol').attr('data-item', data.item_rol_id);
 				    $('#removeCol').attr('data-structure', data.id);
@@ -53,7 +53,7 @@
                 var print_row = $(this).attr('data-row');
                 $.get('/formularios/nuevaFila/'+ rol_id +'/'+ parent_id, function(data){
 				    //esta el la peticion get, la cual se divide en tres partes. ruta,variables y funcion
-				    var input = '<tr><td style="padding:12px;"><input type="text" name="row_'+ data.id +'" data-type="item" data-id="'+ data.id +'" value="'+ data.item +'" /></td></tr>';
+				    var input = '<tr><td style="padding:12px;"><input class="form-control" type="text" name="row_'+ data.id +'" data-type="item" data-id="'+ data.id +'" value="'+ data.item +'" /></td></tr>';
 
 				    if(data.parent_id === null) {
 				    	$('#rowChilds_'+ id).show();
@@ -144,20 +144,20 @@
 @section('content')
     <div class="row">
 	    <div class="col-sm-12 col-md-12 col-lg-12 col-xl-12">
-	    	@if(session()->has('info'))
-		    	<div class="panel">
-		        	<div class="alert alert-success">{!! session('info') !!}
-		        		<button class="close" data-dismiss="alert">
-                        	<i class="pci-cross pci-circle"></i>
-                    	</button>
-		        	</div>
-			    </div>
-		    @endif
 	        <div class="panel">
-	        	<form method="POST" action="{{ route('formularios.update', $rol->id) }}" enctype="multipart/form-data" class="form-horizontal form-padding">
+	        	@if(session()->has('info'))
+			    	<div class="panel">
+			        	<div class="alert alert-success">{!! session('info') !!}
+			        		<button class="close" data-dismiss="alert">
+	                        	<i class="pci-cross pci-circle"></i>
+	                    	</button>
+			        	</div>
+				    </div>
+			    @endif
+	        	<form method="POST" enctype="multipart/form-data" class="form-horizontal form-padding">
 	                  {!! method_field('PUT') !!}
 	                  <input type="hidden" name="created_by" value="{{ auth()->user()->id }}">
-	                  @include('forms.form', ['btnText' => 'Actualizar', 'action' => 'edit'])
+	                  @include('forms.form', ['action' => 'edit'])
 				</form>
 			</div>
 	    </div>

@@ -19,7 +19,7 @@ class CreateFormController extends Controller {
         $this->middleware('permission:index_form')->only('index');
         $this->middleware('permission:edit_form')->only(['edit', 'updateInputName', 'updateEditable']);
         $this->middleware('permission:show_form')->only('show');
-        $this->middleware('permission:delete_form')->only('destroyCol');
+        $this->middleware('permission:delete_form')->only(['destroyCol', 'destroyRow']);
     }
 
     public function index() {

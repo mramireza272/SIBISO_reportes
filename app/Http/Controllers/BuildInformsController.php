@@ -13,6 +13,7 @@ use App\Models\ItemValueReport;
 use App\Models\ItemRol;
 use App\Models\FormulaResult;
 use App\Models\VariableFormula;
+use Validator;
 
 class BuildInformsController extends Controller {
     function __construct() {
@@ -21,7 +22,7 @@ class BuildInformsController extends Controller {
         $this->middleware('permission:index_form')->only('index');
         $this->middleware('permission:edit_form')->only(['edit', 'update', 'updateGoal']);
         $this->middleware('permission:show_form')->only('show');
-        $this->middleware('permission:delete_form')->only('destroyCol');
+        $this->middleware('permission:delete_form')->only('destroyGoal');
     }
 
     /**
@@ -136,9 +137,34 @@ class BuildInformsController extends Controller {
 
     public function updateGoal(Request $request) {
         if($request->filled('goal_txt')) {
-            Goal::where('id', $request->id)->update(['goal_txt' => $request->goal_txt]);
+            Goal::findOrFail($request->id)->update(['goal_txt' => $request->goal_txt]);
         } elseif($request->filled('goal_unit')) {
-            Goal::where('id', $request->id)->update(['goal_unit' => $request->goal_unit]);
+            Goal::findOrFail($request->id)->update(['goal_unit' => $request->goal_unit]);
+        } elseif($request->filled('type')) {
+            $messages = [
+                'date_start.required'             => 'La fecha inicio es obligatoria',
+                'date_end.required'               => 'La fecha fin es obligatoria',
+                'date_end.after_or_equal'         => 'La fecha fin debe ser una fecha posterior o igual a fecha inicio',
+                'date_start.before_or_equal'      => 'La fecha inicio debe ser una fecha anterior o igual a fecha fin',
+                'date_start.date'                 => 'La fecha inicio no es una fecha válida',
+                'date_end.date'                   => 'La fecha fin no es una fecha válida',
+                'date_start.date_format'          => 'La fecha inicio no corresponde al formato :format',
+                'date_end.date_format'            => 'La fecha fin no corresponde al formato :format',
+            ];
+            $validator = Validator::make($request->all(), [
+                'date_start' => 'required|date|date_format:Y-m-d|before_or_equal:date_end',
+                'date_end' => 'required|date|date_format:Y-m-d|after_or_equal:date_start'
+            ], $messages);
+
+            if ($validator->passes()) {
+                if($request->type == "start") {
+                    Goal::findOrFail($request->id)->update(['date_start' => $request->date_start]);
+                } elseif($request->type == "end") {
+                    Goal::findOrFail($request->id)->update(['date_end' => $request->date_end]);
+                }
+            }
+
+            return response()->json(['error' => $validator->errors()->all()]);
         }
 
         return;
