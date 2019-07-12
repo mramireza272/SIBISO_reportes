@@ -26,7 +26,7 @@ class ResultController extends Controller {
   public function index() {
     //dd($request->all());
     $roles = Role::all()->sortBy('name')->except(1);
-    $results = Result::all()->sortBy('theme_result')->groupBy('rol_id');
+    $results = Result::all()->sortBy('theme_result')->sortBy('rol_id')->groupBy('rol_id');
     $reports = [];
     $role_id = '';
 
@@ -85,6 +85,8 @@ class ResultController extends Controller {
         $reports[] = $report;
       }
     }
+
+    //dd($reports);
 
     return view('results.index', compact('reports', 'roles', 'role_id'));
   }
@@ -165,7 +167,8 @@ class ResultController extends Controller {
   public function search(Request $request) {
     //dd($request->all());
     $roles = Role::all()->sortBy('name')->except(1);
-    $results = Result::where('rol_id', $request->uar)->orderBy('theme_result')->get();
+    //$results = Result::where('rol_id', $request->uar)->orderBy('theme_result')->get();
+    $results = Result::where('rol_id', $request->uar)->get()->sortBy('theme_result');
     $reports = [];
     $role_id = $request->uar;
 
