@@ -19,7 +19,6 @@
             	</button>
         	</div>
 	    </div>
-	    <br>
     @endif
     <div class="panel-body">
         @can('create_roles')

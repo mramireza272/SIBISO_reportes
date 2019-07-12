@@ -169,21 +169,6 @@ class BuildFormController extends Controller {
             $report->created_by = $post['created_by'];
             $report->save();
 
-            /*
-            foreach ($post as $key => $value) {
-                $field = strpos($key, 'f_');
-
-                if($field>-1 and strlen($value)>-1){
-                    $pices = explode('_', $key);
-
-                    $ivr = ItemValueReport::findOrFail($pices[1]);
-
-                    $ivr->valore = $value;
-                    $ivr->save();
-                }
-            }
-			*/
-
             foreach ($post as $key => $value) {
                 $field = strpos($key, 'f_');
 
@@ -197,8 +182,8 @@ class BuildFormController extends Controller {
                     ]);
                     $ivr->valore = $value;
                     $ivr->save();
+                }
             }
-        }
 
             return redirect()->route('reportes.edit', $id)->with('info', '<p style="text-align: justify;">Registro editado satisfactoriamente. <strong>¡ IMPORTANTE !</strong> Puede editar o eliminar el registro hasta 2 horas después de haberlo creado. Le recomendamos consultarlo para estar seguro de que la información registrada es correcta. Si requiere eliminar o editar un registro después de este periodo, comunique su solicitud a <ins>formularios.sibiso@gmail.com</ins></p>');
         }

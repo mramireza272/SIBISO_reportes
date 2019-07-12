@@ -31,15 +31,6 @@
 		        "paging"    : true,
 		        "ordering"	: false
 		    });
-
-		    $("#example").on('click', '.delete', function(e){
-		    	e.preventDefault();
-		        var $form = $(this);
-			    $('#confirm').modal({ backdrop: 'static', keyboard: false })
-			        .on('click', '#delete-btn', function(){
-			            $form.submit();
-			    });
-		    });
 		});
 	</script>
 @endsection
@@ -97,15 +88,6 @@
 		                                	Editar
 		                            	</a>
 	                            	@endcan
-	                            	{{-- @can('delete_form')
-					                	<form class="delete" style="display: inline;" method="POST" action="{{ route('informes.destroy', $result->id) }}">
-		                                    {!! method_field('DELETE') !!}
-							                <input type="hidden" name="_token" value="{{ csrf_token() }}">
-							                <button title="Eliminar" class="btn btn-sm btn-danger">
-				        						Eliminar
-				        					</button>
-						                </form>
-					                @endcan --}}
 					            </td>
 				            </tr>
 			            @endforeach
@@ -114,24 +96,6 @@
 			    </table>
 			</div>
 		</div>
-	</div>
-
-	<div class="modal" id="confirm">
-	    <div class="modal-dialog modal-sm">
-	        <div class="modal-content">
-	            <div class="modal-header">
-	                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
-	                <h4 class="modal-title" style="text-align: center;">Atención</h4>
-	            </div>
-	            <div class="modal-body" style="text-align: center;">
-	                <p>¿Está seguro de eliminar?</p>
-	            </div>
-	            <div class="modal-footer">
-	                <button type="button" class="btn btn-sm btn-default" data-dismiss="modal">Cerrar</button>
-		            <button type="button" class="btn btn-sm btn-primary" id="delete-btn">Eliminar</button>
-	            </div>
-	        </div>
-	    </div>
 	</div>
 </div>
 @endsection
