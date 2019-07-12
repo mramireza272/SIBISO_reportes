@@ -66,7 +66,7 @@
 		                <div class="panel-body">
 		                	@isset($report['goals'])
 			                	@if(count($report['goals']) > 0)
-				                	<div class="col-md-6">
+				                	<div class="col-sm-6 col-md-6 col-lg-6 col-xl-6">
 						                <div class="table-responsive">
 									        <table id="goals" class="table table-striped table-bordered" style="width: 100%">
 									        	<thead>
@@ -93,7 +93,7 @@
 									        </table>
 									    </div>
 									</div>
-								    <div class="col-md-6">
+								    <div class="col-sm-6 col-md-6 col-lg-6 col-xl-6">
 									    <div class="table-responsive">
 									        <table id="results" class="table table-striped table-bordered" style="width: 100%">
 									        	<thead>
@@ -112,7 +112,7 @@
 										             <tr>
 										             	@foreach($report['goals'] as $goal)
 											             	<td>
-											             		{{  $report['total_value'] .' ('. $goal['percent'] .')' }}
+											             		{{  $goal['total_value'] .' ('. $goal['percent'] .')' }}
 											             	</td>
 										             	@endforeach
 										             </tr>

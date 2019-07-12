@@ -54,11 +54,6 @@
         	</div>
     	</div>
   	@endif
-	<div class="panel-body text-right">
-		{{-- @canany(['create_ined', 'create_cgib', 'create_asc', 'create_sdh', 'create_iapp'])
-			<a href="{{ route('formularios.create') }}" class="btn btn-primary">Nuevo Formulario</a>
-		@endcanany --}}
-	</div>
 	<div class="panel-body">
 		<div class="row">
             <div class="col-sm-12 col-md-12 col-lg-12 col-xl-12">
@@ -84,15 +79,6 @@
 	                                	Editar
 	                            	</a>
                             	@endcan
-                            	{{-- @can('delete_form')
-				                	<form class="delete" style="display: inline;" method="POST" action="{{ route('formularios.destroy', $rol->id) }}">
-	                                    {!! method_field('DELETE') !!}
-						                <input type="hidden" name="_token" value="{{ csrf_token() }}">
-						                <button title="Eliminar" class="btn btn-sm btn-danger">
-			        						Eliminar
-			        					</button>
-					                </form>
-				                @endcan --}}
 				            </td>
 			            </tr>
 		        	@endforeach

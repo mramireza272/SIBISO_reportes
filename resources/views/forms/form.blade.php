@@ -13,7 +13,7 @@
                 <thead>
                     <tr>
                         <th>
-                            <input type="text" name="" value="{{ $itm->item }}" data-type="item" data-id="{{ $itm->id }}" @if($action == 'show') readonly @endif />
+                            <input class="form-control" type="text" name="" value="{{ $itm->item }}" data-type="item" data-id="{{ $itm->id }}" @if($action == 'show') readonly @endif />
                         </th>
                         <th>
                             <input class="magic-checkbox" type="checkbox" name="" id="{{ $itm->id }}" @if($action == 'show' || ($itm->childs->count() > 0)) disabled @endif @if($itm->editable) checked @endif />
@@ -23,7 +23,7 @@
                         </th>
                         @foreach ($itm->cols as $col)
                             <th>
-                                <input type="text" name="col_{{ $col->id }}" data-type="rol" data-id="{{ $col->id }}" value="{{ $col->columns }}" @if($action == 'show') readonly @endif />
+                                <input class="form-control" type="text" name="col_{{ $col->id }}" data-type="rol" data-id="{{ $col->id }}" value="{{ $col->columns }}" @if($action == 'show') readonly @endif />
                             </th>
                         @endforeach
 
@@ -44,7 +44,7 @@
                     @foreach ($itm->childs as $subitm)
                         <tr>
                             <td>
-                                <input type="text" name="row_{{ $subitm->id }}" data-type="item" data-id="{{ $subitm->id }}" value="{{ $subitm->item }}" @if($action == 'show') readonly @endif />
+                                <input class="form-control" type="text" name="row_{{ $subitm->id }}" data-type="item" data-id="{{ $subitm->id }}" value="{{ $subitm->item }}" @if($action == 'show') readonly @endif />
                             </td>
                             <td>
                                 <input class="magic-checkbox" type="checkbox" name="{{ $subitm->id }}" id="{{ $subitm->id }}" @if($action == 'show') disabled @endif @if($subitm->editable) checked @endif />
@@ -56,7 +56,7 @@
 	                    @foreach ($subitm->childs as $subch)
 	                        <tr>
 	                            <td>
-	                                <input type="text" name="row_{{ $subch->id }}" data-type="item" data-id="{{ $subch->id }}" value="{{ $subch->item }}" @if($action == 'show') readonly @endif />
+	                                <input class="form-control" type="text" name="row_{{ $subch->id }}" data-type="item" data-id="{{ $subch->id }}" value="{{ $subch->item }}" @if($action == 'show') readonly @endif />
 	                            </td>
 	                        </tr>
 	                    @endforeach

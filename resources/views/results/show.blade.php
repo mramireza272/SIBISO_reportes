@@ -42,6 +42,7 @@
 	                dataType:   'json',
 	                success:    function(response){
 	                	if($.isEmptyObject(response.error)){
+	                		console.log(response.otro);
 	                    	$("#results").show();
 	                    	html = '';
 
