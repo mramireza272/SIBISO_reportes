@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use Illuminate\Database\Eloquent\Builder;
 
 class Result extends Model
 {
@@ -13,7 +14,6 @@ class Result extends Model
     protected $fillable = [
       'rol_id', 'theme_result', 'description'
     ];
-
 
     public function goals(){
     	return $this->hasMany('App\Models\Goal', 'result_id','id')->orderBy('id');
