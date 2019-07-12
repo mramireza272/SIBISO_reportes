@@ -29,7 +29,10 @@
 		        },
 		        "responsive": true,
 		        "paging"    : true,
-		        "ordering"	: false
+		        "order": [],
+		        "columnDefs": [
+  					{ targets: 'no-sort', orderable: false }
+				]
 		    });
 		});
 	</script>
@@ -58,18 +61,19 @@
 		    	<table id="example" class="display" style="width:100%">
 			        <thead>
 			            <tr>
-			                <th class="text-center" style="width: 5%">#</th>
+			                <th class="no-sort" style="text-align: center; width: 5%;">#</th>
 			                <th style="width: 35%">Unidad Administrativa Responsable</th>
-			                <th style="width: 20%">Tema</th>
-			                <th style="width: 20%">Descripción</th>
-			                <th style="width: 20%">Acciones</th>
+			                <th class="no-sort" style="width: 20%;">Tema</th>
+			                <th class="no-sort" style="width: 20%;">Descripción</th>
+			                <th class="no-sort" style="width: 20%;">Acciones</th>
 			            </tr>
 			        </thead>
 			        <tbody>
+			        @php($i = 1)
 		        	@foreach($results as $result_list)
 		        		@foreach ($result_list as $result)
 				            <tr>
-				            	<td>{{ $loop->iteration }}</td>
+				            	<td style="text-align: center;">{{ $i }}</td>
 				                <td>{{ $result->rol->name }}</td>
 				                <td>{{ $result->theme_result }}</td>
 				                <td>{{ $result->description }}</td>
@@ -90,6 +94,7 @@
 	                            	@endcan
 					            </td>
 				            </tr>
+				            @php($i++)
 			            @endforeach
 		        	@endforeach
 			        </tbody>

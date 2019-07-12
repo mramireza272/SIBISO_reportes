@@ -64,7 +64,7 @@
 			                </div>
 			            </div>
 		                <div class="panel-body">
-		                	@isset($report['goals'])
+		                	@if(isset($report['goals']))
 			                	@if(count($report['goals']) > 0)
 				                	<div class="col-sm-6 col-md-6 col-lg-6 col-xl-6">
 						                <div class="table-responsive">
@@ -120,16 +120,16 @@
 									        </table>
 									    </div>
 									</div>
-							    @else
-								    <div class="table-responsive">
-								        <table id="example" class="table table-striped" style="width: 100%">
-								        	<thead>
-								        		<th style="text-align: left;">Total: {{ $report['total_value'] }}</th>
-								        	</thead>
-								        </table>
-								    </div>
 							    @endif
-						    @endisset
+							@else
+							    <div class="table-responsive">
+							        <table id="example" class="table table-striped" style="width: 100%">
+							        	<thead>
+							        		<th style="text-align: left;">{{ isset($report['total_value']) ? 'Total: '. $report['total_value'] : '' }}</th>
+							        	</thead>
+							        </table>
+							    </div>
+							@endif
 						</div>
 						<div class="panel-footer text-right">
 							<a role="button" href="{{ route('resultados.show', $report['id']) }}" class="btn btn-primary">Ampliar</a>
