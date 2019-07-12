@@ -50,7 +50,7 @@ class ResultController extends Controller {
                 ['date_end', '<=', $goal->date_end]
               ])->get()->toArray();
 
-              foreach($formula->variables as $variable){
+              foreach($formula->variables as $variable) {
                 $valus[] = ItemValueReport::where([
                   ['item_rol_id', $variable->itemrol_id],
                   ['item_col_id', $variable->itemstructure_id]
@@ -71,7 +71,7 @@ class ResultController extends Controller {
           } else {
             $valus = [];
 
-            foreach($formula->variables as $variable){
+            foreach($formula->variables as $variable) {
               $valus[] = ItemValueReport::where([
                 ['item_rol_id', $variable->itemrol_id],
                 ['item_col_id', $variable->itemstructure_id]
@@ -191,7 +191,7 @@ class ResultController extends Controller {
               ['date_end', '<=', $goal->date_end]
             ])->get()->toArray();
 
-            foreach($formula->variables as $variable){
+            foreach($formula->variables as $variable) {
               $valus[] = ItemValueReport::where([
                 ['item_rol_id', $variable->itemrol_id],
                 ['item_col_id', $variable->itemstructure_id]
@@ -212,7 +212,7 @@ class ResultController extends Controller {
         } else {
           $valus = [];
 
-          foreach($formula->variables as $variable){
+          foreach($formula->variables as $variable) {
             $valus[] = ItemValueReport::where([
               ['item_rol_id', $variable->itemrol_id],
               ['item_col_id', $variable->itemstructure_id]
@@ -267,7 +267,7 @@ class ResultController extends Controller {
           ['date_end', '<=', $request->date_end]
         ])->get()->toArray();
 
-        foreach($formula->variables as $variable){
+        foreach($formula->variables as $variable) {
           $valus[] = ItemValueReport::where([
             ['item_rol_id', $variable->itemrol_id],
             ['item_col_id', $variable->itemstructure_id]
@@ -291,7 +291,7 @@ class ResultController extends Controller {
         $report['goals'] = $goals;
       }
 
-      return response()->json(['result' => $report, 'otro' => $result]);
+      return response()->json(['result' => $report]);
     }
 
     return response()->json(['error' => $validator->errors()->all()]);
