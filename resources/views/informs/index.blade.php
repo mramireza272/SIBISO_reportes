@@ -69,34 +69,30 @@
 			            </tr>
 			        </thead>
 			        <tbody>
-			        @php($i = 1)
-		        	@foreach($results as $result_list)
-		        		@foreach ($result_list as $result)
-				            <tr>
-				            	<td style="text-align: center;">{{ $i }}</td>
-				                <td>{{ $result->rol->name }}</td>
-				                <td>{{ $result->theme_result }}</td>
-				                <td>{{ $result->description }}</td>
-				                <td>
-				                	<a href="{{ route('informes.show', $result->id) }}" class="btn btn-sm btn-primary">
-		                                Ver
+	        		@foreach ($results as $result)
+			            <tr>
+			            	<td style="text-align: center;">{{ $loop->iteration }}</td>
+			                <td>{{ $result->name }}</td>
+			                <td>{{ $result->theme_result }}</td>
+			                <td>{{ $result->description }}</td>
+			                <td>
+			                	<a href="{{ route('informes.show', $result->id) }}" class="btn btn-sm btn-primary">
+	                                Ver
+	                            </a>
+			                	@can('edit_form')
+				                	<a href="{{ route('informes.creategoal', $result->id) }}" class="btn btn-sm btn-info">
+		                                Meta
 		                            </a>
-				                	@can('edit_form')
-					                	<a href="{{ route('informes.creategoal', $result->id) }}" class="btn btn-sm btn-info">
-			                                Meta
-			                            </a>
-					                	<a href="{{ route('informes.createvariable', $result->id) }}" class="btn btn-sm btn-info">
-		                                	Variable
-		                            	</a>
-		                            	<a href="{{ route('informes.edit', $result->id) }}" class="btn btn-sm btn-warning">
-		                                	Editar
-		                            	</a>
-	                            	@endcan
-					            </td>
-				            </tr>
-				            @php($i++)
-			            @endforeach
-		        	@endforeach
+				                	<a href="{{ route('informes.createvariable', $result->id) }}" class="btn btn-sm btn-info">
+	                                	Variable
+	                            	</a>
+	                            	<a href="{{ route('informes.edit', $result->id) }}" class="btn btn-sm btn-warning">
+	                                	Editar
+	                            	</a>
+                            	@endcan
+				            </td>
+			            </tr>
+		            @endforeach
 			        </tbody>
 			    </table>
 			</div>

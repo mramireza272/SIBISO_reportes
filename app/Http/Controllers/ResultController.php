@@ -26,64 +26,63 @@ class ResultController extends Controller {
   public function index() {
     //dd($request->all());
     $roles = Role::all()->sortBy('name')->except(1);
-    $results = Result::all()->sortBy('theme_result')->groupBy('rol_id');
+    //$results = Result::all()->sortBy('theme_result')->groupBy('rol_id');
+    $results = Result::select('results.*', 'r.name')->join('roles AS r', 'r.id', '=', 'results.rol_id')->orderBy('r.name')->orderBy('theme_result')->groupBy(['results.id', 'r.name', 'results.rol_id'])->get();
     $reports = [];
     $role_id = '';
 
-    foreach($results as $results_list) {
-      foreach ($results_list as $result) {
-        $report = [];
-        $report['id'] = $result->id;
-        $report['role'] = $result->rol->name;
-        $report['theme_result'] = $result->theme_result;
+    foreach ($results as $result) {
+      $report = [];
+      $report['id'] = $result->id;
+      $report['role'] = $result->rol->name;
+      $report['theme_result'] = $result->theme_result;
 
-        foreach ($result->formulas as $formula) {
-          if($result->goals->count() > 0) {
-            $goals = [];
+      foreach ($result->formulas as $formula) {
+        if($result->goals->count() > 0) {
+          $goals = [];
 
-            foreach ($result->goals as $goal) {
-              $valus = [];
-              $each_goal = [];
-              $reports_ids = Report::select('id')->where([
-                ['rol_id', $result->rol_id],
-                ['date_start', '>=', $goal->date_start],
-                ['date_end', '<=', $goal->date_end]
-              ])->get()->toArray();
-
-              foreach($formula->variables as $variable) {
-                $valus[] = ItemValueReport::where([
-                  ['item_rol_id', $variable->itemrol_id],
-                  ['item_col_id', $variable->itemstructure_id]
-                ])->whereIn('report_id', $reports_ids)->sum('valore');
-              }
-
-              $total_value = array_sum($valus);
-              $each_goal['total_value'] = number_format($total_value);
-              $dividendo = floatval($goal->goal_unit);
-              $each_goal['goal_txt'] = $goal->goal_txt;
-              $each_goal['goal_unit'] = number_format($goal->goal_unit);
-              $percent = ($total_value / $dividendo) * 100;
-              $each_goal['percent'] = round($percent, 2) .' %';
-              $goals[] = $each_goal;
-            }
-
-            $report['goals'] = $goals;
-          } else {
+          foreach ($result->goals as $goal) {
             $valus = [];
+            $each_goal = [];
+            $reports_ids = Report::select('id')->where([
+              ['rol_id', $result->rol_id],
+              ['date_start', '>=', $goal->date_start],
+              ['date_end', '<=', $goal->date_end]
+            ])->get()->toArray();
 
             foreach($formula->variables as $variable) {
               $valus[] = ItemValueReport::where([
                 ['item_rol_id', $variable->itemrol_id],
                 ['item_col_id', $variable->itemstructure_id]
-              ])->sum('valore');
+              ])->whereIn('report_id', $reports_ids)->sum('valore');
             }
 
-            $report['total_value'] = number_format(array_sum($valus));
+            $total_value = array_sum($valus);
+            $each_goal['total_value'] = number_format($total_value);
+            $dividendo = floatval($goal->goal_unit);
+            $each_goal['goal_txt'] = $goal->goal_txt;
+            $each_goal['goal_unit'] = number_format($goal->goal_unit);
+            $percent = ($total_value / $dividendo) * 100;
+            $each_goal['percent'] = round($percent, 2) .' %';
+            $goals[] = $each_goal;
           }
-        }
 
-        $reports[] = $report;
+          $report['goals'] = $goals;
+        } else {
+          $valus = [];
+
+          foreach($formula->variables as $variable) {
+            $valus[] = ItemValueReport::where([
+              ['item_rol_id', $variable->itemrol_id],
+              ['item_col_id', $variable->itemstructure_id]
+            ])->sum('valore');
+          }
+
+          $report['total_value'] = number_format(array_sum($valus));
+        }
       }
+
+      $reports[] = $report;
     }
 
     //dd($reports);
