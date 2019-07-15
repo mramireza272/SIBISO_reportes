@@ -26,7 +26,7 @@ class ResultController extends Controller {
   public function index() {
     //dd($request->all());
     $roles = Role::all()->sortBy('name')->except(1);
-    $results = Result::all()->sortBy('theme_result')->sortBy('rol_id')->groupBy('rol_id');
+    $results = Result::all()->sortBy('theme_result')->groupBy('rol_id');
     $reports = [];
     $role_id = '';
 
