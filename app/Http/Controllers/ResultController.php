@@ -24,12 +24,12 @@ class ResultController extends Controller {
    * @return \Illuminate\Http\Response
    */
   public function index() {
-    //dd($request->all());
     $roles = Role::all()->sortBy('name')->except(1);
     //$results = Result::all()->sortBy('theme_result')->groupBy('rol_id');
-    $results = Result::select('results.*', 'r.name')->join('roles AS r', 'r.id', '=', 'results.rol_id')->orderBy('r.name')->orderBy('theme_result')->groupBy(['results.id', 'r.name', 'results.rol_id'])->get();
+    $results = Result::select('results.*', 'r.name')->join('roles AS r', 'r.id', '=', 'results.rol_id')->orderBy('r.name')->orderBy('theme_result')->get();
     $reports = [];
     $role_id = '';
+    //dd($results);
 
     foreach ($results as $result) {
       $report = [];
@@ -85,8 +85,6 @@ class ResultController extends Controller {
       $reports[] = $report;
     }
 
-    //dd($reports);
-
     return view('results.index', compact('reports', 'roles', 'role_id'));
   }
 
@@ -118,7 +116,8 @@ class ResultController extends Controller {
    * @return \Illuminate\Http\Response
    */
   public function show($id) {
-    $result = Result::where('id', $id)->with('rol')->get()->first();
+    //$result = Result::where('id', $id)->with('rol')->get()->first();
+    $result = Result::findOrFail($id);
     $results = "";
 
     return view('results.show', compact('result', 'results'));

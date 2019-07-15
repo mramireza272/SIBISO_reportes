@@ -25,7 +25,7 @@
 		                <div class="form-group">
 						    <ul>
 								@foreach($result->goals as $goal)
-									<li><strong>{{ $goal->goal_txt }}</strong> <em>({{ $goal->goal_unit }})</em></li>
+									<li><strong>{{ $goal->goal_txt }}</strong> <em>({{ number_format($goal->goal_unit) }})</em></li>
 								@endforeach
 							</ul>
 						</div>
