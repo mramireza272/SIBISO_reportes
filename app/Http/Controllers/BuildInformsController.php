@@ -31,7 +31,7 @@ class BuildInformsController extends Controller {
      * @return \Illuminate\Http\Response
      */
     public function index(){
-        $results = Result::select('results.*', 'r.name')->join('roles AS r', 'r.id', '=', 'results.rol_id')->orderBy('r.name')->orderBy('theme_result')->groupBy(['results.id', 'r.name', 'results.rol_id'])->get();
+        $results = Result::select('results.*', 'r.name')->join('roles AS r', 'r.id', '=', 'results.rol_id')->orderBy('r.name')->orderBy('theme_result')->get();
         //dd($results);
         //$results = Result::all()->sortBy('theme_result')->groupBy('rol_id');
 
@@ -69,7 +69,7 @@ class BuildInformsController extends Controller {
      * @return \Illuminate\Http\Response
      */
     public function show($id) {
-        $result = Result::where('id', $id)->with(['goals', 'rol'])->orderBy('created_at')->get()->first();
+        $result = Result::findOrFail($id);
         //dd($result);
 
         return view('informs.show', compact('result'));
