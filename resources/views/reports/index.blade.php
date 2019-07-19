@@ -118,7 +118,7 @@
 					        					</button>
 							                </form>
 						                @endcanany
-						                @canany(['validate_ined', 'validate_cgib', 'validate_asc', 'validate_sdh', 'validate_iapp'])
+						                {{-- @canany(['validate_ined', 'validate_cgib', 'validate_asc', 'validate_sdh', 'validate_iapp'])
 						                	<form class="authorize" style="display: inline;" method="POST" action="{{ route('reportes.validate', $report->id) }}">
 			                                    {!! method_field('PUT') !!}
 								                <input type="hidden" name="_token" value="{{ csrf_token() }}">
@@ -126,7 +126,7 @@
 					        						Validar
 					        					</button>
 							                </form>
-						                @endcan
+						                @endcan --}}
 					                @endif
 					            </td>
 				            </tr>
