@@ -5,14 +5,14 @@ use App\Models\ItemRol;
 use App\Models\RolStructureItem;
 use Spatie\Permission\Models\Role;
 
-class ItemRolForm3 extends Seeder {
+class ItemRolForm3Titular extends Seeder {
     /**
      * Run the database seeds.
      *
      * @return void
      */
     public function run() {
-    	$role = Role::findByName('Atención Social y Ciudadana');
+        $role = Role::findByName('Atención Social y Ciudadana (Titular)');
 
     	if($role->exists) {
 	    	$mains = ['Acciones a reportar'];
@@ -29,11 +29,11 @@ class ItemRolForm3 extends Seeder {
 	    				['name' => 'Diálogos temáticos', 'editable' => true]
 	    			]],
 	    			['col' => 'Otros actores', 'editable' => false, 'subcol' => [
-		    			['name' => 'Audiencias', 'editable' => true],
-		    			['name' => 'Diálogos temáticos', 'editable' => true]
-		    		]]
-	    		]
-	    	];
+	    				['name' => 'Audiencias', 'editable' => true],
+	    				['name' => 'Diálogos temáticos', 'editable' => true]
+	    			]]
+				]
+			];
 
 	    	$order = 0;
 
@@ -79,13 +79,13 @@ class ItemRolForm3 extends Seeder {
 				    	$subsuborder++;
 			    	}
 
-			    	$suborder++;
+				    $suborder++;
 		    	}
 
 		    	$order++;
 	    	}
     	} else {
-    		dd('no hay role parole');
-    	}
+	    	dd('no hay role parole');
+	    }
     }
 }

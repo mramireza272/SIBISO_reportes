@@ -2,9 +2,14 @@
 
 @section('titulo', 'Sistema de Reporte de Servicios Sociales SIBISO')
 
-@section('titulo_pagina', 'Ver Formulario')
+@section('titulo_pagina', 'Ver Registro')
 
 @section('customcss')
+	<style>
+    	textarea {
+      		resize: none;
+    	}
+    </style>
 @endsection
 
 @section('customjs')
@@ -15,7 +20,7 @@
 	    <div class="col-sm-12 col-md-12 col-lg-12 col-xl-12">
 	        <div class="panel">
 	        	<form class="form-horizontal form-padding">
-              @include('forms.form', ['action' => 'show'])
+              		@include('records.form', ['action' => 'show'])
 				</form>
 			</div>
 	    </div>

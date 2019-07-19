@@ -5,29 +5,29 @@ use App\Models\ItemRol;
 use App\Models\RolStructureItem;
 use Spatie\Permission\Models\Role;
 
-class ItemRolSeeder extends Seeder {
+class ItemRolTitularSeeder extends Seeder {
     /**
      * Run the database seeds.
      *
      * @return void
      */
     public function run() {
-    	$role = Role::findByName('Instituto para la Atención a Poblaciones Prioritarias');
+        $role = Role::findByName('Instituto para la Atención a Poblaciones Prioritarias (Titular)');
 
     	$mains = [
-			'CAIS',
-			'Hogar CDMX',
-			'Sistema de Servicios para el Bienestar Capital Social',
-			'Niños y Niñas fuera de peligro',
-			'Remodelaciones C.A.I.S (Ubicación)',
-			'Obra Centros de Valoración y Canalización (Ubicación)',
-			'Concepto',
-			'Concepto',
-			'Actas de Nacimiento Extemporáneas'
-		];
+    		'CAIS',
+    		'Hogar CDMX',
+    		'Sistema de Servicios para el Bienestar Capital Social',
+    		'Niños y Niñas fuera de peligro',
+    		'Remodelaciones C.A.I.S (Ubicación)',
+    		'Obra Centros de Valoración y Canalización (Ubicación)',
+    		'Concepto',
+    		'Concepto',
+    		'Actas de Nacimiento Extemporáneas'
+    	];
 
     	$columnsmain = [
-            '0' => ['Raciones (Alimentación)', 'Atenciones Médicas', 'Pernocta', 'Actividades Recreativas'],
+    		'0' => ['Raciones (Alimentación)', 'Atenciones Médicas', 'Pernocta', 'Actividades Recreativas'],
     		'1' => ['Raciones', 'Atenciones Médicas', 'Personal de Enfermería', 'Actividades Recreativas'],
     		'2' => ['Tarjetas entregadas'],
     		'3' => ['Niños y Niñas atendidos'],
@@ -41,7 +41,7 @@ class ItemRolSeeder extends Seeder {
     	$subs = [
     		'0' => [
     			['col' => 'Atlampa', 'editable' => false, 'subcol' => ['Hombres', 'Mujeres']],
-    			['col' => 'Azcapotzalco', 'editable' => false, 'subcol' => ['Hombres', 'Mujeres']],
+    			['col' => 'Azcapotzalco', 'editable' => false,'subcol' => ['Hombres', 'Mujeres']],
     			['col' => 'Cascada', 'editable' => false, 'subcol' => ['Hombres', 'Mujeres']],
     			['col' => 'Coruña Hombres', 'editable' => false, 'subcol' => ['Hombres', 'Mujeres']],
     			['col' => 'Coruña Jóvenes', 'editable' => false, 'subcol' => ['Hombres', 'Mujeres']],
@@ -58,19 +58,19 @@ class ItemRolSeeder extends Seeder {
     			['col' => 'Egresos', 'editable' => true, 'subcol' => ['Hombres', 'Mujeres']]
     		],
     		'2' => [
-    		    ['col' => 'Cantidad', 'editable' => true, 'subcol' => []]
-    		],
-    		'3' => [
     			['col' => 'Cantidad', 'editable' => true, 'subcol' => []]
     		],
+    		'3' => [
+    			['col'=>'Cantidad', 'editable' => true, 'subcol' => []]
+    		],
     		'4' => [
-    			['col' => 'Atlampa','editable' => true, 'subcol' => []],
+    			['col' => 'Atlampa', 'editable' => true, 'subcol' => []],
     			['col' => 'Azcapotzalco', 'editable' => true, 'subcol' => []],
     			['col' => 'Cascada', 'editable' => true, 'subcol' => []],
     			['col' => 'Coruña Hombres', 'editable' => true, 'subcol' => []],
     			['col' => 'Coruña Jóvenes', 'editable' => true, 'subcol' => []],
     			['col' => 'Cuautepec', 'editable' => true, 'subcol' => []],
-    			['col' => 'Cuemanco', 'editable' => true, 'subcol' => []],
+    			['col' => 'Cuemanco', 'editable' => true, 'subcol'=>[]],
     			['col' => 'Villa Mujeres', 'editable' => true, 'subcol' => []],
     			['col' => 'Plaza del Estudiante', 'editable' => true, 'subcol' => []],
     			['col' => 'Torres de Potrero', 'editable' => true, 'subcol' => []],
@@ -92,7 +92,7 @@ class ItemRolSeeder extends Seeder {
     			['col' => 'Albergue Familiar DIF-CDMX', 'editable' => true, 'subcol' => []]
     		],
     		'6' => [
-    			['col' => 'No. de talleres realizados (oficios,terapia ocupacional,salud emocional,adicciones)', 'editable' => true, 'subcol' => []],
+    			['col' => 'No. de talleres realizados (oficios,terapia ocupacional,salud emocional,adicciones)', 'editable' => true, 'subcol'=>[]],
     			['col' => 'No. de asistentes', 'editable' => true, 'subcol' => []],
     			['col' => 'No. de reuniones comunidades de apoyo', 'editable' => true, 'subcol' => []],
     			['col' => 'No. de participantes', 'editable' => true, 'subcol' => []],
@@ -112,18 +112,18 @@ class ItemRolSeeder extends Seeder {
 
     	foreach ($mains as $key => $value) {
 	    	$itemrol = ItemRol::create([
-                'rol_id' => $role->id,
-                'item' => $value,
-                'parent_id' => null,
-                'editable' => false,
-                'order' => $key
+	    		'rol_id' => $role->id,
+	    		'item' => $value,
+	    		'parent_id' => null,
+	    		'editable' => false,
+	    		'order' => $key
 	    	]);
 
 	    	foreach ($columnsmain[$order] as $ckey => $cvalue) {
 		    	$itemstruct = RolStructureItem::create([
-                    'item_rol_id' => $itemrol->id,
-                    'columns' => $cvalue,
-                    'order' => $order
+		    		'item_rol_id' => $itemrol->id,
+		    		'columns' => $cvalue,
+		    		'order' => $order
 		    	]);
 	    	}
 
@@ -131,28 +131,28 @@ class ItemRolSeeder extends Seeder {
 
 	    	foreach ($subs[$order] as $subkey => $subvalue) {
 		    	$subitemrol = ItemRol::create([
-                    'rol_id' => $role->id,
-                    'item' => $subvalue['col'],
-                    'parent_id' => $itemrol->id,
-                    'editable' => $subvalue['editable'],
-                    'order' => $suborder
+		    		'rol_id' => $role->id,
+		    		'item' => $subvalue['col'],
+		    		'parent_id' => $itemrol->id,
+		    		'editable' => $subvalue['editable'],
+		    		'order' => $suborder
 		    	]);
 
 		    	$subsuborder = 0;
 
 		    	foreach ($subvalue['subcol'] as $subbval) {
 			    	$subsubitemrol = ItemRol::create([
-                        'rol_id' => $role->id,
-                        'item' => $subbval,
-                        'parent_id' => $subitemrol->id,
-                        'editable' => true,
-                        'order' => $subsuborder
+			    		'rol_id' => $role->id,
+			    		'item' => $subbval,
+			    		'parent_id' => $subitemrol->id,
+			    		'editable' => true,
+			    		'order' => $subsuborder
 			    	]);
 
 			    	$subsuborder++;
 		    	}
 
-    		    $suborder++;
+		    	$suborder++;
 	    	}
 
 	    	$order++;
