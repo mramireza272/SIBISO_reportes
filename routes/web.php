@@ -23,7 +23,8 @@ Route::match(['get', 'post'], '/usuarios/busqueda', ['as' => 'usuarios.search', 
 //Bitácora
 Route::resource('bitacora', 'LogController');
 
-//Realizar reportes - Unidades Administrativas
+//Realizar reportes - Unidades Administrativas Responsables
+Route::put('/reportes/validar/{id}', ['as' => 'reportes.validate', 'uses' => 'BuildFormController@updateStatus']);
 Route::resource('reportes', 'BuildFormController');
 
 //CRUD formularios
@@ -40,7 +41,7 @@ Route::get('/informes/crearmeta/{id}', ['as' => 'informes.creategoal', 'uses' =>
 Route::post('/informes/guardarmeta/', ['as' => 'informes.storegoal', 'uses' => 'BuildInformsController@storeGoal']);
 Route::get('/informes/crearvariable/{id}', ['as' => 'informes.createvariable', 'uses' => 'BuildInformsController@createVariable']);
 Route::post('/informes/guardarvariable/', ['as' => 'informes.storevariable', 'uses' => 'BuildInformsController@storeVariable']);
-Route::put('/informes/updateMeta', 'BuildInformsController@updateGoal');
+Route::put('/informes/actualizarmeta', ['as' => 'informes.updategoal', 'uses' => 'BuildInformsController@updateGoal']);
 Route::delete('/informes/eliminarmeta', ['as' => 'informes.destroyGoal', 'uses' => 'BuildInformsController@destroyGoal']);
 Route::resource('informes', 'BuildInformsController')->except(['destroy']);
 
@@ -48,3 +49,7 @@ Route::resource('informes', 'BuildInformsController')->except(['destroy']);
 Route::post('/resultados/generaravance', 'ResultController@buildProgress');
 Route::post('/resultados/filtro', ['as' => 'resultados.search', 'uses' => 'ResultController@search']);
 Route::resource('resultados', 'ResultController')->only(['index', 'show']);
+
+//Todos los Registros de las UAR - Administrador
+Route::post('/registros/filtro', ['as' => 'registros.search', 'uses' => 'RecordsController@search']);
+Route::resource('registros', 'RecordsController');

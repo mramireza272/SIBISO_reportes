@@ -30,10 +30,8 @@ class BuildInformsController extends Controller {
      *
      * @return \Illuminate\Http\Response
      */
-    public function index(){
+    public function index() {
         $results = Result::select('results.*', 'r.name')->join('roles AS r', 'r.id', '=', 'results.rol_id')->orderBy('r.name')->orderBy('theme_result')->get();
-        //dd($results);
-        //$results = Result::all()->sortBy('theme_result')->groupBy('rol_id');
 
         return view('informs.index', compact('results'));
     }
@@ -43,8 +41,8 @@ class BuildInformsController extends Controller {
      *
      * @return \Illuminate\Http\Response
      */
-    public function create(){
-        $roles = Role::all()->sortBy('name')->except(1);
+    public function create() {
+        $roles = Role::all()->sortBy('name')->except([1, 3, 5, 7, 9, 11]);
 
         return view('informs.create', compact('roles'));
     }
@@ -56,7 +54,6 @@ class BuildInformsController extends Controller {
      * @return \Illuminate\Http\Response
      */
     public function store(ResultRequest $request) {
-        //dd($request->all());
         Result::create($request->all());
 
         return redirect()->route('informes.create')->with('info', 'Informe creado satisfactoriamente.');
@@ -98,6 +95,7 @@ class BuildInformsController extends Controller {
     public function update(ResultRequest $request, $id) {
         //dd($request->all());
         $result = Result::findOrFail($id)->update($request->all());
+
 
         return redirect()->route('informes.edit', $id)->with('info', 'Informe actualizado satisfactoriamente.');
     }

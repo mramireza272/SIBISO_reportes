@@ -5,14 +5,14 @@ use App\Models\ItemRol;
 use App\Models\RolStructureItem;
 use Spatie\Permission\Models\Role;
 
-class ItemRolForm3 extends Seeder {
+class ItemRolForm2Titular extends Seeder {
     /**
      * Run the database seeds.
      *
      * @return void
      */
     public function run() {
-    	$role = Role::findByName('Atención Social y Ciudadana');
+        $role = Role::findByName('Coordinación General de Inclusión y Bienestar (Titular)');
 
     	if($role->exists) {
 	    	$mains = ['Acciones a reportar'];
@@ -20,22 +20,22 @@ class ItemRolForm3 extends Seeder {
 
 	    	$subs = [
 	    		'0' => [
-	    			['col' => 'Personas Físicas', 'editable' => false, 'subcol' => [
-	    				['name' => 'Audiencias', 'editable' => true],
-	    				['name' => 'Diálogos temáticos', 'editable' => true]
+	    			['col'=>'Actas de nacimiento extemporáneas', 'editable' => false, 'subcol' => []],
+	    			['col'=>'Personas Mayores ', 'editable' => false, 'subcol' => [
+	    				['name' => 'Hombres', 'editable' => true],
+	    			 	['name' => 'Mujeres', 'editable' => true]
 	    			]],
-	    			['col' => 'Organizaciones de la Sociedad Civil', 'editable' => false, 'subcol' => [
-	    				['name' => 'Audiencias', 'editable' => true],
-	    				['name' => 'Diálogos temáticos', 'editable' => true]
+	    			['col' => 'Personas Indígenas', 'editable' => false, 'subcol' => [
+	    			 	['name' => 'Hombres', 'editable' => true],
+	    			 	['name' => 'Mujeres', 'editable' => true]
 	    			]],
-	    			['col' => 'Otros actores', 'editable' => false, 'subcol' => [
-		    			['name' => 'Audiencias', 'editable' => true],
-		    			['name' => 'Diálogos temáticos', 'editable' => true]
-		    		]]
+	    			['col' => 'Alianzas con empresas de entretenimiento', 'editable' => true, 'subcol' => []],
+	    			['col' => 'Alianzas con universidades públicas y privadas', 'editable' => true, 'subcol' => []],
+	    			['col' => 'Convenios de colaboración y coordinación', 'editable' => true, 'subcol'=>[]]
 	    		]
 	    	];
 
-	    	$order = 0;
+    		$order = 0;
 
 	    	foreach ($mains as $key => $value) {
 		    	$itemrol = ItemRol::create([
@@ -72,7 +72,7 @@ class ItemRolForm3 extends Seeder {
 				    		'rol_id' => $role->id,
 				    		'item' => $subbval['name'],
 				    		'parent_id' => $subitemrol->id,
-				    		'editable' => $subvalue['editable'],
+				    		'editable' => $subbval['editable'],
 				    		'order' => $subsuborder
 				    	]);
 

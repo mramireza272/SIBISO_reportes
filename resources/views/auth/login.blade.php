@@ -7,7 +7,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <link rel="shortcut icon" type="image/png" href="/img/logos/logo_fav.png"/>
 
-    <title>Sistema de Reportes SIBISO | Acceso al sistema</title>
+    <title>Sistema de Reporte de Servicios Sociales SIBISO | Acceso al sistema</title>
 
     <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700&amp;subset=latin" rel="stylesheet">
     <link href="css/bootstrap.min.css" rel="stylesheet">
@@ -29,9 +29,9 @@
 	                </div>
 
 		        	<div class="media pad-top bord-top"></div>
-		        	
+
 		            <div class="mar-ver pad-btm">
-		                <h1 class="h3">Sistema de Reportes</h1>
+		                <h1 class="h3">Sistema de Reporte de Servicios Sociales SIBISO</h1>
 		                <p>Ingrese sus credenciales</p>
 		            </div>
 		            @if(Session::has('info'))
@@ -69,7 +69,7 @@
 		            @endif
 		            {!! $errors->first('email', '<div class="alert alert-danger">:message</div>') !!}
 		        </div>
-		
+
 		        <div class="pad-all">
 		            <a href="{{ route('password.request') }}" class="btn-link mar-rgt">Olvidó su contraseña?</a>
 		            <a href="{{ route('register') }}" class="btn-link mar-lft"><strong>Registrarse</strong></a>
@@ -81,8 +81,8 @@
 		        </div>
 		    </div>
 		</div>
-		
-		
+
+
     </div>
 
     <script src="/js/jquery.min.js"></script>

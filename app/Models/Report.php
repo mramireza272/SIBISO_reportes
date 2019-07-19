@@ -17,10 +17,22 @@ class Report extends Model
         'created_by',
         'date_start',
         'date_end',
-        'active'
+        'observation',
+        'active',
+        'status',
+        'authorized_by',
+        'updated_at'
     ];
 
     public function childs(){
         return $this->hasMany('App\Models\ItemValueReport', 'report_id', 'id');
+    }
+
+    public function user(){
+        return $this->belongsTo('App\User', 'created_by', 'id')->orderBy('name');
+    }
+
+    public function authorize(){
+        return $this->belongsTo('App\User', 'authorized_by', 'id')->orderBy('name');
     }
 }

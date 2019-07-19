@@ -1,6 +1,6 @@
 @extends('templates.master')
 
-@section('titulo', 'Sistema de Reportes SIBISO')
+@section('titulo', 'Sistema de Reporte de Servicios Sociales SIBISO')
 
 @section('titulo_pagina', 'Nueva Meta')
 
@@ -11,11 +11,11 @@
     <link href="/plugins/datatables/extensions/Buttons/css/buttons.dataTables.min.css">
     <style>
         table td {
-          word-wrap: break-word;
-          max-width: 400px;
+        	word-wrap: break-word;
+            max-width: 400px;
         }
         #example td {
-          white-space:inherit;
+            white-space:inherit;
         }
     </style>
 @endsection
@@ -53,7 +53,7 @@
 		    	$.ajax({
 					type: 'PUT',
 					dataType: 'JSON',
-					url: "{{ url('/informes/updateMeta') }}",
+					url: "{{ route('informes.updategoal') }}",
 					data: params,
 					success: function(data){
 						console.log(data);
@@ -71,7 +71,7 @@
 		    	$.ajax({
 					type: 'PUT',
 					dataType: 'JSON',
-					url: "{{ url('/informes/updateMeta') }}",
+					url: "{{ route('informes.updategoal') }}",
 					data: params,
 					success: function(data){
 						console.log(data);
@@ -91,7 +91,7 @@
 		    	$.ajax({
 					type: 'PUT',
 					dataType: 'JSON',
-					url: "{{ url('/informes/updateMeta') }}",
+					url: "{{ route('informes.updategoal') }}",
 					data: params,
 					success: function(data){
 						if($.isEmptyObject(data.error)){
@@ -115,7 +115,7 @@
 		    	$.ajax({
 					type: 'PUT',
 					dataType: 'JSON',
-					url: "{{ url('/informes/updateMeta') }}",
+					url: "{{ route('informes.updategoal') }}",
 					data: params,
 					success: function(data){
 						if($.isEmptyObject(data.error)){
@@ -222,7 +222,7 @@
 							                <h4 class="modal-title" style="text-align: center;">Atención</h4>
 							            </div>
 							            <div class="modal-body" style="text-align: center;">
-							                <p>¿Está seguro de eliminar?</p>
+							                <p>¿Está seguro(a) de eliminar?</p>
 							            </div>
 							            <div class="modal-footer">
 							                <button type="button" class="btn btn-sm btn-default" data-dismiss="modal">Cerrar</button>

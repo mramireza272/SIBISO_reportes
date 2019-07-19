@@ -1,10 +1,15 @@
 @extends('templates.master')
 
-@section('titulo', 'Sistema de Reportes SIBISO')
+@section('titulo', 'Sistema de Reporte de Servicios Sociales SIBISO')
 
 @section('titulo_pagina', 'Nuevo Registro')
 
 @section('customcss')
+	<style>
+    	textarea {
+      		resize: none;
+    	}
+    </style>
 @endsection
 
 @section('customjs')

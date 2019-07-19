@@ -5,14 +5,14 @@ use App\Models\ItemRol;
 use App\Models\RolStructureItem;
 use Spatie\Permission\Models\Role;
 
-class ItemRolForm3 extends Seeder {
+class ItemRolForm4Titular extends Seeder {
     /**
      * Run the database seeds.
      *
      * @return void
      */
     public function run() {
-    	$role = Role::findByName('Atención Social y Ciudadana');
+        $role = Role::findByName('Subsecretaría de Derechos Humanos (Titular)');
 
     	if($role->exists) {
 	    	$mains = ['Acciones a reportar'];
@@ -20,18 +20,9 @@ class ItemRolForm3 extends Seeder {
 
 	    	$subs = [
 	    		'0' => [
-	    			['col' => 'Personas Físicas', 'editable' => false, 'subcol' => [
-	    				['name' => 'Audiencias', 'editable' => true],
-	    				['name' => 'Diálogos temáticos', 'editable' => true]
-	    			]],
-	    			['col' => 'Organizaciones de la Sociedad Civil', 'editable' => false, 'subcol' => [
-	    				['name' => 'Audiencias', 'editable' => true],
-	    				['name' => 'Diálogos temáticos', 'editable' => true]
-	    			]],
-	    			['col' => 'Otros actores', 'editable' => false, 'subcol' => [
-		    			['name' => 'Audiencias', 'editable' => true],
-		    			['name' => 'Diálogos temáticos', 'editable' => true]
-		    		]]
+	    			['col' => 'Foros y Conversatorios', 'subcol' => []],
+	    			['col' => 'Capacitación sobre DDHH y diversidad sexual a personas operadoras de Locatel', 'subcol' => []],
+	    			['col' => 'Lunes por la Educación para la Paz', 'subcol' => []]
 	    		]
 	    	];
 
@@ -61,7 +52,7 @@ class ItemRolForm3 extends Seeder {
 			    		'rol_id' => $role->id,
 			    		'item' => $subvalue['col'],
 			    		'parent_id' => $itemrol->id,
-			    		'editable' => $subvalue['editable'],
+			    		'editable' => true,
 			    		'order' => $suborder
 			    	]);
 
@@ -70,9 +61,9 @@ class ItemRolForm3 extends Seeder {
 			    	foreach ($subvalue['subcol'] as $subbval) {
 				    	$subsubitemrol = ItemRol::create([
 				    		'rol_id' => $role->id,
-				    		'item' => $subbval['name'],
+				    		'item' => $subbval,
 				    		'parent_id' => $subitemrol->id,
-				    		'editable' => $subvalue['editable'],
+				    		'editable' => true,
 				    		'order' => $subsuborder
 				    	]);
 

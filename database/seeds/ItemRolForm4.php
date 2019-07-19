@@ -5,94 +5,78 @@ use App\Models\ItemRol;
 use App\Models\RolStructureItem;
 use Spatie\Permission\Models\Role;
 
-class ItemRolForm4 extends Seeder
-{
+class ItemRolForm4 extends Seeder {
     /**
      * Run the database seeds.
      *
      * @return void
      */
-    public function run()
-    {
-
-        //
+    public function run() {
     	$role = Role::findByName('Subsecretaría de Derechos Humanos');
 
-    	if($role->exists){
+    	if($role->exists) {
 	    	$mains = ['Acciones a reportar'];
-	    	$columnsmain = ['0'=>['Cantidad']];
+	    	$columnsmain = ['0' => ['Cantidad']];
 
 	    	$subs = [
-	    		'0'=>[
-	    			['col'=>'Foros y Conversatorios','subcol'=>[]],
-	    			['col'=>'Capacitación sobre DDHH y diversidad sexual a personas operadoras de Locatel','subcol'=>[]],
-	    			['col'=>'Lunes por la Educación para la Paz','subcol'=>[]]
-
+	    		'0' => [
+	    			['col' => 'Foros y Conversatorios', 'subcol' => []],
+	    			['col' => 'Capacitación sobre DDHH y diversidad sexual a personas operadoras de Locatel', 'subcol' => []],
+	    			['col' => 'Lunes por la Educación para la Paz', 'subcol' => []]
 	    		]
 	    	];
 
-    	
-    	$order=0;
-    	foreach ($mains as $key => $value) {
-	    	$itemrol = ItemRol::create(['rol_id' => $role->id,
-	        				 'item'   => $value,
-	        				 'parent_id' =>null,
-	        				 'editable' => false,
-	        				 'order' => $key
-	    	]);
-	    	
-	    	foreach ($columnsmain[$order] as $ckey => $cvalue) {
-		    	$itemstruct = RolStructureItem::create(['item_rol_id' => $itemrol->id,
-		        				 'columns'   => $cvalue,
-		        				 'order'=>$order
+	    	$order = 0;
+
+	    	foreach ($mains as $key => $value) {
+		    	$itemrol = ItemRol::create([
+		    		'rol_id' => $role->id,
+		    		'item' => $value,
+		    		'parent_id' => null,
+		    		'editable' => false,
+		    		'order' => $key
 		    	]);
 
-	    	}
-
-	    	$suborder = 0;
-	    	foreach ($subs[$order] as $subkey => $subvalue) {
-
-		    	$subitemrol = ItemRol::create(['rol_id' => $role->id,
-		        				 'item'   => $subvalue['col'],
-		        				 'parent_id' =>$itemrol->id,
-		        				 'editable' => true,
-		        				 'order' => $suborder
-		    	]);
-
-		    	$subsuborder=0;
-		    	foreach ($subvalue['subcol'] as $subbval) {
-			    	$subsubitemrol = ItemRol::create(['rol_id' => $role->id,
-			        				 'item'   => $subbval,
-			        				 'parent_id' =>$subitemrol->id,
-			        				 'editable' => true,
-			        				 'order' => $subsuborder
+		    	foreach ($columnsmain[$order] as $ckey => $cvalue) {
+			    	$itemstruct = RolStructureItem::create([
+			    		'item_rol_id' => $itemrol->id,
+			    		'columns' => $cvalue,
+			    		'order' => $order
 			    	]);
-			    	$subsuborder++;
-
 		    	}
 
-		    $suborder++;
+		    	$suborder = 0;
 
+		    	foreach ($subs[$order] as $subkey => $subvalue) {
+			    	$subitemrol = ItemRol::create([
+			    		'rol_id' => $role->id,
+			    		'item' => $subvalue['col'],
+			    		'parent_id' => $itemrol->id,
+			    		'editable' => true,
+			    		'order' => $suborder
+			    	]);
 
+			    	$subsuborder = 0;
 
+			    	foreach ($subvalue['subcol'] as $subbval) {
+				    	$subsubitemrol = ItemRol::create([
+				    		'rol_id' => $role->id,
+				    		'item' => $subbval,
+				    		'parent_id' => $subitemrol->id,
+				    		'editable' => true,
+				    		'order' => $subsuborder
+				    	]);
+
+				    	$subsuborder++;
+			    	}
+
+			    	$suborder++;
+		    	}
+
+		    	$order++;
 	    	}
-
-
-
-	    	$order++;
-
-    	}
-
-
-
-    	}
-    	else{
+    	} else {
     		dd('no hay role parole');
     	}
-
-        //
-    
-
-
     }
 }

@@ -14,8 +14,9 @@ use Validator;
 class ResultController extends Controller {
   function __construct() {
     $this->middleware('auth');
-    $this->middleware('permission:index_form')->only(['index', 'search']);
-    $this->middleware('permission:show_form')->only(['show', 'buildProgress']);
+    $this->middleware('permission:index_results')->only('index');
+    $this->middleware('permission:search_results')->only('search');
+    $this->middleware('permission:show_results')->only(['show', 'buildProgress']);
   }
 
   /**
@@ -24,12 +25,35 @@ class ResultController extends Controller {
    * @return \Illuminate\Http\Response
    */
   public function index() {
-    $roles = Role::all()->sortBy('name')->except(1);
-    //$results = Result::all()->sortBy('theme_result')->groupBy('rol_id');
-    $results = Result::select('results.*', 'r.name')->join('roles AS r', 'r.id', '=', 'results.rol_id')->orderBy('r.name')->orderBy('theme_result')->get();
-    $reports = [];
+    $rol = auth()->user()->roles()->first();
     $role_id = '';
-    //dd($results);
+    $roles = '';
+    $reports = [];
+
+    if($rol->name == "Administrador") {
+      $roles = Role::all()->sortBy('name')->except([1, 3, 5, 7, 9, 11]);
+      $results = Result::select('results.*', 'r.name')->join('roles AS r', 'r.id', '=', 'results.rol_id')->orderBy('r.name')->orderBy('theme_result')->get();
+    } elseif($rol->name == "Atención Social y Ciudadana" || $rol->name == "Atención Social y Ciudadana (Titular)") {
+      $role1 = Role::findByName('Atención Social y Ciudadana');
+      $role2 = Role::findByName('Atención Social y Ciudadana (Titular)');
+      $results = Result::whereIn('rol_id', [$role1->id, $role2->id])->orderBy('theme_result')->get();
+    } elseif($rol->name == "Coordinación General de Inclusión y Bienestar" || $rol->name == "Coordinación General de Inclusión y Bienestar (Titular)") {
+      $role1 = Role::findByName('Coordinación General de Inclusión y Bienestar');
+      $role2 = Role::findByName('Coordinación General de Inclusión y Bienestar (Titular)');
+      $results = Result::whereIn('rol_id', [$role1->id, $role2->id])->orderBy('theme_result')->get();
+    } elseif($rol->name == "Instituto para el Envejecimiento Digno" || $rol->name == "Instituto para el Envejecimiento Digno (Titular)") {
+      $role1 = Role::findByName('Instituto para el Envejecimiento Digno');
+      $role2 = Role::findByName('Instituto para el Envejecimiento Digno (Titular)');
+      $results = Result::whereIn('rol_id', [$role1->id, $role2->id])->orderBy('theme_result')->get();
+    } elseif($rol->name == "Instituto para la Atención a Poblaciones Prioritarias" || $rol->name == "Instituto para la Atención a Poblaciones Prioritarias (Titular)") {
+      $role1 = Role::findByName('Instituto para la Atención a Poblaciones Prioritarias');
+      $role2 = Role::findByName('Instituto para la Atención a Poblaciones Prioritarias (Titular)');
+      $results = Result::whereIn('rol_id', [$role1->id, $role2->id])->orderBy('theme_result')->get();
+    } elseif($rol->name == "Subsecretaría de Derechos Humanos" || $rol->name == "Subsecretaría de Derechos Humanos (Titular)") {
+      $role1 = Role::findByName('Subsecretaría de Derechos Humanos');
+      $role2 = Role::findByName('Subsecretaría de Derechos Humanos (Titular)');
+      $results = Result::whereIn('rol_id', [$role1->id, $role2->id])->orderBy('theme_result')->get();
+    }
 
     foreach ($results as $result) {
       $report = [];
@@ -45,6 +69,14 @@ class ResultController extends Controller {
             $valus = [];
             $each_goal = [];
             $reports_ids = Report::select('id')->where([
+              ['rol_id', $result->rol_id],
+              ['date_start', '<=', $goal->date_start],
+              ['date_end', '>=', $goal->date_start]
+            ])->orWhere([
+              ['rol_id', $result->rol_id],
+              ['date_start', '<=', $goal->date_end],
+              ['date_end', '>=', $goal->date_end]
+            ])->orWhere([
               ['rol_id', $result->rol_id],
               ['date_start', '>=', $goal->date_start],
               ['date_end', '<=', $goal->date_end]
@@ -164,8 +196,7 @@ class ResultController extends Controller {
    */
   public function search(Request $request) {
     //dd($request->all());
-    $roles = Role::all()->sortBy('name')->except(1);
-    //$results = Result::where('rol_id', $request->uar)->orderBy('theme_result')->get();
+    $roles = Role::all()->sortBy('name')->except([1, 3, 5, 7, 9, 11]);
     $results = Result::where('rol_id', $request->uar)->get()->sortBy('theme_result');
     $reports = [];
     $role_id = $request->uar;
@@ -184,6 +215,14 @@ class ResultController extends Controller {
             $valus = [];
             $each_goal = [];
             $reports_ids = Report::select('id')->where([
+              ['rol_id', $result->rol_id],
+              ['date_start', '<=', $goal->date_start],
+              ['date_end', '>=', $goal->date_start]
+            ])->orWhere([
+              ['rol_id', $result->rol_id],
+              ['date_start', '<=', $goal->date_end],
+              ['date_end', '>=', $goal->date_end]
+            ])->orWhere([
               ['rol_id', $result->rol_id],
               ['date_start', '>=', $goal->date_start],
               ['date_end', '<=', $goal->date_end]

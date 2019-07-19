@@ -4,7 +4,7 @@
         <div class="col-sm-12">
             <div class="form-group">
             	<label class="control-label" for="name"><strong>Nombre*</strong></label>
-            	<input class="form-control" type="text" name="name" value="{{ $role->name ?? old('name') }}">
+            	<input class="form-control" type="text" name="name" value="{{ $role->name ?? old('name') }}" readonly>
                 {!! $errors->first('name', '<small class="help-block text-danger">:message</small>')!!}
             </div>
       	</div>
