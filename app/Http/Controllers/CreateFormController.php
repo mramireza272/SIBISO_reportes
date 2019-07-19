@@ -23,7 +23,7 @@ class CreateFormController extends Controller {
     }
 
     public function index() {
-        $roles = Role::all()->sortBy('name')->except(1);
+        $roles = Role::all()->sortBy('name')->except([1, 3, 5, 7, 9, 11]);
 
         return view('forms.index', compact('roles'));
     }

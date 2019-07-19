@@ -1,11 +1,10 @@
 @extends('templates.master')
 
-@section('titulo', 'Sistema de Reportes SIBISO | Acceso al sistema')
+@section('titulo', 'Sistema de Reporte de Servicios Sociales SIBISO')
 
 @section('titulo_pagina', 'Usuarios')
 
 @section('customcss')
-
 @endsection
 
 @section('content')
@@ -112,7 +111,7 @@
 	                <h4 class="modal-title" style="text-align: center;">Atención</h4>
 	            </div>
 	            <div class="modal-body" style="text-align: center;">
-	                <p>¿Está seguro de eliminar?</p>
+	                <p>¿Está seguro(a) de eliminar?</p>
 	            </div>
 	            <div class="modal-footer">
 	                <button type="button" class="btn btn-sm btn-primary" id="delete-btn">Eliminar</button>
@@ -124,14 +123,14 @@
 @endsection
 
 @section('customjs')
-<script>
-    $(".delete").on('click', function(e){
-    	e.preventDefault();
-        var $form = $(this);
-	    $('#confirm').modal({ backdrop: 'static', keyboard: false })
-	        .on('click', '#delete-btn', function(){
-	            $form.submit();
+	<script>
+	    $(".delete").on('click', function(e){
+	    	e.preventDefault();
+	        var $form = $(this);
+		    $('#confirm').modal({ backdrop: 'static', keyboard: false })
+		        .on('click', '#delete-btn', function(){
+		            $form.submit();
+		    });
 	    });
-    });
-</script>
+	</script>
 @endsection

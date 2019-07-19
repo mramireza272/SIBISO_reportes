@@ -80,7 +80,7 @@
     </div>
 </div>
 <div class="panel-footer text-right">
-    <a role="button" href="{{ route('reportes.index') }}" class="btn btn-primary">Regresar</a>
+    <a role="button" href="{{ route('registros.index') }}" class="btn btn-primary">Regresar</a>
     @if($action != 'show')
         <button type="submit" class="btn btn-primary">{{ isset($btnText) ? $btnText : 'Guardar' }}</button>
     @endif

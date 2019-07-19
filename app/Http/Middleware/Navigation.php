@@ -31,7 +31,6 @@ class Navigation
                 ];
             }*/
 
-
             if(Auth::user()->hasPermissionTo('index_form')){
                 $this->menus['Formularios'] = [
                     'url'    => url('/formularios'),
@@ -45,12 +44,29 @@ class Navigation
                     'icon'   => 'pli-formula'
                 ];
 
+                //quitar cuando se vaya a presentar el módulo final
+                if(Auth::user()->hasPermissionTo('index_results')){
+                    $this->menus['Resultados'] = [
+                        'url'    => url('/resultados'),
+                        'active' => (strpos($url, str_replace(url('/'), '', '/resultados')) !== false) ? ' class="active-sub"' : '',
+                        'icon'   => 'pli-bar-chart-2'
+                    ];
+                }
+
+                /*$this->menus['Registros'] = [
+                    'url'    => url('/registros'),
+                    'active' => (strpos($url, str_replace(url('/'), '', '/registros')) !== false) ? ' class="active-sub"' : '',
+                    'icon'   => 'pli-notepad-2'
+                ];*/
+            }
+
+            /*if(Auth::user()->hasPermissionTo('index_results')){
                 $this->menus['Resultados'] = [
                     'url'    => url('/resultados'),
                     'active' => (strpos($url, str_replace(url('/'), '', '/resultados')) !== false) ? ' class="active-sub"' : '',
                     'icon'   => 'pli-bar-chart-2'
                 ];
-            }
+            }*/
 
             if(Auth::user()->hasPermissionTo('index_user')){
                 $this->menus['Usuarios'] = [

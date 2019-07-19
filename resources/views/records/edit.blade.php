@@ -23,8 +23,6 @@
 	    		autoclose: true,
 	        	todayBtn: true,
 	        	pickerPosition: "bottom-left"
-	           /* startDate:'2019/04/22',
-	            endDate:'2019/12/31'*/
 	    	});
 	    });
 	</script>
@@ -43,11 +41,11 @@
 			        	</div>
 				    </div>
 			    @endif
-	        	<form method="POST" action="{{ route('reportes.update', $report->id) }}" enctype="multipart/form-data" class="form-horizontal form-padding">
+	        	<form method="POST" action="{{ route('registros.update', $report->id) }}" enctype="multipart/form-data" class="form-horizontal form-padding">
 	                  {!! method_field('PUT') !!}
 	                  <input type="hidden" name="created_by" value="{{ auth()->user()->id }}">
 	                  <input type="hidden" name="report_id" value="{{ $report->id }}">
-	                  @include('reports.form', ['btnText' => 'Actualizar', 'action' => 'edit'])
+	                  @include('records.form', ['btnText' => 'Actualizar', 'action' => 'edit'])
 				</form>
 			</div>
 	    </div>

@@ -1,11 +1,10 @@
 @extends('templates.master')
 
-@section('titulo', 'Sistema de Reportes SIBISO | Acceso al sistema')
+@section('titulo', 'Sistema de Reporte de Servicios Sociales SIBISO')
 
 @section('titulo_pagina', 'Nuevo Usuario')
 
 @section('customcss')
-
 @endsection
 
 @section('content')
@@ -34,5 +33,4 @@
 @endsection
 
 @section('customjs')
-
 @endsection

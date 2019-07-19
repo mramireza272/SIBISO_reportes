@@ -19,12 +19,18 @@ class AddPermissionsAdminSeeder extends Seeder
         Permission::create(['name' => 'index_form']);
         Permission::create(['name' => 'show_form']);
 
-        $role = Role::findByName('Administrador');
+        Permission::create(['name' => 'index_results']);
+        Permission::create(['name' => 'show_results']);
+        Permission::create(['name' => 'search_results']);
 
+        $role = Role::findByName('Administrador');
         $role->givePermissionTo('create_form');
         $role->givePermissionTo('delete_form');
         $role->givePermissionTo('edit_form');
         $role->givePermissionTo('index_form');
         $role->givePermissionTo('show_form');
+        $role->givePermissionTo('index_results');
+        $role->givePermissionTo('show_results');
+        $role->givePermissionTo('search_results');
     }
 }

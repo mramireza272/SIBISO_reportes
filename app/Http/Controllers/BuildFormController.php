@@ -30,10 +30,28 @@ class BuildFormController extends Controller {
      */
     public function index() {
         $rol = auth()->user()->roles()->first();
-        $reports = Report::where([
-            ['active', true],
-            ['rol_id', $rol->id],
-        ])->orderBy('created_at', 'desc')->get();
+
+        if($rol->name == "Atención Social y Ciudadana" || $rol->name == "Atención Social y Ciudadana (Titular)") {
+            $role1 = Role::findByName('Atención Social y Ciudadana');
+            $role2 = Role::findByName('Atención Social y Ciudadana (Titular)');
+            $reports = Report::where('active', true)->whereIn('rol_id', [$role1->id, $role2->id])->orderBy('created_at', 'desc')->get();
+        } elseif($rol->name == "Coordinación General de Inclusión y Bienestar" || $rol->name == "Coordinación General de Inclusión y Bienestar (Titular)") {
+            $role1 = Role::findByName('Coordinación General de Inclusión y Bienestar');
+            $role2 = Role::findByName('Coordinación General de Inclusión y Bienestar (Titular)');
+            $reports = Report::where('active', true)->whereIn('rol_id', [$role1->id, $role2->id])->orderBy('created_at', 'desc')->get();
+        } elseif($rol->name == "Instituto para el Envejecimiento Digno" || $rol->name == "Instituto para el Envejecimiento Digno (Titular)") {
+            $role1 = Role::findByName('Instituto para el Envejecimiento Digno');
+            $role2 = Role::findByName('Instituto para el Envejecimiento Digno (Titular)');
+            $reports = Report::where('active', true)->whereIn('rol_id', [$role1->id, $role2->id])->orderBy('created_at', 'desc')->get();
+        } elseif($rol->name == "Instituto para la Atención a Poblaciones Prioritarias" || $rol->name == "Instituto para la Atención a Poblaciones Prioritarias (Titular)") {
+            $role1 = Role::findByName('Instituto para la Atención a Poblaciones Prioritarias');
+            $role2 = Role::findByName('Instituto para la Atención a Poblaciones Prioritarias (Titular)');
+            $reports = Report::where('active', true)->whereIn('rol_id', [$role1->id, $role2->id])->orderBy('created_at', 'desc')->get();
+        } elseif($rol->name == "Subsecretaría de Derechos Humanos" || $rol->name == "Subsecretaría de Derechos Humanos (Titular)") {
+            $role1 = Role::findByName('Subsecretaría de Derechos Humanos');
+            $role2 = Role::findByName('Subsecretaría de Derechos Humanos (Titular)');
+            $reports = Report::where('active', true)->whereIn('rol_id', [$role1->id, $role2->id])->orderBy('created_at', 'desc')->get();
+        }
 
         return view('reports.index', compact('reports', 'rol'));
     }
@@ -59,16 +77,9 @@ class BuildFormController extends Controller {
      */
     public function store(ReportRequest $request) {
         //dd($request->all());
-        $post = $request->post();
-        $report = Report::create([
-            'rol_id' => $post['rol_id'],
-            'created_by' => $post['created_by'],
-            'date_start' => $post['date_start'],
-            'date_end' => $post['date_end'],
-            'active' => $post['active'],
-        ]);
+        $report = Report::create($request->all());
 
-        foreach ($post as $key => $value) {
+        foreach ($request->all() as $key => $value) {
             $field = strpos($key, 'f_');
 
             if($field>-1 and strlen($value)>-1){
@@ -83,7 +94,7 @@ class BuildFormController extends Controller {
             }
         }
 
-        return redirect()->route('reportes.create')->with('info', '<p style="text-align: justify;">Registro creado satisfactoriamente. <strong>¡ IMPORTANTE !</strong> Puede editar o eliminar el registro hasta 2 horas después de haberlo creado. Le recomendamos consultarlo para estar seguro de que la información registrada es correcta. Si requiere eliminar o editar un registro después de este periodo, comunique su solicitud a <ins>formularios.sibiso@gmail.com</ins></p>');
+        return redirect()->route('reportes.create')->with('info', 'Registro creado satisfactoriamente.');
     }
 
     /**
@@ -117,38 +128,33 @@ class BuildFormController extends Controller {
      */
     public function edit($id) {
         $report = Report::findOrFail($id);
+        $role = Role::findOrFail($report->rol_id);
+        $items_rol = ItemRol::where('rol_id', $report->rol_id)->where('parent_id', null)->get();
+        $items_values = ItemValueReport::where('report_id', $report->id)->get();
+        $vals = [];
 
-        if($this->checkTime($report->created_at)) {
-            $role = Role::findOrFail($report->rol_id);
-            $items_rol = ItemRol::where('rol_id', $report->rol_id)->where('parent_id', null)->get();
-            $items_values = ItemValueReport::where('report_id', $report->id)->get();
-            $vals = [];
+        #$forvaluesnotadde
+        $itemseditable = ItemRol::where('rol_id', $report->rol_id)->get();
 
-            #$forvaluesnotadde
-            $itemseditable = ItemRol::where('rol_id', $report->rol_id)->get();
-
-            foreach ($itemseditable as $rol) {
-            	foreach($rol->cols as $colss){
-            		foreach ($itemseditable as $interrol) {
-						$vals[$colss->id][$interrol->id] = [
-							'value' => 0,
-							'id' => 0
-						];
-            		}
-            	}
-            }
-
-            foreach ($items_values as $itve) {
-                $vals[$itve->item_col_id][$itve->item_rol_id] = [
-                    'value' => $itve->valore,
-                    'id' => $itve->id
-                ];
-            }
-
-            return view('reports.edit', compact('role', 'report', 'items_rol', 'vals'));
+        foreach ($itemseditable as $rol) {
+        	foreach($rol->cols as $colss){
+        		foreach ($itemseditable as $interrol) {
+					$vals[$colss->id][$interrol->id] = [
+						'value' => 0,
+						'id' => 0
+					];
+        		}
+        	}
         }
 
-        return redirect()->route('reportes.index');
+        foreach ($items_values as $itve) {
+            $vals[$itve->item_col_id][$itve->item_rol_id] = [
+                'value' => $itve->valore,
+                'id' => $itve->id
+            ];
+        }
+
+        return view('reports.edit', compact('role', 'report', 'items_rol', 'vals'));
     }
 
     /**
@@ -161,34 +167,37 @@ class BuildFormController extends Controller {
     public function update(ReportRequest $request, $id) {
         //dd($request->all());
         $report = Report::findOrFail($id);
+        $report->date_start = $request->date_start;
+        $report->date_end = $request->date_end;
+        $report->observation = $request->observation;
+        $report->created_by = $request->created_by;
+        $report->updated_at = date("Y-m-d H:i:s");
+        $report->save();
 
-        if($this->checkTime($report->created_at)) {
-            $post = $request->post();
-            $report->date_start = $post['date_start'];
-            $report->date_end = $post['date_end'];
-            $report->created_by = $post['created_by'];
-            $report->save();
+        foreach ($request->all() as $key => $value) {
+            $field = strpos($key, 'f_');
 
-            foreach ($post as $key => $value) {
-                $field = strpos($key, 'f_');
+            if($field>-1 and strlen($value)>-1){
+                $pices = explode('_', $key);
 
-                if($field>-1 and strlen($value)>-1){
-                    $pices = explode('_', $key);
-
-                    $ivr = ItemValueReport::firstOrCreate([
-                        'report_id' => $report->id,
-                        'item_rol_id' => $pices[3],
-                        'item_col_id' => $pices[2]
-                    ]);
-                    $ivr->valore = $value;
-                    $ivr->save();
-                }
+                $ivr = ItemValueReport::firstOrCreate([
+                    'report_id' => $report->id,
+                    'item_rol_id' => $pices[3],
+                    'item_col_id' => $pices[2]
+                ]);
+                $ivr->valore = $value;
+                $ivr->save();
             }
-
-            return redirect()->route('reportes.edit', $id)->with('info', '<p style="text-align: justify;">Registro editado satisfactoriamente. <strong>¡ IMPORTANTE !</strong> Puede editar o eliminar el registro hasta 2 horas después de haberlo creado. Le recomendamos consultarlo para estar seguro de que la información registrada es correcta. Si requiere eliminar o editar un registro después de este periodo, comunique su solicitud a <ins>formularios.sibiso@gmail.com</ins></p>');
         }
 
-        return redirect()->route('reportes.index');
+        return redirect()->route('reportes.edit', $id)->with('info', 'Registro editado satisfactoriamente.');
+    }
+
+    public function updateStatus($id) {
+        //dd($id);
+        Report::findOrFail($id)->update(['status' => false, 'authorized_by' => \Auth::user()->id]);
+
+        return redirect()->route('reportes.index')->with('info', 'Registro autorizado satisfactoriamente.');
     }
 
     /**
@@ -198,16 +207,10 @@ class BuildFormController extends Controller {
      * @return \Illuminate\Http\Response
      */
     public function destroy($id) {
-        $report = Report::findOrFail($id);
+        $report = Report::findOrFail($id)->delete();
+        $itemValueReport = ItemValueReport::where('report_id', $id)->delete();
 
-        if($this->checkTime($report->created_at)) {
-            $report->delete();
-            $itemValueReport = ItemValueReport::where('report_id', $id)->delete();
-
-            return redirect()->route('reportes.index')->with('info', 'Registro eliminado satisfactoriamente.');
-        }
-
-        return redirect()->route('reportes.index');
+        return redirect()->route('reportes.index')->with('info', 'Registro eliminado satisfactoriamente.');
     }
 
     private function checkTime($created_at) {

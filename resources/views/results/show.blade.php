@@ -1,13 +1,13 @@
 @extends('templates.master')
 
-@section('titulo', 'Sistema de Reportes SIBISO')
+@section('titulo', 'Sistema de Reporte de Servicios Sociales SIBISO')
 
 @section('titulo_pagina', 'Ver Resultado Ampliado')
 
 @section('customcss')
 	<style>
 	    table thead, th, tbody, td {
-	      text-align: center;
+	    	text-align: center;
 	    }
     </style>
 @endsection
