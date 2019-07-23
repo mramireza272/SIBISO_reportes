@@ -29,6 +29,7 @@ class ResultController extends Controller {
     $role_id = '';
     $roles = '';
     $reports = [];
+    $results = [];
 
     if($rol->name == "Administrador") {
       $roles = Role::all()->sortBy('name')->except([1, 3, 5, 7, 9, 11]);

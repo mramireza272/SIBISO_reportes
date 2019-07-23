@@ -5,7 +5,7 @@
 		<div class="form-group">
 			<label class="col-sm-3 col-md-3 col-lg-3 col-xl-3 control-label" for="name"><strong>Nombre Completo *</strong></label>
 			<div class="col-sm-3 col-md-3 col-lg-3 col-xl-3">
-				<input class="form-control" type="text" name="name" value="{{ $user->name ?? old('name') }}" placeholder="Nombre" required>
+				<input class="form-control" type="text" name="name" value="{{ $user->name ?? old('name') }}" placeholder="Nombre" required autofocus>
 				{!! $errors->first('name', '<small class="help-block text-danger">:message</small>') !!}
 			</div>
 			<div class="col-sm-3 col-md-3 col-lg-3 col-xl-3">

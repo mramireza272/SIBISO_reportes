@@ -22,11 +22,11 @@
 		    </div>
 	    @endif
 	    <div class="panel-body">
-	        @can('create_roles')
+	        {{-- @can('create_roles')
 	        <a href="{{ route('roles.create') }}" class="btn btn-primary">
 	            Nuevo Rol
 	        </a>
-	        @endcan
+	        @endcan --}}
 
 	        <table id="table-roles"
 		               data-search="true"
@@ -62,7 +62,7 @@
 		                                Editar
 		                            </a>
 		                        @endcan
-		                        @can('delete_roles')
+		                        {{-- @can('delete_roles')
 		                            <form class="delete" action="{{ route('roles.destroy', $role->id) }}" style="display: inline;" method="POST">
 			        					{!! method_field('DELETE') !!}
 										<input type="hidden" name="_token" value="{{ csrf_token() }}">
@@ -70,7 +70,7 @@
 				        					Eliminar
 				        				</button>
 				        			</form>
-		                        @endcan
+		                        @endcan --}}
 		                    </td>
 		                </tr>
 	                @endforeach
