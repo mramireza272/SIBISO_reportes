@@ -6,16 +6,13 @@ use Closure;
 use Auth;
 use \Spatie\Permission\Models\Role;
 
-class Navigation
-{
+class Navigation {
     private $menus;
 
     function __construct(){
-        //$this->menus = [];
-
         $url = str_replace(url('/'),'',url()->current());
         $this->menus = [
-            'Menu principal'    => [
+            'Menú principal'    => [
                 'url'     => url('/home'),
                 'active'  => ($url == '') ? ' class="active-sub"' : '',
                 'icon'    => 'pli-home',
@@ -23,7 +20,7 @@ class Navigation
         ];
 
         if(Auth::check()){
-            /*if(Auth::user()->hasRole(['SIBISO', 'Administrador'])){
+            /*if(Auth::user()->hasRole('Administrador')) {
                 $this->menus['Bitácora'] = [
                     'url'     => route('bitacora.index'),
                     'active' => (strpos($url, str_replace(url('/'), '', '/bitacora')) !== false) ? ' class="active-sub"' : '',
@@ -31,7 +28,7 @@ class Navigation
                 ];
             }*/
 
-            if(Auth::user()->hasPermissionTo('index_form')){
+            if(Auth::user()->hasPermissionTo('index_form')) {
                 $this->menus['Formularios'] = [
                     'url'    => url('/formularios'),
                     'active' => (strpos($url, str_replace(url('/'), '', '/formularios')) !== false) ? ' class="active-sub"' : '',
@@ -44,31 +41,22 @@ class Navigation
                     'icon'   => 'pli-formula'
                 ];
 
-                //quitar cuando se vaya a presentar el módulo final
-                if(Auth::user()->hasPermissionTo('index_results')){
-                    $this->menus['Resultados'] = [
-                        'url'    => url('/resultados'),
-                        'active' => (strpos($url, str_replace(url('/'), '', '/resultados')) !== false) ? ' class="active-sub"' : '',
-                        'icon'   => 'pli-bar-chart-2'
-                    ];
-                }
-
-                /*$this->menus['Registros'] = [
+                $this->menus['Registros'] = [
                     'url'    => url('/registros'),
                     'active' => (strpos($url, str_replace(url('/'), '', '/registros')) !== false) ? ' class="active-sub"' : '',
                     'icon'   => 'pli-notepad-2'
-                ];*/
+                ];
             }
 
-            /*if(Auth::user()->hasPermissionTo('index_results')){
+            if(Auth::user()->hasPermissionTo('index_results')) {
                 $this->menus['Resultados'] = [
                     'url'    => url('/resultados'),
                     'active' => (strpos($url, str_replace(url('/'), '', '/resultados')) !== false) ? ' class="active-sub"' : '',
                     'icon'   => 'pli-bar-chart-2'
                 ];
-            }*/
+            }
 
-            if(Auth::user()->hasPermissionTo('index_user')){
+            if(Auth::user()->hasPermissionTo('index_user')) {
                 $this->menus['Usuarios'] = [
                     'url'    => url('/usuarios'),
                     'active' => (strpos($url, str_replace(url('/'), '', '/usuarios')) !== false) ? ' class="active-sub"' : '',
@@ -76,7 +64,7 @@ class Navigation
                 ];
             }
 
-            if(Auth::user()->hasPermissionTo('index_roles')){
+            if(Auth::user()->hasPermissionTo('index_roles')) {
                 $this->menus['Roles'] = [
                     'url'    => url('/roles'),
                     'active' => (strpos($url, str_replace(url('/'), '', '/roles')) !== false) ? ' class="active-sub"' : '',
@@ -90,7 +78,7 @@ class Navigation
                 ];
             }
 
-            if(Auth::user()->hasAnyPermission(['index_ined', 'index_cgib', 'index_asc', 'index_sdh', 'index_iapp'])){
+            if(Auth::user()->hasAnyPermission(['index_ined', 'index_cgib', 'index_asc', 'index_sdh', 'index_iapp'])) {
                 $this->menus['Registros'] = [
                     'url'    => url('/reportes'),
                     'active' => (strpos($url, str_replace(url('/'), '', '/reportes')) !== false) ? ' class="active-sub"' : '',
