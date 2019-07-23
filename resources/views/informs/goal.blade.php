@@ -198,7 +198,7 @@
 						                </td>
 						                <td>
 						                	@can('delete_form')
-							                	<form class="delete" style="display: inline;" method="POST" action="{{ route('informes.destroyGoal') }}">
+							                	<form class="delete" style="display: inline;" method="POST" action="{{ route('informes.destroygoal') }}">
 				                                    {!! method_field('DELETE') !!}
 									                <input type="hidden" name="_token" value="{{ csrf_token() }}">
 									                <input type="hidden" name="result_id" value="{{ $result->id }}">
