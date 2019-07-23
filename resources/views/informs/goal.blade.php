@@ -245,7 +245,7 @@
 					<div class="form-group">
 					    <label class="control-label col-sm-3 col-md-3 col-lg-3 col-xl-3" for="goal_txt"><strong>Nombre*</strong></label>
 					    <div class="col-sm-9 col-md-9 col-lg-9 col-xl-9">
-					        <input type="text" id="goal_txt" name="goal_txt" class="form-control" placeholder="Ingrese el nombre de la meta" value="{{ old('goal_txt') }}" />
+					        <input type="text" id="goal_txt" name="goal_txt" class="form-control" placeholder="Ingrese el nombre de la meta" value="{{ old('goal_txt') }}" autofocus/>
 					        {!! $errors->first('goal_txt', '<small class="help-block text-danger">:message</small>') !!}
 					    </div>
 					</div>

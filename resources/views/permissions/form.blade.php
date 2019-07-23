@@ -4,7 +4,7 @@
         <div class="col-sm-12 col-md-12 col-lg-12 col-xl-12">
             <div class="form-group">
               <label class="control-label" for="name"><strong>Nombre*</strong></label>
-            	<input class="form-control" type="text" name="name" value="{{ $permission->name ?? old('name')}}">
+            	<input class="form-control" type="text" name="name" value="{{ $permission->name ?? old('name')}}" autofocus>
                 {!! $errors->first('name', '<small class="help-block text-danger">:message</small>')!!}
             </div>
             <div class="form-group">
