@@ -8,6 +8,11 @@ Route::get('/', function () {
     return redirect('/login');
 });
 
+//Externo
+//Route::post('/authext','Auth\ExternalController@login');
+Route::get('/authext','Auth\ExternalController@login');
+
+
 //Global
 Route::get('/home', 'HomeController@index')->name('home');
 Route::get('logout', 'Auth\LoginController@logout');
