@@ -23,8 +23,13 @@ class UserController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function index() {
-        $users = User::where('active', true)->orderBy('created_at', 'desc')->get();
+        //oculto el usuario de CGPI
+        $users = User::where([
+            ['active', true],
+            ['email', '!=', 'admin@territorial']
+        ])->orderBy('created_at', 'desc')->get();
         $search = "";
+
         return view('Users.index', compact('users', 'search'));
     }
 

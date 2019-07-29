@@ -70,20 +70,20 @@
 	                    <div class="text-center pad-to">
 	                        <div class="btn-group">
 	                            @can('edit_user')
-	                            <a href="{{ route('usuarios.edit', $user->id) }}" class="btn btn-sm btn-default">
-	                            	<i class="pli-pen-5 icon-lg icon-fw"></i> Editar
-	                            </a>
+		                            <a href="{{ route('usuarios.edit', $user->id) }}" class="btn btn-sm btn-default">
+		                            	<i class="pli-pen-5 icon-lg icon-fw"></i> Editar
+		                            </a>
 	                            @endcan
 	                            @can('delete_user')
-	                            @if(auth()->user()->id != $user->id)
-	                            <form class="delete" style="display: inline" method="POST" action="{{ route('usuarios.destroy', $user->id) }}">
-	                            	{!! method_field('DELETE') !!}
-									<input type="hidden" name="_token" value="{{ csrf_token() }}">
-		                            <button href="#" class="btn btn-sm btn-default">
-		                            	<i class="pli-recycling icon-lg icon-fw"></i> Eliminar
-		                            </button>
-		                        </form>
-		                        @endif
+		                            @if(auth()->user()->id != $user->id)
+			                            <form class="delete" style="display: inline" method="POST" action="{{ route('usuarios.destroy', $user->id) }}">
+			                            	{!! method_field('DELETE') !!}
+											<input type="hidden" name="_token" value="{{ csrf_token() }}">
+				                            <button href="#" class="btn btn-sm btn-default">
+				                            	<i class="pli-recycling icon-lg icon-fw"></i> Eliminar
+				                            </button>
+				                        </form>
+			                        @endif
 		                        @endcan
 	                        </div>
 	                    </div>
