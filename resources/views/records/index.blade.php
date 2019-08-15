@@ -138,7 +138,7 @@
 				                <th>Fecha y hora de creación</th>
 				                <th>Última edición</th>
 				                <th>Autoriza</th>
-				                <th>Estatus</th>
+				                <th>Estado</th>
 				                <th>Acciones</th>
 				            </tr>
 				        </tfoot>

@@ -104,11 +104,16 @@
 				</div>
 	        	<form class="panel-body form-horizontal form-padding">
 	        		<div class="panel-heading">
-			            <h3 class="panel-title">Reporte: <strong>{{ $result->theme_result }}</strong></h3>
+			            <h3 class="panel-title" title="{{ $result->theme_result }}">Reporte: <strong>{{ $result->theme_result }}</strong></h3>
 	                </div>
 	                <div class="panel-heading">
-			            <h3 class="panel-title">Área: <strong>{{ $result->rol->name }}</strong></h3>
+			            <h3 class="panel-title" title="{{ $result->rol->name }}">Área: <strong>{{ $result->rol->name }}</strong></h3>
 	                </div>
+	                @if(!empty($result->description))
+	                <div class="panel-heading">
+			            <h3 class="panel-title" title="{{ $result->description }}">Descripción: <strong>{{ $result->description }}</strong></h3>
+	                </div>
+	                @endif
 					<div class="panel-body">
 						<div class="form-group">
 					        <label class="control-label col-sm-3 col-md-3 col-lg-3 col-xl-3 text-left"><strong>Periodo al que corresponde la información: *</strong></label>

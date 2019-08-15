@@ -15,7 +15,17 @@
 @section('customjs')
 	<script type="application/javascript" >
 		$(document).ready(function() {
-		    $('select').chosen({no_results_text: "Sin resultados encontrados", width: "100%", allow_single_deselect:true});
+		    $('select').chosen({no_results_text: "Sin resultados encontrados", width: "100%", allow_single_deselect: true});
+
+		    $('.fechapicker').datetimepicker({
+	    		minView: 2,
+	    		pickTime: false,
+	    		language: 'es',
+	    		format: 'yyyy-mm-dd',
+	    		autoclose: true,
+	        	todayBtn: true,
+	        	pickerPosition: "bottom-left"
+	    	});
 		});
 	</script>
 @endsection
@@ -25,26 +35,40 @@
 		<div class="row">
 			<div class="col-sm-12 col-md-12 col-lg-12 col-xl-12">
 				<div class="panel">
-					<form method="POST" action="{{ route('resultados.search') }}" class="panel-body form-horizontal form-padding">
+					<form method="GET" action="{{ route('resultados.search') }}" class="panel-body form-horizontal form-padding">
 						<input type="hidden" name="_token" value="{{ csrf_token() }}">
 						<div class="panel-heading">
 					        <h3 class="panel-title"><strong>Filtro</strong></h3>
 					    </div>
-					    <div class="form-group">
-					    	<label class="control-label col-sm-3 col-md-3 col-lg-3 col-xl-3 text-right"><strong>Unidad Administrativa Responsable: </strong></label>
-						    <div class="col-sm-4 col-md-4 col-lg-4 col-xl-4">
-						        <select data-placeholder="Selecciona la Unidad Administrativa Responsable" class="form-control" name="uar">
-			                        <option value=""></option>
-			                        @foreach($roles as $role)
-			                        	<option value="{{ $role->id }}" @if($role->id == $role_id) selected @endif> {{ $role->name }}</option>
-			                        @endforeach
-			                    </select>
-			                </div>
-			                <div class="col-sm-4 col-md-4 col-lg-4 col-xl-4">
-			                	<button type="submit" class="btn btn-primary">Filtrar</button>
-			                	<a role="button" href="{{ route('resultados.index') }}" class="btn btn-info">Borrar filtro</a>
-			                </div>
-			            </div>
+					    <div class="panel-body">
+						    <div class="form-group">
+						    	<label class="control-label col-sm-3 col-md-3 col-lg-3 col-xl-3 text-right"><strong>Unidad Administrativa Responsable: *</strong></label>
+							    <div class="col-sm-6 col-md-6 col-lg-6 col-xl-6">
+							        <select data-placeholder="Selecciona la Unidad Administrativa Responsable" class="form-control" id="uar" name="uar">
+				                        <option value=""></option>
+				                        @foreach($roles as $role)
+				                        	<option value="{{ $role->id }}" @if($role->id == old('uar', $role_id)) selected @endif> {{ $role->name }}</option>
+				                        @endforeach
+				                    </select>
+				                    {!! $errors->first('uar', '<small class="help-block text-danger">:message</small>') !!}
+				                </div>
+				            </div>
+				            <div class="form-group">
+						        <label class="control-label col-sm-3 col-md-3 col-lg-3 col-xl-3 text-right"><strong>Periodo al que corresponde la información:</strong></label>
+						        <div class="col-sm-3 col-md-3 col-lg-3 col-xl-3 text-left">
+						            <input autocomplete="off" type='text' class="form-control date fechapicker" id="date_start" name="date_start" value="{{ old('date_start', $date_start) }}" placeholder="Fecha de inicio del periodo" />
+						            {!! $errors->first('date_start', '<small class="help-block text-danger">:message</small>') !!}
+						        </div>
+						        <div class="col-sm-3 col-md-3 col-lg-3 col-xl-3 text-left">
+						            <input autocomplete="off" type='text' class="form-control date fechapicker" id="date_end" name="date_end" value="{{ old('date_end', $date_end) }}" placeholder="Fecha del fin del periodo" />
+						            {!! $errors->first('date_end', '<small class="help-block text-danger">:message</small>') !!}
+						        </div>
+						    </div>
+						</div>
+						<div class="panel-footer text-center">
+		                	<button type="submit" class="btn btn-primary">Filtrar</button>
+		                	<a role="button" href="{{ route('resultados.index') }}" class="btn btn-info">Borrar filtro</a>
+						</div>
 					</form>
 				</div>
 			</div>
@@ -58,13 +82,22 @@
 						<div class="panel-body">
 							<div class="panel-heading">
 								<div class="col-sm-6 col-md-6 col-lg-6 col-xl-6">
-					                <h3 class="panel-title">Reporte: <strong>{{ $report['theme_result'] }}</strong></h3>
+					                <h3 class="panel-title" title="{{ $report['theme_result'] }}">Reporte: <strong>{{ $report['theme_result'] }}</strong></h3>
 					            </div>
 					            <div class="col-sm-6 col-md-6 col-lg-6 col-xl-6">
 					                <h3 class="panel-title text-right" title="{{ $report['role'] }}">Área: <strong>{{ $report['role'] }}</strong></h3>
 					            </div>
 			                </div>
 			            </div>
+		                @if(!empty($report['description']))
+		                <div class="panel-body">
+			                <div class="panel-heading">
+								<div class="col-sm-12 col-md-12 col-lg-12 col-xl-12">
+					                <h3 class="panel-title" title="{{ $report['description'] }}">Descripción: <strong>{{ $report['description'] }}</strong></h3>
+					            </div>
+			                </div>
+			            </div>
+		                @endif
 		                <div class="panel-body">
 		                	@if(isset($report['goals']))
 			                	@if(count($report['goals']) > 0)
