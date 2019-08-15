@@ -40,19 +40,19 @@
     <!--Animate.css [ OPTIONAL ]-->
     <link href="/plugins/animate-css/animate.css" rel="stylesheet">
     @yield('customcss')
-        
+
 </head>
 
 <body>
     <div id="container" class="effect aside-float aside-bright mainnav-sm navbar-fixed">
-        
+
         @include('templates.navbar')
 
         <div class="boxed">
 
             <div id="content-container">
                 <div id="page-head">
-                    
+
                     <div id="page-title">
                         <h1 class="page-header text-overflow">
                             @yield('titulo_pagina')
@@ -60,12 +60,12 @@
                     </div>
                         @include('templates.breadcrumbs')
                 </div>
-                
+
                 <div id="page-content">
                     @yield('content')
                 </div>
             </div>
-    
+
             <aside id="aside-container">
                 <div id="aside">
                     <div class="nano">
@@ -75,7 +75,7 @@
                     </div>
                 </div>
             </aside>
-    
+
             <nav id="mainnav-container">
                 <div id="mainnav">
 
@@ -107,13 +107,13 @@
 
 
         </footer>
-    
+
         <button class="scroll-top btn">
             <i class="pci-chevron chevron-up"></i>
         </button>
-        
+
     </div>
-    
+
     <script src="/js/jquery.min.js"></script>
     <script src="/js/bootstrap.min.js"></script>
     <script src="/js/nifty.min.js"></script>
@@ -126,7 +126,7 @@
     <!--Nestable List [ OPTIONAL ]-->
     <script src="/plugins/nestable-list/jquery.nestable.js"></script>
     <!--=================================================-->
-    
+
     <!--Demo script [ DEMONSTRATION ]-->
     {{--<script src="/js/demo/nifty-demo.min.js"></script>--}}
     <script src="/plugins/chosen/chosen.jquery.js" type="text/javascript"></script>
@@ -138,7 +138,7 @@
     <!--Modals [ SAMPLE ]-->
     <script src="/plugins/ui-modals/ui-modals.js"></script>
     @yield('customjs')
-    
+
 
 </body>
 </html>
