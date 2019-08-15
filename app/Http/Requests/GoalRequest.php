@@ -42,7 +42,7 @@ class GoalRequest extends FormRequest
             'after_or_equal'       => ':attribute debe ser una fecha posterior o igual a :date',
             'before_or_equal'      => ':attribute debe ser una fecha anterior o igual a :date',
             'date'                 => ':attribute no es una fecha válida',
-            'date_format'          => ':attribute no corresponde al formato :format',
+            'date_format'          => ':attribute no corresponde al formato AAAA-MM-DD',
         ];
     }
 

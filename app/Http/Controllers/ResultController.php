@@ -28,6 +28,8 @@ class ResultController extends Controller {
     $rol = auth()->user()->roles()->first();
     $role_id = '';
     $roles = '';
+    $date_start = '';
+    $date_end = '';
     $reports = [];
     $results = [];
 
@@ -61,6 +63,7 @@ class ResultController extends Controller {
       $report['id'] = $result->id;
       $report['role'] = $result->rol->name;
       $report['theme_result'] = $result->theme_result;
+      $report['description'] = $result->description;
 
       foreach ($result->formulas as $formula) {
         if($result->goals->count() > 0) {
@@ -96,7 +99,7 @@ class ResultController extends Controller {
             $each_goal['goal_txt'] = $goal->goal_txt;
             $each_goal['goal_unit'] = number_format($goal->goal_unit);
             $percent = ($total_value / $dividendo) * 100;
-            $each_goal['percent'] = round($percent, 2) .' %';
+            $each_goal['percent'] = number_format(round($percent, 2)) .' %';
             $goals[] = $each_goal;
           }
 
@@ -118,7 +121,7 @@ class ResultController extends Controller {
       $reports[] = $report;
     }
 
-    return view('results.index', compact('reports', 'roles', 'role_id'));
+    return view('results.index', compact('reports', 'roles', 'role_id', 'date_start', 'date_end'));
   }
 
   /**
@@ -197,10 +200,50 @@ class ResultController extends Controller {
    */
   public function search(Request $request) {
     //dd($request->all());
+    if(($request->date_start != null) || ($request->date_end != null)) {
+      $messages = [
+        'date_start.required'             => 'La fecha inicio es obligatoria',
+        'date_end.required'               => 'La fecha fin es obligatoria',
+        'date_end.after_or_equal'         => 'La fecha fin debe ser una fecha posterior o igual a fecha inicio',
+        'date_start.before_or_equal'      => 'La fecha inicio debe ser una fecha anterior o igual a fecha fin',
+        'date_start.date'                 => 'La fecha inicio no es una fecha válida',
+        'date_end.date'                   => 'La fecha fin no es una fecha válida',
+        'date_start.date_format'          => 'La fecha inicio no corresponde al formato AAAA-MM-DD',
+        'date_end.date_format'            => 'La fecha fin no corresponde al formato AAAA-MM-DD',
+        'uar.required'                    => 'La Unidad Administrativa Responsable es obligatoria',
+      ];
+      $request->validate([
+        'date_start' => 'required|date|date_format:Y-m-d|before_or_equal:date_end',
+        'date_end'   => 'required|date|date_format:Y-m-d|after_or_equal:date_start',
+        'uar'        => 'required',
+      ], $messages);
+      $results = Result::with(['goals' => function ($query) use($request) {
+        $query->where([
+          ['date_start', '<=', $request->date_start],
+          ['date_end', '>=', $request->date_start],
+        ])->orWhere([
+          ['date_start', '<=', $request->date_end],
+          ['date_end', '>=', $request->date_end],
+        ])->orWhere([
+          ['date_start', '>=', $request->date_start],
+          ['date_end', '<=', $request->date_end],
+        ]);
+      }])->where('rol_id', $request->uar)->get()->sortBy('theme_result');
+    } else {
+      $messages = [
+        'uar.required'                    => 'La Unidad Administrativa Responsable es obligatoria',
+      ];
+      $request->validate([
+        'uar'        => 'required',
+      ], $messages);
+      $results = Result::where('rol_id', $request->uar)->get()->sortBy('theme_result');
+    }
+
     $roles = Role::all()->sortBy('name')->except([1, 3, 5, 7, 9, 11]);
-    $results = Result::where('rol_id', $request->uar)->get()->sortBy('theme_result');
     $reports = [];
     $role_id = $request->uar;
+    $date_start = $request->date_start;
+    $date_end = $request->date_end;
 
     foreach ($results as $result) {
       $report = [];
@@ -242,7 +285,7 @@ class ResultController extends Controller {
             $each_goal['goal_txt'] = $goal->goal_txt;
             $each_goal['goal_unit'] = number_format($goal->goal_unit);
             $percent = ($total_value / $dividendo) * 100;
-            $each_goal['percent'] = round($percent, 2) .' %';
+            $each_goal['percent'] = number_format(round($percent, 2)) .' %';
             $goals[] = $each_goal;
           }
 
@@ -264,7 +307,7 @@ class ResultController extends Controller {
       $reports[] = $report;
     }
 
-    return view('results.index', compact('reports', 'roles', 'role_id'));
+    return view('results.index', compact('reports', 'roles', 'role_id', 'date_start', 'date_end'));
   }
 
   public function buildProgress(Request $request) {
@@ -275,8 +318,8 @@ class ResultController extends Controller {
       'date_start.before_or_equal'      => 'La fecha inicio debe ser una fecha anterior o igual a fecha fin',
       'date_start.date'                 => 'La fecha inicio no es una fecha válida',
       'date_end.date'                   => 'La fecha fin no es una fecha válida',
-      'date_start.date_format'          => 'La fecha inicio no corresponde al formato :format',
-      'date_end.date_format'            => 'La fecha fin no corresponde al formato :format',
+      'date_start.date_format'          => 'La fecha inicio no corresponde al formato AAAA-MM-DD',
+      'date_end.date_format'            => 'La fecha fin no corresponde al formato AAAA-MM-DD',
     ];
     $validator = Validator::make($request->all(), [
       'date_start' => 'required|date|date_format:Y-m-d|before_or_equal:date_end',

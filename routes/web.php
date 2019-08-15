@@ -47,7 +47,7 @@ Route::resource('informes', 'BuildInformsController')->except(['destroy']);
 
 //Resultados reportes - Administrador
 Route::post('/resultados/generaravance', 'ResultController@buildProgress');
-Route::post('/resultados/filtro', ['as' => 'resultados.search', 'uses' => 'ResultController@search']);
+Route::match(['get', 'post'], '/resultados/filtro', ['as' => 'resultados.search', 'uses' => 'ResultController@search']);
 Route::resource('resultados', 'ResultController')->only(['index', 'show']);
 
 //Todos los Registros de las UAR - Administrador

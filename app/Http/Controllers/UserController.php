@@ -26,7 +26,7 @@ class UserController extends Controller
         //oculto el usuario de CGPI
         $users = User::where([
             ['active', true],
-            ['email', '!=', 'admin@territorial']
+            ['email', '<>', 'admin@territorial']
         ])->orderBy('created_at', 'desc')->get();
         $search = "";
 
@@ -142,11 +142,10 @@ class UserController extends Controller
     public function search(Request $request) {
         $users = User::where([
             ['active', true],
-            ['name', 'ilike', '%'. $request->search .'%'],
-        ])->orWhere([
-            ['active', true],
-            ['email', 'ilike', '%'. $request->search .'%'],
-        ])->orderBy('name', 'ASC')->get();
+            ['email', '<>', 'admin@territorial'],
+        ])->where(function ($query) use ($request) {
+            $query->where('name', 'ilike', '%'. $request->search .'%')->orWhere('email', 'ilike', '%'. $request->search .'%');
+        })->orderBy('name', 'ASC')->get();
         //$userscount = $users->count();
         $search = $request->search;
 
