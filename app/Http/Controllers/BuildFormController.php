@@ -77,7 +77,9 @@ class BuildFormController extends Controller {
      */
     public function store(ReportRequest $request) {
         //dd($request->all());
-        $report = Report::create($request->all());
+        $input = $request->all();
+        $input['created_by'] = auth()->user()->id;
+        $report = Report::create($input);
 
         foreach ($request->all() as $key => $value) {
             $field = strpos($key, 'f_');
@@ -170,7 +172,7 @@ class BuildFormController extends Controller {
         $report->date_start = $request->date_start;
         $report->date_end = $request->date_end;
         $report->observation = $request->observation;
-        $report->created_by = $request->created_by;
+        $report->created_by = auth()->user()->id;
         $report->updated_at = date("Y-m-d H:i:s");
         $report->save();
 
@@ -195,7 +197,7 @@ class BuildFormController extends Controller {
 
     public function updateStatus($id) {
         //dd($id);
-        Report::findOrFail($id)->update(['status' => false, 'authorized_by' => \Auth::user()->id]);
+        Report::findOrFail($id)->update(['status' => false, 'authorized_by' => auth()->user()->id]);
 
         return redirect()->route('reportes.index')->with('info', 'Registro autorizado satisfactoriamente.');
     }

@@ -123,16 +123,16 @@ class CreateFormController extends Controller {
 
     public function updateInputName(Request $request) {
         if($request->type == 'rol') {
-            RolStructureItem::findOrFail($request->id)->update(['columns' => $request->column]);
+            RolStructureItem::findOrFail($request->id)->update(['columns' => $request->column, 'updated_at' => date('Y-m-d H:i:s')]);
         } elseif ($request->type == 'item') {
-            ItemRol::findOrFail($request->id)->update(['item' => $request->column]);
+            ItemRol::findOrFail($request->id)->update(['item' => $request->column, 'updated_at' => date('Y-m-d H:i:s')]);
         }
 
         return;
     }
 
     public function updateEditable(Request $request) {
-        ItemRol::findOrFail($request->id)->update(['editable' => $request->checked]);
+        ItemRol::findOrFail($request->id)->update(['editable' => $request->checked, 'updated_at' => date('Y-m-d H:i:s')]);
 
         return;
     }
