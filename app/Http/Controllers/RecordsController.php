@@ -135,7 +135,7 @@ class RecordsController extends Controller {
         $report->date_start = $request->date_start;
         $report->date_end = $request->date_end;
         $report->observation = $request->observation;
-        $report->created_by = $request->created_by;
+        $report->created_by = auth()->user()->id;
         $report->updated_at = date("Y-m-d H:i:s");
         $report->save();
 

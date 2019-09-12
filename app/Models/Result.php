@@ -12,7 +12,7 @@ class Result extends Model
     protected $dates = ['deleted_at'];
 
     protected $fillable = [
-      'rol_id', 'theme_result', 'description'
+      'rol_id', 'theme_result', 'description', 'updated_at'
     ];
 
     public function goals(){
