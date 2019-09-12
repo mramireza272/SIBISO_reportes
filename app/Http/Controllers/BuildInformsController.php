@@ -54,7 +54,9 @@ class BuildInformsController extends Controller {
      * @return \Illuminate\Http\Response
      */
     public function store(ResultRequest $request) {
-        Result::create($request->all());
+        $input = $request->all();
+        $input['created_by'] = auth()->user()->id;
+        Result::create($input);
 
         return redirect()->route('informes.create')->with('info', 'Informe creado satisfactoriamente.');
     }
@@ -94,7 +96,9 @@ class BuildInformsController extends Controller {
      */
     public function update(ResultRequest $request, $id) {
         //dd($request->all());
-        $result = Result::findOrFail($id)->update($request->all());
+        $input = $request->all();
+        $input['updated_at'] = date('Y-m-d H:i:s');
+        $result = Result::findOrFail($id)->update($input);
 
 
         return redirect()->route('informes.edit', $id)->with('info', 'Informe actualizado satisfactoriamente.');
@@ -137,9 +141,9 @@ class BuildInformsController extends Controller {
 
     public function updateGoal(Request $request) {
         if($request->filled('goal_txt')) {
-            Goal::findOrFail($request->id)->update(['goal_txt' => $request->goal_txt]);
+            Goal::findOrFail($request->id)->update(['goal_txt' => $request->goal_txt, 'updated_at' => date('Y-m-d H:i:s')]);
         } elseif($request->filled('goal_unit')) {
-            Goal::findOrFail($request->id)->update(['goal_unit' => $request->goal_unit]);
+            Goal::findOrFail($request->id)->update(['goal_unit' => $request->goal_unit, 'updated_at' => date('Y-m-d H:i:s')]);
         } elseif($request->filled('type')) {
             $messages = [
                 'date_start.required'             => 'La fecha inicio es obligatoria',
@@ -158,9 +162,9 @@ class BuildInformsController extends Controller {
 
             if ($validator->passes()) {
                 if($request->type == "start") {
-                    Goal::findOrFail($request->id)->update(['date_start' => $request->date_start]);
+                    Goal::findOrFail($request->id)->update(['date_start' => $request->date_start, 'updated_at' => date('Y-m-d H:i:s')]);
                 } elseif($request->type == "end") {
-                    Goal::findOrFail($request->id)->update(['date_end' => $request->date_end]);
+                    Goal::findOrFail($request->id)->update(['date_end' => $request->date_end, 'updated_at' => date('Y-m-d H:i:s')]);
                 }
             }
 

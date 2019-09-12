@@ -41,7 +41,7 @@ class UserController extends Controller
     public function create() {
         $roles = array();
 
-        if(\Auth::user()->hasRole(['Administrador'])){
+        if(auth()->user()->hasRole(['Administrador'])){
             $roles = $this->getRoles();
         }
 
@@ -64,6 +64,7 @@ class UserController extends Controller
         ], $messages);
 
         $input = $request->all();
+        $input['created_by'] = auth()->user()->id;
         $user = User::create($input);
         $user->assignRole($request->input('roles'));
 
@@ -113,6 +114,8 @@ class UserController extends Controller
 
         $user = User::findOrFail($id);
         $input = $request->all();
+        $input['created_by'] = auth()->user()->id;
+        $input['updated_at'] = date('Y-m-d H:i:s');
         $user->update($input);
 
         DB::table('model_has_roles')->where('model_id', $id)->delete();
@@ -128,7 +131,7 @@ class UserController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function destroy($id) {
-        $user = User::where('id', $id)->update(['created_by' => \Auth::user()->id, 'active' => false]);
+        $user = User::findOrFail($id)->update(['created_by' => auth()->user()->id, 'updated_at' => date('Y-m-d H:i:s'), 'active' => false]);
 
         return redirect()->route('usuarios.index')->with('info', 'Usuario(a) deshabilitado(a) satisfactoriamente.');
     }

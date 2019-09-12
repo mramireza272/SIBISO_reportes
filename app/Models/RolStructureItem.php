@@ -14,7 +14,8 @@ class RolStructureItem extends Model
     protected $fillable = [
         'item_rol_id',
         'columns',
-        'order'
+        'order',
+        'updated_at'
     ];
 
 

@@ -33,7 +33,8 @@ class ItemRol extends Model
         'item',
         'parent_id',
         'editable',
-        'order'
+        'order',
+        'updated_at'
     ];
 
 
